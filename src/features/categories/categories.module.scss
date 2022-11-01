@@ -1,0 +1,24 @@
+@import "../../assets/styles/variables.scss";
+
+.categories {
+  padding: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+.card {
+  height: 200px;
+  padding: 0.8rem;
+  flex-basis: 16.66%;
+  background-color: antiquewhite;
+  text-decoration: none;
+  &:visited {
+    color: inherit;
+  }
+}
+
+.card__item {
+  background-color: cadetblue;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+}

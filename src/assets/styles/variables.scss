@@ -1,0 +1,11 @@
+$primary-color: #483a5c;
+$white: white;
+$dark-gray: rgb(99, 99, 99);
+$dimmed-white: rgb(221, 221, 221);
+
+$width-container: 1440px;
+
+@mixin container {
+  margin: 0 auto;
+  max-width: 1440px;
+}

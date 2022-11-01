@@ -1,0 +1,28 @@
+{
+  "root": true,
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    }
+  },
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "prefer-const": 1,
+    "react/prop-types": 1
+  }
+}

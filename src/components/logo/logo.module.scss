@@ -1,0 +1,12 @@
+@import "../../assets/styles/variables.scss";
+
+.logo {
+  width: fit-content;
+  padding: 0.5rem;
+  background-color: $primary-color;
+  color: $white;
+  border-radius: 15px;
+  font-size: 2rem;
+  font-weight: 700;
+  cursor: pointer;
+}

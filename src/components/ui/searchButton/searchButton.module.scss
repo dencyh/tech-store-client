@@ -1,0 +1,15 @@
+@import "../../../assets/styles/variables.scss";
+
+.button {
+  padding: 0.5rem;
+  top: 50%;
+  height: 100%;
+  width: 3rem;
+  cursor: pointer;
+  border: none;
+  border-right: 1px solid $dimmed-white;
+}
+
+.icon {
+  color: $dark-gray;
+}
