@@ -19,7 +19,7 @@ const NavItems = () => {
     <ul className={styles.list}>
       {menuItems.map((item) => (
         <li key={item.text}>
-          <Link href={item.to} className={styles.list__item}>
+          <Link to={item.to} className={styles.list__item}>
             {item.icon ? <FontAwesomeIcon icon={item.icon} /> : ""}
             <div className="text-xs">{item.text}</div>
           </Link>
