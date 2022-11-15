@@ -1,7 +1,7 @@
 import React from "react";
-import Logo from "../components/logo/logo";
-import Navbar from "../components/navbar";
-import Categories from "../features/categories";
+import Logo from "../components/ui/logo/logo";
+import Navbar from "../components/ui/navbar";
+import Categories from "../components/ui/categories";
 import Layout from "./layout";
 
 const Home = () => {

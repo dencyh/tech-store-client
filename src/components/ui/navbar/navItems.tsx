@@ -4,14 +4,16 @@ import styles from "./navbar.module.scss";
 import {
   faUser,
   faCartShopping,
-  faCube
+  faCube,
+  faHeart
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const menuItems = [
-  { text: "Orders", to: "orders", icon: faCube },
-  { text: "Profile", to: "profile", icon: faUser },
-  { text: "Cart", to: "cart", icon: faCartShopping }
+  { text: "Заказы", to: "orders", icon: faCube },
+  { text: "Профиль", to: "profile", icon: faUser },
+  { text: "Избранное", to: "bookmarks", icon: faHeart },
+  { text: "Корзина", to: "cart", icon: faCartShopping }
 ];
 
 const NavItems = () => {

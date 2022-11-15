@@ -1,22 +1,29 @@
-@import "../../assets/styles/variables.scss";
+@import "../../../assets/styles/variables.scss";
 
 .categories {
-  padding: 0 auto;
+  margin: 20px auto 0;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
 }
 .card {
   height: 200px;
   padding: 0.8rem;
-  flex-basis: 16.66%;
+  flex-basis: 19%;
   text-decoration: none;
   border-radius: 25px;
+  background-color: rgb(245, 245, 245);
+  margin: 5px;
   &:visited {
     color: inherit;
   }
   &:hover {
-    background-color: rgb(243, 243, 243);
+    background-color: rgb(240, 240, 240);
   }
+}
+
+.card__title {
+  margin-bottom: 5px;
 }
 
 .card__item {
