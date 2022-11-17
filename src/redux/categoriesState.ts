@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { BASE_URL } from "../api/api";
 import { Category } from "../types/category";
 
 export const getCategories = createAsyncThunk(
   "categories/getCategories",
   async () => {
-    const url = process.env.REACT_APP_API_URL + "/api/categories";
+    const url = BASE_URL + "/api/categories";
     const response = await fetch(url);
     const data = await response.json();
     return data;

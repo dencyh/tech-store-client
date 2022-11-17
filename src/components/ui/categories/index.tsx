@@ -14,7 +14,6 @@ const Categories = () => {
     dispath(getCategories());
   }, [dispath]);
 
-  const arr = _.range(0, 12);
   return (
     <div className={styles.wrapper}>
       <div className={styles.categories}>
