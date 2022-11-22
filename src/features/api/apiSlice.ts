@@ -5,12 +5,17 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_API_URL + "/api"
   }),
-  tagTypes: ["Category"],
+  tagTypes: ["Category", "Product"],
   endpoints: (builder) => ({
     getCategories: builder.query({
       query: () => "/categories"
+    }),
+    getProductsByCategory: builder.query({
+      query: (type: string) => `/products?type=${type}`
     })
+    // getProduct: builder.query({})
   })
 });
 
-export const { useGetCategoriesQuery } = apiSlice;
+export const { useGetCategoriesQuery, useGetProductsByCategoryQuery } =
+  apiSlice;
