@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "./search.module.scss";
 import SearchButton from "../../ui/searchButton";
-import TextInput from "../form/textInput";
 
 const Search = ({ categories = [] }) => {
   const [query, setQuery] = useState("");

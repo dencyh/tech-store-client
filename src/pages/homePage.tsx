@@ -4,7 +4,7 @@ import Navbar from "../components/ui/navbar";
 import Categories from "../features/categories";
 import Layout from "./layout";
 
-const Home = () => {
+const HomePage = () => {
   return (
     <Layout>
       <Categories />
@@ -12,4 +12,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

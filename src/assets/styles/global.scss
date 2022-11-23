@@ -14,6 +14,10 @@ a {
   text-decoration: none;
 }
 
+ul {
+  list-style: none;
+}
+
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -25,4 +29,46 @@ body {
 
 .container {
   @include container();
+}
+
+// Custom checkbox
+
+.checkbox_label {
+  padding-left: 1.5rem;
+}
+
+.check_input {
+  position: absolute;
+  appearance: none;
+}
+
+.check_input:checked + .custom_checkbox {
+  background-image: url("../img/checkbox/checked.svg");
+}
+
+.check_input:disabled:checked + .custom_checkbox {
+  background-image: url("../img/checkbox/checked_disabled.svg");
+}
+
+.check_input:disabled + .custom_checkbox {
+  background-image: url("../img/checkbox/unchecked_disabled.svg");
+}
+
+.check_input:focus + .custom_checkbox {
+  background-image: url("../img/checkbox/unchecked_focus.svg");
+}
+
+.check_input:checked:focus + .custom_checkbox {
+  background-image: url("../img/checkbox/checked_focus.svg");
+}
+
+.custom_checkbox {
+  cursor: pointer;
+  margin-left: -1.5rem;
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  background-image: url("../img/checkbox/unchecked.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
 }

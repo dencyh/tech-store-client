@@ -1,13 +1,32 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useGetProductsByCategoryQuery } from "../api/apiSlice";
+import ProductListItem from "./productListItem";
+import { useGetCategoryProductsQuery } from "./productsSlice";
+import styles from "./products.module.scss";
 
 const ProductList = () => {
   const { category } = useParams();
-  const response = useGetProductsByCategoryQuery(category || "");
-  console.log(response);
+  const {
+    data: products,
+    isLoading,
+    isSuccess
+  } = useGetCategoryProductsQuery(category);
 
-  return <div>ProductList</div>;
+  let content;
+
+  if (isLoading) {
+    content = <>Loading...</>;
+  } else if (isSuccess) {
+    content = (
+      <>
+        {products.map((product: any) => (
+          <ProductListItem key={product._id} product={product} />
+        ))}
+      </>
+    );
+  }
+
+  return <div className={styles.list}>{content}</div>;
 };
 
 export default ProductList;

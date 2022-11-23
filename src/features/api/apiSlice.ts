@@ -9,13 +9,8 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     getCategories: builder.query({
       query: () => "/categories"
-    }),
-    getProductsByCategory: builder.query({
-      query: (type: string) => `/products?type=${type}`
     })
-    // getProduct: builder.query({})
   })
 });
 
-export const { useGetCategoriesQuery, useGetProductsByCategoryQuery } =
-  apiSlice;
+export const { useGetCategoriesQuery } = apiSlice;
