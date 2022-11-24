@@ -7,7 +7,7 @@ const Filters = () => {
     brand: ""
   });
 
-  const onChange = ({ name, value }: { name: string; value: string }) => {
+  const handleChange = ({ name, value }: { name: string; value: string }) => {
     setValue((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -37,38 +37,13 @@ const Filters = () => {
         <p className={styles.title}>Бренд</p>
         <ul>
           <li>
-            <label className="checkbox_label">
-              <input className="check_input" id="google" type="checkbox" />
-              <span className="custom_checkbox"></span>
-              Google
-            </label>
-            <label className="checkbox_label">
-              <input
-                className="check_input"
-                id="google"
-                type="checkbox"
-                checked
-              />
-              <span className="custom_checkbox"></span>
-              Google
-            </label>
-            <label className="checkbox_label">
-              <input
-                className="check_input"
-                id="google"
-                type="checkbox"
-                disabled
-              />
-              <span className="custom_checkbox"></span>
-              Google
-            </label>
+            <Checkbox
+              name="brand"
+              value={value.brand}
+              label="Apple"
+              onChange={handleChange}
+            />
           </li>
-          <Checkbox
-            name="brand"
-            value={value.brand}
-            label="Apple"
-            onChange={onChange}
-          />
         </ul>
       </div>
     </aside>

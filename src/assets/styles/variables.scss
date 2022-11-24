@@ -1,4 +1,7 @@
 $primary-color: #313235;
+$secondary-color: #7315e5;
+$secondary-transparent: #aa64ff61;
+$accent-color: #ffd039;
 $white: white;
 $dimmed-black: #1d252c;
 $darker-gray: #4a4a4a;
@@ -6,7 +9,6 @@ $dark-gray: #636363;
 $light-gray: #c7c7c7;
 $dimmed-white: #dddddd;
 $link-color: #1a5888;
-$buy-button: #7315e5;
 $danger: #bb0628;
 $temp: #a0a0a0;
 $width-container: 1440px;
@@ -15,4 +17,12 @@ $width-container: 1440px;
   margin: 0 auto;
   max-width: 1340px;
   min-width: 990px;
+}
+
+@mixin badge($color) {
+  border-radius: 5px;
+  font-size: 12px;
+  padding: 4px 8px;
+  background-color: $color;
+  white-space: nowrap;
 }

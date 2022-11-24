@@ -38,13 +38,28 @@
 
 .info {
   padding: 30px 20px;
-  flex-basis: 50%;
+  flex-basis: 40%;
 }
 
 .title {
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   font-size: 24px;
+}
+
+.reviews {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.benefits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.badge {
+  @include badge($accent-color);
 }
 
 .features {
@@ -53,6 +68,13 @@
   gap: 5px;
   font-size: 12px;
   white-space: 5px;
+}
+
+.features__title {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: 14px;
 }
 
 .feature {
@@ -72,6 +94,7 @@
   gap: 10px;
   color: $darker-gray;
   font-weight: 600;
+  font-size: 24px;
 }
 
 .price_new {
@@ -91,7 +114,7 @@
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  background-color: $buy-button;
+  background-color: $secondary-color;
   color: $white;
 }
 .btn__icon {
@@ -100,8 +123,13 @@
 }
 
 .bookmark {
+  height: 40px;
+  width: 100%;
+  max-width: 350px;
   font-size: 16px;
   background: none;
-  border: none;
+  border: 1px solid $light-gray;
+  border-radius: 5px;
   cursor: pointer;
+  padding: 5px 10px;
 }

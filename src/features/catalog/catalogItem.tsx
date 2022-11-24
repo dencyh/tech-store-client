@@ -3,13 +3,10 @@ import { Link, useParams } from "react-router-dom";
 
 import styles from "./catalog.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faStar } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { Product } from "../../types/products/core.product";
-
-function formatPrice(price: number) {
-  return Intl.NumberFormat("ru-RU").format(price);
-}
+import { formatPrice } from "../../utils/formatPrice";
 
 function showKeyFeatures(product: Product) {
   switch (product.type) {
@@ -28,6 +25,7 @@ function showKeyFeatures(product: Product) {
       return (
         <ul className={styles.features}>
           <li className={styles.feature}>
+            <span>Экран:</span>
             <span>{screenSize}&quot;</span>
             <span>
               {resolution[0]}x{resolution[1]}
@@ -35,16 +33,19 @@ function showKeyFeatures(product: Product) {
             <span>{refreshRate}HZ</span>
           </li>
           <li className={styles.feature}>
+            <span>Процессор:</span>
             <span>{cpu}</span>
             <span>{cpuCores} CPU Cores</span>
           </li>
           <li className={styles.feature}>
+            <span>Память:</span>
             <span>{ram} GB RAM</span>
             <span>
               {capacity < 999 ? capacity + "GB" : capacity / 1000 + "TB"} SSD
             </span>
           </li>
           <li className={styles.feature}>
+            <span>Видеокарта:</span>
             <span>{gpu}</span>
           </li>
         </ul>
@@ -80,14 +81,27 @@ const ProductListItem: React.FC<Props> = ({ product }) => {
             {product.name}
           </Link>
         </h3>
-        <div>{showKeyFeatures(product)}</div>
+        <p className={styles.reviews}>
+          <span>
+            <FontAwesomeIcon icon={faStar} />
+            4.9
+          </span>{" "}
+          <span>20 отзывов</span>{" "}
+        </p>
+        {/* <p className={styles.features__title}>Характеристики</p> */}
+        {showKeyFeatures(product)}
+        <div className={styles.benefits}>
+          <span className={styles.badge}>Бонусы</span>
+          <span className={styles.badge}>Бесплатная доставка</span>
+          <span className={styles.badge}>Доставка завтра</span>
+        </div>
       </div>
 
       <div className={styles.pricebox}>
         <div className={styles.price}>
-          <p className={styles.price_new}>{formatPrice(product.price)} ₽</p>
+          <p className={styles.price_new}>{formatPrice(product.price)}</p>
           <p className={styles.price_old}>
-            {formatPrice(product.price + 10000)} ₽
+            {formatPrice(product.price + 10000)}
           </p>
         </div>
         <button className={styles.btn}>
@@ -102,6 +116,10 @@ const ProductListItem: React.FC<Props> = ({ product }) => {
           </span>
           Добавить в израбнное
         </button>
+        <div>
+          <p>В наличии</p>
+          <p>Доставка 5-7 дней</p>
+        </div>
       </div>
     </div>
   );
