@@ -1,14 +1,11 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import Filters from "../features/filters";
-import Products from "../features/products";
-import ProductList from "../features/products/productList";
+import Product from "../features/products/product";
 import Layout from "./layout";
 
 const ProductPage = () => {
   return (
     <Layout>
-      <Products />
+      <Product />
     </Layout>
   );
 };

@@ -1,10 +1,10 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import ProductListItem from "./productListItem";
-import { useGetCategoryProductsQuery } from "./productsSlice";
-import styles from "./products.module.scss";
+import { useGetCategoryProductsQuery } from "../api/apiSlice";
+import CatalogItem from "./catalogItem";
+import styles from "./catalog.module.scss";
 
-const ProductList = () => {
+const CatalogList = () => {
   const { category } = useParams();
   const {
     data: products,
@@ -20,7 +20,7 @@ const ProductList = () => {
     content = (
       <>
         {products.map((product: any) => (
-          <ProductListItem key={product._id} product={product} />
+          <CatalogItem key={product._id} product={product} />
         ))}
       </>
     );
@@ -29,4 +29,4 @@ const ProductList = () => {
   return <div className={styles.list}>{content}</div>;
 };
 
-export default ProductList;
+export default CatalogList;

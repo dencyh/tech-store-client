@@ -1,12 +1,11 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import { Product } from "../../types/products/core.product";
-import { Laptop } from "../../types/products/laptop";
-import { Smartphone } from "../../types/products/smartphone";
-import styles from "./products.module.scss";
+
+import styles from "./catalog.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
+import { Product } from "../../types/products/core.product";
 
 function formatPrice(price: number) {
   return Intl.NumberFormat("ru-RU").format(price);
@@ -60,9 +59,15 @@ interface Props {
 
 const ProductListItem: React.FC<Props> = ({ product }) => {
   const image = product.imagePaths ? product.imagePaths[0] : "";
+
   const url = process.env.REACT_APP_API_URL + "/" + image;
-  const { category } = useParams();
-  const productLink = "/" + category + "/" + product._id;
+
+  const productLink =
+    "/products" +
+    "/" +
+    product.name.toLowerCase().split(" ").join("-") +
+    "/" +
+    product._id;
 
   return (
     <div className={styles.item}>
