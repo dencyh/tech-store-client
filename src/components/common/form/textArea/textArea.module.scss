@@ -18,7 +18,11 @@
   @include label-focus($light-blue);
 }
 
-.input:not([value=""]):not(:focus) + .label {
+// .input:not([value=""]):not(:focus) + .label {
+//   @include label-focus($white);
+// }
+
+.input:not(:focus):not(:empty) + .label {
   @include label-focus($white);
 }
 

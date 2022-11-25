@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styles from "./textInput.module.scss";
+import styles from "./textArea.module.scss";
 
 interface Props
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+  extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "onChange"> {
   label?: string;
   type?: string;
   name: string;
@@ -12,7 +12,7 @@ interface Props
   error?: string;
 }
 
-const TextInput: React.FC<Props> = ({
+const TextArea: React.FC<Props> = ({
   label,
   type = "text",
   name,
@@ -23,19 +23,16 @@ const TextInput: React.FC<Props> = ({
 }) => {
   return (
     <div className={styles.container}>
-      <input
-        type={type}
+      <textarea
         name={name}
         id={name}
         onChange={(e) => onChange({ name, value: e.target.value })}
         value={value}
-        className={`${styles.input} ${error ? styles.input_invalid : ""}`}
+        className={styles.input}
+        rows={rest.rows ? rest.rows : 3}
         {...rest}
       />
-      <label
-        htmlFor={name}
-        className={`${styles.label}  ${error ? styles.label_invalid : ""}`}
-      >
+      <label htmlFor={name} className={styles.label}>
         {label}
       </label>
       {error && <div>{error}</div>}
@@ -43,4 +40,4 @@ const TextInput: React.FC<Props> = ({
   );
 };
 
-export default TextInput;
+export default TextArea;

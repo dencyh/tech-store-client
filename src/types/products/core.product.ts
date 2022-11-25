@@ -17,12 +17,15 @@ type ProductColor =
 
 export type Biometrics = "faceId" | "touchId";
 
+export type ProductType = "smartphones" | "laptops";
+
 export interface CoreProduct {
   _id: string;
   name: string;
   price: number;
   brandName: string;
   color: ProductColor;
+  description: string;
   // rating: Rating;
   releaseDate: number;
   imagePaths?: string[];
