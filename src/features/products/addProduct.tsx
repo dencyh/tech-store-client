@@ -9,25 +9,30 @@ import { translate } from "../../utils/translate";
 import styles from "./product.module.scss";
 import _ from "lodash";
 
+function isKey<T>(x: T, k: PropertyKey): k is keyof T {
+  return k in x;
+}
+
 const initState = {
-  type: "",
   name: "",
   brandName: "",
   color: "",
   price: "",
   releaseDate: "",
-  description: "",
   os: "",
   screenSize: "",
-  resolutionX: "",
-  resolutionY: "",
+  resolution: {
+    resolutionX: "",
+    resolutionY: ""
+  },
   refreshRate: "",
   cpu: "",
   ram: "",
   capacity: "",
   batteryLife: "",
   cpuCores: "",
-  gpu: ""
+  gpu: "",
+  description: ""
 };
 
 const AddProduct = () => {
@@ -35,7 +40,15 @@ const AddProduct = () => {
   const [values, setValues] = useState(initState);
 
   const handleChange = ({ name, value }: { name: string; value: string }) => {
-    setValues((prev) => ({ ...prev, [name]: value }));
+    if (name.startsWith("resolution")) {
+      setValues((prev) =>
+        isKey(prev.resolution, name)
+          ? { ...prev, resolution: { ...prev.resolution, [name]: value } }
+          : prev
+      );
+    } else {
+      setValues((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,8 +66,7 @@ const AddProduct = () => {
     const {
       screenSize,
       refreshRate,
-      resolutionX,
-      resolutionY,
+      resolution,
       ram,
       capacity,
       batteryLife,
@@ -73,7 +85,7 @@ const AddProduct = () => {
       specs: {
         screenSize: Number.parseFloat(screenSize),
         refreshRate: Number(refreshRate),
-        resolution: [Number(resolutionX), Number(resolutionY)],
+        resolution: Object.values(resolution).map((item) => Number(item)),
         ram: Number(ram),
         capacity: Number(capacity),
         batteryLife: Number(batteryLife),
@@ -84,32 +96,53 @@ const AddProduct = () => {
   };
   return (
     <Layout>
-      <h3 style={{ marginBottom: "20px" }}>{translate(category)}</h3>
+      <h3 className={styles.title}>{translate(category)}</h3>
       <form className={styles.form} onSubmit={handleSubmit}>
-        {Object.keys(initState).map((key) => {
-          return key === "description" ? (
-            <div style={{ minWidth: "400px" }}>
-              <TextArea
-                key={key}
-                label={key}
-                name={key}
-                rows={5}
-                value={values[key as keyof typeof initState]}
-                onChange={handleChange}
-              />
-            </div>
-          ) : (
-            <div style={{ minWidth: "400px" }}>
-              <TextInput
-                key={key}
-                label={key}
-                name={key}
-                value={values[key as keyof typeof initState]}
-                onChange={handleChange}
-              />
-            </div>
-          );
-        })}
+        <div className={styles.grid}>
+          {Object.keys(initState).map((key) => {
+            if (key === "resolution") {
+              return (
+                <div key={key} className={styles.resolution}>
+                  <TextInput
+                    key={"resolutionX"}
+                    label={key}
+                    name={"resolutionX"}
+                    value={values["resolution"]["resolutionX"]}
+                    onChange={handleChange}
+                  />
+                  <span>X</span>
+                  <TextInput
+                    key={"resolutionY"}
+                    label={key}
+                    name={"resolutionY"}
+                    value={values["resolution"]["resolutionY"]}
+                    onChange={handleChange}
+                  />
+                </div>
+              );
+            } else {
+              return (
+                key !== "description" && (
+                  <TextInput
+                    key={key}
+                    label={key}
+                    name={key}
+                    value={values[key as keyof typeof initState] as string}
+                    onChange={handleChange}
+                  />
+                )
+              );
+            }
+          })}
+        </div>
+
+        <TextArea
+          label={"Описание"}
+          name={"description"}
+          rows={5}
+          value={values.description}
+          onChange={handleChange}
+        />
         <button className={styles.btn}>Создать</button>
       </form>
     </Layout>
