@@ -2,8 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./textInput.module.scss";
 
-interface Props {
-  label: string;
+interface Props
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+  label?: string;
   type?: string;
   name: string;
   value: string;
@@ -17,11 +18,11 @@ const TextInput: React.FC<Props> = ({
   name,
   value,
   onChange,
-  error = ""
+  error = "",
+  ...rest
 }) => {
   return (
-    <div>
-      <label htmlFor={name}>{label}</label>
+    <div className={styles.container}>
       <input
         type={type}
         name={name}
@@ -29,7 +30,12 @@ const TextInput: React.FC<Props> = ({
         onChange={(e) => onChange({ name, value: e.target.value })}
         value={value}
         className={styles.input}
+        required
+        {...rest}
       />
+      <label htmlFor={name} className={styles.label}>
+        {label}
+      </label>
       {error && <div>{error}</div>}
     </div>
   );

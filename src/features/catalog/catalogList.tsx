@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetCategoryProductsQuery } from "../api/apiSlice";
 import CatalogItem from "./catalogItem";
 import styles from "./catalog.module.scss";
@@ -19,6 +19,12 @@ const CatalogList = () => {
   } else if (isSuccess) {
     content = (
       <>
+        <Link
+          to={`/${category}/new`}
+          className={`${styles.btn} ${styles.new__link}`}
+        >
+          Добавить продукт
+        </Link>
         {products.map((product: any) => (
           <CatalogItem key={product._id} product={product} />
         ))}

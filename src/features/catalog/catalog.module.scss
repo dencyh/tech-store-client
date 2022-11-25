@@ -116,7 +116,16 @@
   border-radius: 5px;
   background-color: $secondary-color;
   color: $white;
+  display: block;
 }
+
+.new__link {
+  width: 250px;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .btn__icon {
   margin-right: 14px;
   font-size: 14px;
