@@ -1,4 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { method } from "lodash";
+import { Product } from "../../types/products/core.product";
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -15,6 +17,16 @@ export const apiSlice = createApi({
     }),
     getProduct: builder.query({
       query: (id) => `/products/${id}`
+    }),
+    uploadImages: builder.mutation<Product, { id: string; images: FormData }>({
+      query: ({ id, images }) => ({
+        url: `/products/${id}`,
+        method: "PATCH",
+        // headers: {
+        //   "content-type": "multipart/form-data"
+        // },
+        body: images
+      })
     })
   })
 });
@@ -22,5 +34,6 @@ export const apiSlice = createApi({
 export const {
   useGetCategoriesQuery,
   useGetCategoryProductsQuery,
-  useGetProductQuery
+  useGetProductQuery,
+  useUploadImagesMutation
 } = apiSlice;

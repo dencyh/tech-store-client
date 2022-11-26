@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import TextArea from "../../components/common/form/textArea/textArea";
 import TextInput from "../../components/common/form/textInput/textInput";
+import DND from "../../components/ui/dnd/dnd";
 import Layout from "../../pages/layout";
-import { CreateProductInput } from "../../schemas/products/core.product.schema";
-import { Product } from "../../types/products/core.product";
 import { translate } from "../../utils/translate";
 import styles from "./product.module.scss";
-import _ from "lodash";
 
 function isKey<T>(x: T, k: PropertyKey): k is keyof T {
   return k in x;
@@ -41,11 +39,10 @@ const AddProduct = () => {
 
   const handleChange = ({ name, value }: { name: string; value: string }) => {
     if (name.startsWith("resolution")) {
-      setValues((prev) =>
-        isKey(prev.resolution, name)
-          ? { ...prev, resolution: { ...prev.resolution, [name]: value } }
-          : prev
-      );
+      setValues((prev) => ({
+        ...prev,
+        resolution: { ...prev.resolution, [name]: value }
+      }));
     } else {
       setValues((prev) => ({ ...prev, [name]: value }));
     }
@@ -94,10 +91,13 @@ const AddProduct = () => {
     };
     console.log(result);
   };
+
   return (
     <Layout>
-      <h3 className={styles.title}>{translate(category)}</h3>
       <form className={styles.form} onSubmit={handleSubmit}>
+        <h3 className={styles.title} style={{ marginBottom: "20px" }}>
+          {translate(category)}
+        </h3>
         <div className={styles.grid}>
           {Object.keys(initState).map((key) => {
             if (key === "resolution") {
@@ -105,7 +105,7 @@ const AddProduct = () => {
                 <div key={key} className={styles.resolution}>
                   <TextInput
                     key={"resolutionX"}
-                    label={key}
+                    label={"W"}
                     name={"resolutionX"}
                     value={values["resolution"]["resolutionX"]}
                     onChange={handleChange}
@@ -113,7 +113,7 @@ const AddProduct = () => {
                   <span>X</span>
                   <TextInput
                     key={"resolutionY"}
-                    label={key}
+                    label={"H"}
                     name={"resolutionY"}
                     value={values["resolution"]["resolutionY"]}
                     onChange={handleChange}
@@ -143,8 +143,12 @@ const AddProduct = () => {
           value={values.description}
           onChange={handleChange}
         />
-        <button className={styles.btn}>Создать</button>
+        <button className={styles.btn}>Сохранить</button>
       </form>
+
+      {/* <form className={styles.form}> */}
+      <DND />
+      {/* </form> */}
     </Layout>
   );
 };
