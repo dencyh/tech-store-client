@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { method } from "lodash";
+import { Category } from "../../types/category";
 import { Product } from "../../types/products/core.product";
 
 export const apiSlice = createApi({
@@ -9,22 +10,19 @@ export const apiSlice = createApi({
   }),
   tagTypes: ["Category", "Product"],
   endpoints: (builder) => ({
-    getCategories: builder.query({
+    getCategories: builder.query<Category[], void>({
       query: () => "/categories"
     }),
-    getCategoryProducts: builder.query({
+    getCategoryProducts: builder.query<Product[], string>({
       query: (category) => `/products?type=${category}`
     }),
-    getProduct: builder.query({
+    getProduct: builder.query<Product, string>({
       query: (id) => `/products/${id}`
     }),
     uploadImages: builder.mutation<Product, { id: string; images: FormData }>({
       query: ({ id, images }) => ({
         url: `/products/${id}`,
         method: "PATCH",
-        // headers: {
-        //   "content-type": "multipart/form-data"
-        // },
         body: images
       })
     })

@@ -28,7 +28,7 @@ export interface CoreProduct {
   description: string;
   // rating: Rating;
   releaseDate: number;
-  imagePaths?: string[];
+  imagePaths: string[];
 }
 
 export type Product = Smartphone | Laptop;

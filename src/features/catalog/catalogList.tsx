@@ -6,6 +6,8 @@ import styles from "./catalog.module.scss";
 
 const CatalogList = () => {
   const { category } = useParams();
+  if (!category) return null;
+
   const {
     data: products,
     isLoading,

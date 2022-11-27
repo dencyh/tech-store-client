@@ -5,16 +5,24 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import CardCheckbox from "../../components/common/form/cardCheckbox/cardCheckbox";
 import { Spinner } from "../../components/ui/spinner/spinner";
+import NotFound from "../../pages/404";
 import { formatPrice } from "../../utils/formatPrice";
 import { useGetProductQuery } from "../api/apiSlice";
 import styles from "./product.module.scss";
 
 const Product = () => {
   const { id } = useParams();
+  if (!id) return null;
+
   const [values, setValues] = useState({
     color: ""
   });
-  const { data: product, isLoading, isSuccess } = useGetProductQuery(id);
+  const {
+    data: product,
+    isLoading,
+    isSuccess,
+    isError
+  } = useGetProductQuery(id);
 
   const handleChange = ({ name, value }: { name: string; value: string }) => {
     setValues((prev) => ({ ...prev, [name]: value }));
