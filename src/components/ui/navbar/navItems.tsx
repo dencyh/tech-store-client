@@ -10,10 +10,10 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const menuItems = [
-  { text: "Заказы", to: "orders", icon: faCube },
-  { text: "Профиль", to: "profile", icon: faUser },
-  { text: "Избранное", to: "bookmarks", icon: faHeart },
-  { text: "Корзина", to: "cart", icon: faCartShopping }
+  { text: "Заказы", to: "/orders", icon: faCube },
+  { text: "Профиль", to: "/profile", icon: faUser },
+  { text: "Избранное", to: "/bookmarks", icon: faHeart },
+  { text: "Корзина", to: "/cart", icon: faCartShopping }
 ];
 
 const NavItems = () => {

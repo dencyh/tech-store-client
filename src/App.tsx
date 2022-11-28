@@ -5,14 +5,16 @@ import Home from "./pages/homePage";
 import ProductPage from "./pages/productPage";
 import CatalogPage from "./pages/catalogPage";
 import AddProduct from "./features/products/addProduct";
+import Cart from "./features/cart/cart";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/products/:productName/:id" element={<ProductPage />} />
-      <Route path="/:category" element={<CatalogPage />} />
-      <Route path="/:category/new" element={<AddProduct />} />
+      <Route path="products/:productName/:id" element={<ProductPage />} />
+      <Route path="catalog/:category" element={<CatalogPage />} />
+      <Route path="catalog/:category/new" element={<AddProduct />} />
+      <Route path="cart" element={<Cart />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

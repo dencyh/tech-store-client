@@ -11,7 +11,7 @@ export const CategoryCard: React.FC<Props> = ({ category }) => {
   const url = process.env.REACT_APP_API_URL + "/" + category.image;
 
   return (
-    <Link to={`/${category.type}`} className={styles.card}>
+    <Link to={`catalog/${category.type}`} className={styles.card}>
       <h3 className={styles.card__title}>{category.name}</h3>
       <div className={styles.card__img}>
         <img src={url} alt={category.name} />

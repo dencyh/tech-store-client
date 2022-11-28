@@ -32,12 +32,14 @@ const TextInput: React.FC<Props> = ({
         className={`${styles.input} ${error ? styles.input_invalid : ""}`}
         {...rest}
       />
-      <label
-        htmlFor={name}
-        className={`${styles.label}  ${error ? styles.label_invalid : ""}`}
-      >
-        {label}
-      </label>
+      {label && (
+        <label
+          htmlFor={name}
+          className={`${styles.label}  ${error ? styles.label_invalid : ""}`}
+        >
+          {label}
+        </label>
+      )}
       {error && <div>{error}</div>}
     </div>
   );

@@ -22,7 +22,7 @@ const CatalogList = () => {
     content = (
       <>
         <Link
-          to={`/${category}/new`}
+          to={`/catalog/${category}/new`}
           className={`${styles.btn} ${styles.new__link}`}
         >
           Добавить продукт
