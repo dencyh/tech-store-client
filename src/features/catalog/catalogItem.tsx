@@ -7,6 +7,8 @@ import { faCartShopping, faStar } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { Product } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";
+import { useAppDispatch } from "../../redux/hooks";
+import { productIncrement } from "../cart/cartSlice";
 
 function showKeyFeatures(product: Product) {
   switch (product.type) {
@@ -59,6 +61,8 @@ interface Props {
 }
 
 const ProductListItem: React.FC<Props> = ({ product }) => {
+  const dispatch = useAppDispatch();
+
   const image = product.imagePaths ? product.imagePaths[0] : "";
 
   const url = process.env.REACT_APP_API_URL + "/" + image;
@@ -104,13 +108,21 @@ const ProductListItem: React.FC<Props> = ({ product }) => {
             {formatPrice(product.price + 10000)}
           </p>
         </div>
-        <button className={styles.btn}>
+        <button
+          className={styles.btn}
+          onClick={(e) =>
+            dispatch(productIncrement({ _id: product._id, quantity: 1 }))
+          }
+        >
           <span className={styles.btn__icon}>
             <FontAwesomeIcon icon={faCartShopping} />
           </span>
           <span>В корзину</span>
         </button>
-        <button className={styles.bookmark}>
+        <button
+          className={styles.bookmark}
+          onClick={(e) => console.log("add bookmark")}
+        >
           <span className={styles.btn__icon}>
             <FontAwesomeIcon icon={faBookmark} />
           </span>

@@ -18,6 +18,7 @@
 }
 
 .list__item {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -27,4 +28,30 @@
   &:hover {
     color: $dimmed-white;
   }
+  &:hover > .cart_count {
+    filter: brightness(90%);
+  }
+}
+
+.cart_count {
+  position: absolute;
+  top: -12px;
+  left: 30px;
+  padding: 0px 2px;
+  // width: 20px;
+  // height: 20px;
+  text-align: center;
+  min-width: 20px;
+  // display: flex;
+
+  color: $dimmed-black;
+  background-color: $accent-color;
+
+  border-radius: 50px;
+  border: 1px solid $dimmed-black;
+  box-shadow: 0 0 8px black;
+  white-space: nowrap;
+
+  font-size: 12px;
+  font-weight: 700;
 }
