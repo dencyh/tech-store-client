@@ -8,7 +8,7 @@ import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { Product } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";
 import { useAppDispatch } from "../../redux/hooks";
-import { productIncrement } from "../cart/cartSlice";
+import { productDecrement, productIncrement } from "../cart/cartSlice";
 
 function showKeyFeatures(product: Product) {
   switch (product.type) {
@@ -114,14 +114,26 @@ const ProductListItem: React.FC<Props> = ({ product }) => {
             dispatch(productIncrement({ _id: product._id, quantity: 1 }))
           }
         >
-          <span className={styles.btn__icon}>
-            <FontAwesomeIcon icon={faCartShopping} />
-          </span>
-          <span>В корзину</span>
+          {true ? (
+            <>
+              <span className={styles.btn__icon}>
+                <FontAwesomeIcon icon={faCartShopping} />
+              </span>
+              <span>В корзину</span>
+            </>
+          ) : (
+            <>
+              <span>−</span>
+              <span>1</span>
+              <span>+</span>
+            </>
+          )}
         </button>
         <button
           className={styles.bookmark}
-          onClick={(e) => console.log("add bookmark")}
+          onClick={(e) =>
+            dispatch(productDecrement({ _id: product._id, quantity: 1 }))
+          }
         >
           <span className={styles.btn__icon}>
             <FontAwesomeIcon icon={faBookmark} />

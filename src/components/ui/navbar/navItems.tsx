@@ -9,7 +9,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAppSelector } from "../../../redux/hooks";
-import { selectCartQuantity } from "../../../features/cart/cartSlice";
+import {
+  selectAllProducts,
+  selectCartQuantity
+} from "../../../features/cart/cartSlice";
 
 const menuItems = [
   { text: "Корзина", to: "/cart", icon: faCartShopping },
@@ -19,7 +22,9 @@ const menuItems = [
 ];
 
 const NavItems = () => {
-  const quantity = useAppSelector((state) => selectCartQuantity(state));
+  const quantity = useAppSelector(selectCartQuantity);
+  const all = useAppSelector(selectAllProducts);
+  console.log(all);
 
   return (
     <ul className={styles.list}>
