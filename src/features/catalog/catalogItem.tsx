@@ -7,8 +7,13 @@ import { faCartShopping, faStar } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { Product } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";
-import { useAppDispatch } from "../../redux/hooks";
-import { productDecrement, productIncrement } from "../cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import {
+  productDecrement,
+  productIncrement,
+  selectAllProducts
+} from "../cart/cartSlice";
+import { useUpdateCartMutation } from "../api/apiSlice";
 
 function showKeyFeatures(product: Product) {
   switch (product.type) {
@@ -60,8 +65,14 @@ interface Props {
   product: Product;
 }
 
-const ProductListItem: React.FC<Props> = ({ product }) => {
+const CatalogItem: React.FC<Props> = ({ product }) => {
   const dispatch = useAppDispatch();
+  const decrement = () =>
+    dispatch(productDecrement({ productId: product._id, quantity: 1 }));
+
+  const [updateCart, { isLoading, isError, isSuccess }] =
+    useUpdateCartMutation();
+  const productsInCart = useAppSelector(selectAllProducts);
 
   const image = product.imagePaths ? product.imagePaths[0] : "";
 
@@ -92,7 +103,6 @@ const ProductListItem: React.FC<Props> = ({ product }) => {
           </span>{" "}
           <span>20 отзывов</span>{" "}
         </p>
-        {/* <p className={styles.features__title}>Характеристики</p> */}
         {showKeyFeatures(product)}
         <div className={styles.benefits}>
           <span className={styles.badge}>Бонусы</span>
@@ -110,9 +120,9 @@ const ProductListItem: React.FC<Props> = ({ product }) => {
         </div>
         <button
           className={styles.btn}
-          onClick={(e) =>
-            dispatch(productIncrement({ _id: product._id, quantity: 1 }))
-          }
+          onClick={(e) => {
+            dispatch(productIncrement({ productId: product._id, quantity: 1 }));
+          }}
         >
           {true ? (
             <>
@@ -131,9 +141,12 @@ const ProductListItem: React.FC<Props> = ({ product }) => {
         </button>
         <button
           className={styles.bookmark}
-          onClick={(e) =>
-            dispatch(productDecrement({ _id: product._id, quantity: 1 }))
-          }
+          onClick={(e) => {
+            updateCart({
+              userId: "638616786d4b8695193f2c41",
+              productsInCart: productsInCart
+            });
+          }}
         >
           <span className={styles.btn__icon}>
             <FontAwesomeIcon icon={faBookmark} />
@@ -149,4 +162,4 @@ const ProductListItem: React.FC<Props> = ({ product }) => {
   );
 };
 
-export default ProductListItem;
+export default CatalogItem;

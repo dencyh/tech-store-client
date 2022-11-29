@@ -1,7 +1,9 @@
+import { ProductInCart } from "./../cart/cartSlice";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { method } from "lodash";
 import { Category } from "../../types/category";
 import { Product } from "../../types/products/core.product";
+import { Cart } from "../../types/cart";
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -25,6 +27,16 @@ export const apiSlice = createApi({
         method: "PATCH",
         body: images
       })
+    }),
+    updateCart: builder.mutation<
+      Cart,
+      { userId: string; productsInCart: ProductInCart[] }
+    >({
+      query: ({ userId, productsInCart }) => ({
+        url: `/cart/${userId}`,
+        method: "PUT",
+        body: productsInCart
+      })
     })
   })
 });
@@ -33,5 +45,6 @@ export const {
   useGetCategoriesQuery,
   useGetCategoryProductsQuery,
   useGetProductQuery,
-  useUploadImagesMutation
+  useUploadImagesMutation,
+  useUpdateCartMutation
 } = apiSlice;

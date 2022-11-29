@@ -6,17 +6,13 @@ import {
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../redux/store";
 
-interface ProductInCart {
-  _id: string;
+export interface ProductInCart {
+  productId: string;
   quantity: number;
 }
 
-interface CartState {
-  products: ProductInCart[];
-}
-
 const cartAdapter = createEntityAdapter<ProductInCart>({
-  selectId: (product) => product._id
+  selectId: (product) => product.productId
 });
 
 const initialState = cartAdapter.getInitialState();
@@ -26,7 +22,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     productIncrement(state, action: PayloadAction<ProductInCart>) {
-      const { _id: productId, quantity } = action.payload;
+      const { productId: productId, quantity } = action.payload;
       const isAdded = state.entities[productId];
 
       if (!!isAdded) {
@@ -36,11 +32,11 @@ const cartSlice = createSlice({
       }
     },
     productDecrement(state, action: PayloadAction<ProductInCart>) {
-      const { _id: productId, quantity } = action.payload;
+      const { productId: productId, quantity } = action.payload;
       const isAdded = state.entities[productId];
 
       if (isAdded?.quantity === 1) {
-        cartAdapter.removeOne(state, isAdded._id);
+        cartAdapter.removeOne(state, isAdded.productId);
       } else if (!!isAdded) {
         isAdded.quantity -= 1;
       }
