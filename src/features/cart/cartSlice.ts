@@ -58,3 +58,4 @@ export const selectCartQuantity = createSelector(
   [selectAllProducts],
   (products) => products.reduce((acc, product) => acc + product.quantity, 0)
 );
+

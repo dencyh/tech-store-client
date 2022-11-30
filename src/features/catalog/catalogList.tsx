@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useGetCategoryProductsQuery } from "../api/apiSlice";
+import {
+  TEST_USER_ID,
+  useGetCartQuery,
+  useGetCategoryProductsQuery
+} from "../api/apiSlice";
 import CatalogItem from "./catalogItem";
 import styles from "./catalog.module.scss";
+import { Product } from "../../types/products/core.product";
+import { Cart } from "../../types/cart";
 
 const CatalogList = () => {
   const { category } = useParams();
@@ -10,13 +16,30 @@ const CatalogList = () => {
 
   const {
     data: products,
-    isLoading,
+    isLoading: productsLoading,
     isSuccess
   } = useGetCategoryProductsQuery(category);
 
+  const { data: cart, isLoading: cartLoading } = useGetCartQuery({
+    userId: TEST_USER_ID
+  });
+
+  const productsWithQuantity = useMemo(
+    () =>
+      products?.map((product) => {
+        const productAdded = cart?.productsInCart.find(
+          (inCart) => inCart.productId === product._id
+        );
+        return productAdded
+          ? { ...product, quantity: productAdded.quantity }
+          : { ...product, quantity: 0 };
+      }),
+    [cart, products]
+  );
+
   let content;
 
-  if (isLoading) {
+  if (productsLoading || cartLoading || !productsWithQuantity) {
     content = <>Loading...</>;
   } else if (isSuccess) {
     content = (
@@ -27,7 +50,7 @@ const CatalogList = () => {
         >
           Добавить продукт
         </Link>
-        {products.map((product: any) => (
+        {productsWithQuantity.map((product) => (
           <CatalogItem key={product._id} product={product} />
         ))}
       </>
