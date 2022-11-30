@@ -1,23 +1,28 @@
 import { faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { Link } from "react-router-dom";
+import { Product } from "../../types/products/core.product";
+import { formatPrice } from "../../utils/formatPrice";
 import styles from "./cart.module.scss";
 
-interface Props {}
-const CartItem: React.FC<Props> = () => {
+interface Props {
+  product: Product;
+}
+
+const CartItem: React.FC<Props> = ({ product }) => {
+  const imgUrl = process.env.REACT_APP_API_URL + "/" + product.imagePaths[0];
+
   return (
     <li className={styles.list__item}>
       <div className={styles.img}>
-        <img
-          src="http://localhost:8080/static/product/f060faad-64fc-4f6c-9fe8-7c16a452eb84.png"
-          alt=""
-        />
+        <img src={imgUrl} alt={product.name} />
       </div>
       <div className={styles.info__container}>
         <div>
-          <h3 className={styles.product__title}>
-            Apple 16.2&quot; MacBook Pro with M1 Max Chip
-          </h3>
+          <Link className={styles.link} to="/">
+            <h3 className={styles.product__title}>{product.name}</h3>
+          </Link>
           <p className={styles.availability}>В наличии</p>
           <div className={styles.product__controls}>
             <button className={styles.product__btn}>
@@ -43,7 +48,7 @@ const CartItem: React.FC<Props> = () => {
               <div>{1}</div>
               <button className={styles.quantity__btn}>+</button>
             </div>
-            <p className={styles.price__signle}>120 000 Р</p>
+            <p className={styles.price__signle}>{formatPrice(product.price)}</p>
           </div>
           <div className={styles.product__total}>
             <p>Итог:</p>

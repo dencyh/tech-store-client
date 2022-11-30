@@ -4,6 +4,7 @@ import { method } from "lodash";
 import { Category } from "../../types/category";
 import { Product } from "../../types/products/core.product";
 import { Cart } from "../../types/cart";
+import { toast } from "react-toastify";
 
 export const TEST_USER_ID = "638616786d4b8695193f2c41";
 
@@ -34,6 +35,17 @@ export const apiSlice = createApi({
       query: ({ userId }) => `/cart/${userId}`,
       providesTags: ["Cart"]
     }),
+    getCartProducts: builder.query<
+      Product[],
+      { userId: string; ids: string[] }
+    >({
+      query: ({ userId, ids }) => ({
+        url: `/cart/${userId}/products`,
+        method: "POST",
+        body: { ids }
+      }),
+      providesTags: ["Cart"]
+    }),
     updateCart: builder.mutation<
       Cart,
       { userId: string; productsInCart: ProductInCart[] }
@@ -41,8 +53,24 @@ export const apiSlice = createApi({
       query: ({ userId, productsInCart }) => ({
         url: `/cart/${userId}`,
         method: "PUT",
-        body: productsInCart
+        body: { productsInCart }
       }),
+      async onQueryStarted(
+        { userId, productsInCart },
+        { dispatch, queryFulfilled }
+      ) {
+        const patchResult = dispatch(
+          apiSlice.util.updateQueryData("getCart", { userId }, (draft) => {
+            draft.productsInCart = productsInCart;
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          toast.error("Не удалось обновить корзину. Попробуйте позже");
+          patchResult.undo();
+        }
+      },
       invalidatesTags: ["Cart"]
     })
   })
@@ -54,5 +82,6 @@ export const {
   useGetProductQuery,
   useUploadImagesMutation,
   useGetCartQuery,
+  useGetCartProductsQuery,
   useUpdateCartMutation
 } = apiSlice;

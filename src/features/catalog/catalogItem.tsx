@@ -5,7 +5,7 @@ import styles from "./catalog.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faStar } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
-import { Product } from "../../types/products/core.product";
+import { Product, ProductInCart } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
@@ -22,7 +22,7 @@ import QuantityButton from "../../components/ui/quantityButton/quantityButton";
 import KeyFeatures from "./keyFeatures";
 
 interface Props {
-  product: Product & { quantity: number };
+  product: ProductInCart;
 }
 
 const CatalogItem: React.FC<Props> = ({ product }) => {
