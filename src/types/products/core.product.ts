@@ -32,5 +32,3 @@ export interface CoreProduct {
 }
 
 export type Product = Smartphone | Laptop;
-
-export type ProductInCart = Product & { quantity: number };

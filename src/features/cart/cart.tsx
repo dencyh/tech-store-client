@@ -1,7 +1,7 @@
 import { faBan, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import TextInput from "../../components/common/form/textInput/textInput";
 import Layout from "../../pages/layout";
 import styles from "./cart.module.scss";
@@ -17,20 +17,15 @@ interface Props {}
 
 const Cart: React.FC<Props> = () => {
   const { data: cart } = useGetCartQuery({ userId: TEST_USER_ID });
-  const { data: products } = useGetCartProductsQuery({
-    userId: TEST_USER_ID,
-    ids: cart?.productsInCart.map((item) => item.productId) || []
-  });
-  console.log(products);
 
-  if (!products) return <div>Loading...</div>;
+  if (!cart?.productsInCart) return <div>Loading...</div>;
   return (
     <Layout>
       <div className={styles.container}>
         <div className={styles.products}>
           <ul className={styles.products__list}>
-            {products.map((product) => (
-              <CartItem key={product._id} product={product} />
+            {cart.productsInCart.map((product) => (
+              <CartItem key={product.productId} productInCart={product} />
             ))}
           </ul>
         </div>

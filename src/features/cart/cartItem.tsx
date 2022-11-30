@@ -4,15 +4,22 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Product } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";
+import { useGetProductQuery } from "../api/apiSlice";
 import styles from "./cart.module.scss";
+import { ProductInCart } from "./cartSlice";
 
 interface Props {
-  product: Product;
+  productInCart: ProductInCart;
 }
 
-const CartItem: React.FC<Props> = ({ product }) => {
-  const imgUrl = process.env.REACT_APP_API_URL + "/" + product.imagePaths[0];
+const CartItem: React.FC<Props> = ({ productInCart }) => {
+  const { data: product, isLoading } = useGetProductQuery(
+    productInCart.productId
+  );
 
+  if (!product) return <div>Loading...</div>;
+
+  const imgUrl = process.env.REACT_APP_API_URL + "/" + product.imagePaths[0];
   return (
     <li className={styles.list__item}>
       <div className={styles.img}>

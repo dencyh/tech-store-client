@@ -5,11 +5,12 @@ import styles from "./catalog.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faStar } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
-import { Product, ProductInCart } from "../../types/products/core.product";
+import { Product } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
   productDecrement,
+  ProductInCart,
   productIncrement,
   selectAllProducts
 } from "../cart/cartSlice";
@@ -22,7 +23,7 @@ import QuantityButton from "../../components/ui/quantityButton/quantityButton";
 import KeyFeatures from "./keyFeatures";
 
 interface Props {
-  product: ProductInCart;
+  product: Product & { quantity: number };
 }
 
 const CatalogItem: React.FC<Props> = ({ product }) => {
@@ -40,22 +41,37 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
       if (!cart) return;
       const { productsInCart } = cart;
 
-      let newCart;
+      let newCart = [...productsInCart];
+
+      const inCart = productsInCart.find(
+        (cartItem) => cartItem.productId === product._id
+      );
+
       switch (action) {
         case "increment": {
-          newCart = productsInCart.map((cartItem) =>
-            cartItem.productId === product._id
-              ? { ...cartItem, quantity: cartItem.quantity + 1 }
-              : cartItem
-          );
+          if (!inCart) {
+            newCart.push({ productId: product._id, quantity: 1 });
+          } else {
+            newCart = productsInCart.map((cartItem) =>
+              cartItem.productId === product._id
+                ? { ...cartItem, quantity: cartItem.quantity + 1 }
+                : cartItem
+            );
+          }
           break;
         }
         case "decrement": {
-          newCart = productsInCart.map((cartItem) =>
-            cartItem.productId === product._id
-              ? { ...cartItem, quantity: cartItem.quantity - 1 }
-              : cartItem
-          );
+          if (inCart && inCart.quantity === 1) {
+            newCart = productsInCart.filter(
+              (cartItem) => cartItem.productId !== product._id
+            );
+          } else {
+            newCart = productsInCart.map((cartItem) =>
+              cartItem.productId === product._id
+                ? { ...cartItem, quantity: cartItem.quantity - 1 }
+                : cartItem
+            );
+          }
           break;
         }
       }
