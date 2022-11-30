@@ -35,17 +35,6 @@ export const apiSlice = createApi({
       query: ({ userId }) => `/cart/${userId}`,
       providesTags: ["Cart"]
     }),
-    getCartProducts: builder.query<
-      Product[],
-      { userId: string; ids: string[] }
-    >({
-      query: ({ userId, ids }) => ({
-        url: `/cart/${userId}/products`,
-        method: "POST",
-        body: { ids }
-      }),
-      providesTags: ["Cart"]
-    }),
     updateCart: builder.mutation<
       Cart,
       { userId: string; productsInCart: ProductInCart[] }
@@ -72,6 +61,19 @@ export const apiSlice = createApi({
         }
       },
       invalidatesTags: ["Cart"]
+    }),
+    getCartProducts: builder.query<
+      {
+        userId: string;
+        productsInCart: { quantity: number; productId: Product }[];
+      },
+      { userId: string }
+    >({
+      query: ({ userId }) => ({
+        url: `/cart/${userId}`,
+        method: "POST"
+      }),
+      providesTags: ["Cart"]
     })
   })
 });

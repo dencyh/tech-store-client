@@ -10,28 +10,33 @@ import CartItem from "./cartItem";
 import {
   TEST_USER_ID,
   useGetCartProductsQuery,
+  // useGetCartProductsQuery,
   useGetCartQuery
 } from "../api/apiSlice";
 
 interface Props {}
 
 const Cart: React.FC<Props> = () => {
-  const { data: cart } = useGetCartQuery({ userId: TEST_USER_ID });
+  const { data: cart } = useGetCartProductsQuery({ userId: TEST_USER_ID });
+
+  console.log(cart);
 
   if (!cart?.productsInCart) return <div>Loading...</div>;
   return (
-    <Layout>
-      <div className={styles.container}>
-        <div className={styles.products}>
-          <ul className={styles.products__list}>
-            {cart.productsInCart.map((product) => (
-              <CartItem key={product.productId} productInCart={product} />
-            ))}
-          </ul>
-        </div>
-        <CartSummary />
+    <div className={styles.container}>
+      <div className={styles.products}>
+        <ul className={styles.products__list}>
+          {cart.productsInCart.map((cartItem) => (
+            <CartItem
+              key={cartItem.productId._id}
+              product={cartItem.productId}
+              qauntity={cartItem.quantity}
+            />
+          ))}
+        </ul>
       </div>
-    </Layout>
+      <CartSummary />
+    </div>
   );
 };
 export default Cart;

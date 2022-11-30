@@ -9,14 +9,11 @@ import styles from "./cart.module.scss";
 import { ProductInCart } from "./cartSlice";
 
 interface Props {
-  productInCart: ProductInCart;
+  product: Product;
+  qauntity: number;
 }
 
-const CartItem: React.FC<Props> = ({ productInCart }) => {
-  const { data: product, isLoading } = useGetProductQuery(
-    productInCart.productId
-  );
-
+const CartItem: React.FC<Props> = ({ product, qauntity }) => {
   if (!product) return <div>Loading...</div>;
 
   const imgUrl = process.env.REACT_APP_API_URL + "/" + product.imagePaths[0];
@@ -52,14 +49,14 @@ const CartItem: React.FC<Props> = ({ productInCart }) => {
           <div className={styles.price__info}>
             <div className={styles.quantity}>
               <button className={styles.quantity__btn}>−</button>
-              <div>{1}</div>
+              <div>{qauntity}</div>
               <button className={styles.quantity__btn}>+</button>
             </div>
             <p className={styles.price__signle}>{formatPrice(product.price)}</p>
           </div>
           <div className={styles.product__total}>
             <p>Итог:</p>
-            <p>240 000 P</p>
+            <p>{formatPrice(qauntity * product.price)}</p>
           </div>
         </div>
       </div>

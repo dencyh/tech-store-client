@@ -6,6 +6,7 @@ import ProductPage from "./pages/productPage";
 import CatalogPage from "./pages/catalogPage";
 import AddProduct from "./features/products/addProduct";
 import Cart from "./features/cart/cart";
+import CartPage from "./pages/cartPage";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
       <Route path="products/:productName/:id" element={<ProductPage />} />
       <Route path="catalog/:category" element={<CatalogPage />} />
       <Route path="catalog/:category/new" element={<AddProduct />} />
-      <Route path="cart" element={<Cart />} />
+      <Route path="cart" element={<CartPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
