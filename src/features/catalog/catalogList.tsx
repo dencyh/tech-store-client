@@ -6,6 +6,7 @@ import styles from "./catalog.module.scss";
 import { Product } from "../../types/products/core.product";
 import { Cart } from "../../types/cart";
 import { useGetCartQuery } from "../cart/cartSlice";
+import { useGetBookmarksQuery } from "../bookmarks/bookmarksSlice";
 
 const CatalogList = () => {
   const { category } = useParams();
@@ -21,22 +22,53 @@ const CatalogList = () => {
     userId: TEST_USER_ID
   });
 
-  const productsWithQuantity = useMemo(
+  const { data: bookmarks, isLoading: bookmarksLoading } = useGetBookmarksQuery(
+    {
+      userId: TEST_USER_ID
+    }
+  );
+
+  let content;
+  if (!cart || !bookmarks) {
+    content = <>Loading...</>;
+  }
+
+  const productsWithQuantityBookmarks = useMemo(
     () =>
       products?.map((product) => {
-        const productAdded = cart?.productsInCart.find(
+        const productInCart = cart?.productsInCart.find(
           (inCart) => inCart.productId === product._id
         );
-        return productAdded
-          ? { ...product, quantity: productAdded.quantity }
-          : { ...product, quantity: 0 };
+        const inBookmarks = bookmarks?.products.find(
+          (inBookmarks) => inBookmarks._id === product._id
+        );
+
+        if (productInCart && inBookmarks) {
+          return {
+            ...product,
+            quantity: productInCart.quantity,
+            bookmarks: true
+          };
+        } else if (productInCart) {
+          return {
+            ...product,
+            quantity: productInCart.quantity,
+            bookmarks: false
+          };
+        } else if (inBookmarks) {
+          return {
+            ...product,
+            quantity: 0,
+            bookmarks: true
+          };
+        } else {
+          return { ...product, quantity: 0, bookmarks: false };
+        }
       }),
     [cart, products]
   );
 
-  let content;
-
-  if (productsLoading || cartLoading || !productsWithQuantity) {
+  if (!productsWithQuantityBookmarks || !cart || !bookmarks) {
     content = <>Loading...</>;
   } else if (isSuccess) {
     content = (
@@ -47,7 +79,7 @@ const CatalogList = () => {
         >
           Добавить продукт
         </Link>
-        {productsWithQuantity.map((product) => (
+        {productsWithQuantityBookmarks.map((product) => (
           <CatalogItem key={product._id} product={product} />
         ))}
       </>

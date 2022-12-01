@@ -5,13 +5,9 @@ import { Link } from "react-router-dom";
 import CartQuantity from "../../components/ui/cartQuantity/cartQuantity";
 import { Product } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";
-import { TEST_USER_ID, useGetProductQuery } from "../api/apiSlice";
+import { TEST_USER_ID } from "../api/apiSlice";
 import styles from "./cart.module.scss";
-import {
-  ProductInCart,
-  useGetCartQuery,
-  useUpdateCartMutation
-} from "./cartSlice";
+import { useGetCartQuery, useUpdateCartMutation } from "./cartSlice";
 
 interface Props {
   product: Product;
@@ -114,11 +110,6 @@ const CartItem: React.FC<Props> = ({ product, quantity }) => {
               onIncrement={handleQuantityUpdate("increment")}
               onDecrement={handleQuantityUpdate("decrement")}
             />
-            {/* <div className={styles.quantity}>
-              <button className={styles.quantity__btn}>−</button>
-              <div>{quantity}</div>
-              <button className={styles.quantity__btn}>+</button>
-            </div> */}
             <p className={styles.price__signle}>{formatPrice(product.price)}</p>
           </div>
           <div className={styles.product__total}>

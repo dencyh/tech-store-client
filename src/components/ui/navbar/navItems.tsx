@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import styles from "./navbar.module.scss";
 import {
@@ -8,14 +8,8 @@ import {
   faHeart
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useAppSelector } from "../../../redux/hooks";
-import {
-  selectAllProducts,
-  selectCartQuantity,
-  useGetCartQuery
-} from "../../../features/cart/cartSlice";
+import { useGetCartQuery } from "../../../features/cart/cartSlice";
 import { TEST_USER_ID } from "../../../features/api/apiSlice";
-import { Cart } from "../../../types/cart";
 
 const menuItems = [
   { text: "Корзина", to: "/cart", icon: faCartShopping },

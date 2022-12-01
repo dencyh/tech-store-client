@@ -1,0 +1,24 @@
+@import "../../../assets/styles/variables.scss";
+
+.btn__icon {
+  margin-right: 14px;
+  font-size: 14px;
+}
+
+.btn__icon_added {
+  margin-right: 14px;
+  font-size: 14px;
+  color: $danger;
+}
+
+.bookmark {
+  height: 40px;
+  width: 100%;
+  max-width: 350px;
+  font-size: 16px;
+  background: none;
+  border: 1px solid $light-gray;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+}

@@ -19,20 +19,60 @@ import {
 import { TEST_USER_ID } from "../api/apiSlice";
 import QuantityButton from "../../components/ui/quantityButton/quantityButton";
 import KeyFeatures from "./keyFeatures";
+import {
+  useGetBookmarksQuery,
+  useUpdateBookmarsMutation
+} from "../bookmarks/bookmarksSlice";
+import BookmarkButton from "../../components/ui/bookmarkButton/bookmarkButton";
 
 interface Props {
-  product: Product & { quantity: number };
+  product: Product & { quantity: number; bookmarks: boolean };
 }
 
 const CatalogItem: React.FC<Props> = ({ product }) => {
-  const dispatch = useAppDispatch();
-
-  const [updateCart, { isLoading, isError, isSuccess }] =
-    useUpdateCartMutation();
+  // console.log(product);
+  console.log("item rendered");
+  const [updateCart] = useUpdateCartMutation();
+  const [updateBooksmarks] = useUpdateBookmarsMutation();
 
   const { data: cart, isLoading: cartLoading } = useGetCartQuery({
     userId: TEST_USER_ID
   });
+  const { data: bookmarks, isLoading: bookmarksLoading } = useGetBookmarksQuery(
+    {
+      userId: TEST_USER_ID
+    }
+  );
+
+  const handleBookmarks = (action: "add" | "remove") => {
+    return function () {
+      if (!bookmarks) return;
+      let newProducts = [...bookmarks.products].map(
+        (bookmarkItem) => bookmarkItem._id
+      );
+
+      switch (action) {
+        case "add": {
+          const isAdded = newProducts.find(
+            (productId) => productId === product._id
+          );
+          console.log("add");
+          console.log(isAdded);
+          if (isAdded) return;
+          newProducts.push(product._id);
+          break;
+        }
+        case "remove": {
+          newProducts = newProducts.filter(
+            (productId) => productId !== product._id
+          );
+          break;
+        }
+      }
+      console.log({ products: newProducts });
+      updateBooksmarks({ userId: TEST_USER_ID, products: newProducts });
+    };
+  };
 
   const handleQuantityUpdate = (action: "increment" | "decrement") => {
     return function () {
@@ -141,6 +181,11 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
           </div>
         )}
 
+        <BookmarkButton
+          inBookmarks={product.bookmarks}
+          onAdd={handleBookmarks("add")}
+          onRemove={handleBookmarks("remove")}
+        />
         <button className={styles.bookmark}>
           <span className={styles.btn__icon}>
             <FontAwesomeIcon icon={faBookmark} />
