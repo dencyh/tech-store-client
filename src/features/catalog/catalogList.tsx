@@ -65,8 +65,10 @@ const CatalogList = () => {
           return { ...product, quantity: 0, bookmarks: false };
         }
       }),
-    [cart, products]
+    [cart, products, bookmarks]
   );
+
+  console.log("list rendered");
 
   if (!productsWithQuantityBookmarks || !cart || !bookmarks) {
     content = <>Loading...</>;

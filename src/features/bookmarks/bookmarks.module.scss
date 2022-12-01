@@ -1,0 +1,62 @@
+@import "../../assets/styles/variables.scss";
+
+.container {
+  margin-top: 20px;
+}
+
+.title {
+  margin-bottom: 15px;
+}
+
+.list {
+  display: flex;
+  gap: 60px;
+}
+
+.item {
+  position: relative;
+  max-width: 200px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 1px;
+    background-color: $light-gray;
+    height: 100%;
+    top: 0;
+    right: -30px;
+  }
+  &:last-child::after {
+    display: none;
+  }
+}
+
+.img {
+  width: 150px;
+  height: 150px;
+}
+
+.img > img {
+  width: inherit;
+  height: inherit;
+}
+
+.link {
+  color: $link-color;
+}
+
+.name {
+  margin-bottom: 5px;
+}
+
+.price {
+  color: $dimmed-black;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.rating {
+  display: flex;
+  margin: 5px 0 10px;
+  color: $accent-color;
+}

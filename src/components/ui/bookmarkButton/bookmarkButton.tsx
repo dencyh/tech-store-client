@@ -1,15 +1,23 @@
 import { faBookmark as faBookmarkSolid } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark as faBookmarkRegular } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./bookmarkButton.module.scss";
 
 interface Props {
+  textAdd?: string;
+  textRemove?: string;
   inBookmarks: boolean;
   onAdd: () => void;
   onRemove: () => void;
 }
-const BookmarkButton: React.FC<Props> = ({ inBookmarks, onAdd, onRemove }) => {
+const BookmarkButton: React.FC<Props> = ({
+  textAdd,
+  textRemove,
+  inBookmarks,
+  onAdd,
+  onRemove
+}) => {
   return (
     <button
       className={styles.bookmark}
@@ -20,14 +28,14 @@ const BookmarkButton: React.FC<Props> = ({ inBookmarks, onAdd, onRemove }) => {
           <span className={styles.btn__icon_added}>
             <FontAwesomeIcon icon={faBookmarkSolid} />
           </span>
-          <span>В избранном</span>
+          <span>{textRemove || "В избранном"}</span>
         </>
       ) : (
         <>
           <span className={styles.btn__icon}>
             <FontAwesomeIcon icon={faBookmarkRegular} />
           </span>
-          <span>Добавить в израбнное</span>
+          <span>{textAdd || "Добавить в израбнное"}</span>
         </>
       )}
     </button>
