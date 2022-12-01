@@ -1,14 +1,11 @@
 import React, { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-  TEST_USER_ID,
-  useGetCartQuery,
-  useGetCategoryProductsQuery
-} from "../api/apiSlice";
+import { TEST_USER_ID, useGetCategoryProductsQuery } from "../api/apiSlice";
 import CatalogItem from "./catalogItem";
 import styles from "./catalog.module.scss";
 import { Product } from "../../types/products/core.product";
 import { Cart } from "../../types/cart";
+import { useGetCartQuery } from "../cart/cartSlice";
 
 const CatalogList = () => {
   const { category } = useParams();

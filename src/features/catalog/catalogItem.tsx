@@ -12,13 +12,11 @@ import {
   productDecrement,
   ProductInCart,
   productIncrement,
-  selectAllProducts
-} from "../cart/cartSlice";
-import {
-  TEST_USER_ID,
+  selectAllProducts,
   useGetCartQuery,
   useUpdateCartMutation
-} from "../api/apiSlice";
+} from "../cart/cartSlice";
+import { TEST_USER_ID } from "../api/apiSlice";
 import QuantityButton from "../../components/ui/quantityButton/quantityButton";
 import KeyFeatures from "./keyFeatures";
 

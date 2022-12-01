@@ -7,12 +7,8 @@ import Layout from "../../pages/layout";
 import styles from "./cart.module.scss";
 import CartSummary from "./cartSummary";
 import CartItem from "./cartItem";
-import {
-  TEST_USER_ID,
-  useGetCartProductsQuery,
-  // useGetCartProductsQuery,
-  useGetCartQuery
-} from "../api/apiSlice";
+import { TEST_USER_ID } from "../api/apiSlice";
+import { useGetCartProductsQuery } from "./cartSlice";
 
 interface Props {}
 
@@ -30,7 +26,7 @@ const Cart: React.FC<Props> = () => {
             <CartItem
               key={cartItem.productId._id}
               product={cartItem.productId}
-              qauntity={cartItem.quantity}
+              quantity={cartItem.quantity}
             />
           ))}
         </ul>

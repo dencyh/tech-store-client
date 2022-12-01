@@ -11,9 +11,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAppSelector } from "../../../redux/hooks";
 import {
   selectAllProducts,
-  selectCartQuantity
+  selectCartQuantity,
+  useGetCartQuery
 } from "../../../features/cart/cartSlice";
-import { TEST_USER_ID, useGetCartQuery } from "../../../features/api/apiSlice";
+import { TEST_USER_ID } from "../../../features/api/apiSlice";
 import { Cart } from "../../../types/cart";
 
 const menuItems = [
