@@ -5,8 +5,7 @@ import BookmarksItem from "./bookmarksItem";
 import { useGetBookmarksQuery } from "./bookmarksSlice";
 import styles from "./bookmarks.module.scss";
 
-interface Props {}
-const Bookmarks: React.FC<Props> = () => {
+const Bookmarks = () => {
   const { data: bookmarks, isLoading } = useGetBookmarksQuery({
     userId: TEST_USER_ID
   });

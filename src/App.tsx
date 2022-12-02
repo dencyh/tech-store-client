@@ -7,11 +7,13 @@ import CatalogPage from "./pages/catalogPage";
 import AddProduct from "./features/products/addProduct";
 import CartPage from "./pages/cartPage";
 import BookmarksPage from "./pages/bookmarksPage";
+import ProfilePage from "./pages/profilePage";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="profile" element={<ProfilePage />} />
       <Route path="products/:productName/:id" element={<ProductPage />} />
       <Route path="catalog/:category" element={<CatalogPage />} />
       <Route path="catalog/:category/new" element={<AddProduct />} />

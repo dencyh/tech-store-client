@@ -7,6 +7,7 @@ import { Cart } from "../../types/cart";
 import { Bookmarks } from "../../types/bookmarks";
 
 export const TEST_USER_ID = "6388acc029fb5aa7d36d6b5e";
+export const USER_IN = false;
 
 export const apiSlice = createApi({
   reducerPath: "api",

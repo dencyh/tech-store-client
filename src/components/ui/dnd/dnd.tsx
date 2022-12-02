@@ -49,7 +49,6 @@ const DND = () => {
   const [selectedImage, setSelectedImage] = useState<any>({});
   const handleFilesSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // console.log(URL.createObjectURL(selectedImage));
 
     const formData = new FormData();
 

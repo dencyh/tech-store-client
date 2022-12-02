@@ -1,21 +1,15 @@
 import { faBan, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useMemo, useState } from "react";
-import TextInput from "../../components/common/form/textInput/textInput";
-import Layout from "../../pages/layout";
+import React from "react";
 import styles from "./cart.module.scss";
 import CartSummary from "./cartSummary";
 import CartItem from "./cartItem";
 import { TEST_USER_ID } from "../api/apiSlice";
 import { useGetCartProductsQuery } from "./cartSlice";
 
-interface Props {}
-
-const Cart: React.FC<Props> = () => {
+const Cart = () => {
   const { data: cart } = useGetCartProductsQuery({ userId: TEST_USER_ID });
-
-  console.log(cart);
 
   if (!cart?.productsInCart) return <div>Loading...</div>;
   return (

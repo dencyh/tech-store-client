@@ -30,8 +30,6 @@ interface Props {
 }
 
 const CatalogItem: React.FC<Props> = ({ product }) => {
-  // console.log(product);
-  console.log("item rendered");
   const [updateCart] = useUpdateCartMutation();
   const [updateBooksmarks] = useUpdateBookmarsMutation();
 
@@ -56,8 +54,6 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
           const isAdded = newProducts.find(
             (productId) => productId === product._id
           );
-          console.log("add");
-          console.log(isAdded);
           if (isAdded) return;
           newProducts.push(product._id);
           break;
@@ -69,7 +65,6 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
           break;
         }
       }
-      console.log({ products: newProducts });
       updateBooksmarks({ userId: TEST_USER_ID, products: newProducts });
     };
   };

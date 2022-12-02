@@ -1,8 +1,7 @@
 import React from "react";
 import styles from "./cart.module.scss";
 
-interface Props {}
-const CartSummary: React.FC<Props> = () => {
+const CartSummary = () => {
   return (
     <div className={styles.payment}>
       <h2 className={styles.payment__title}>Итого</h2>

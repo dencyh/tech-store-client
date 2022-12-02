@@ -96,7 +96,7 @@ const AddProduct = () => {
     <Layout>
       <form className={styles.form} onSubmit={handleSubmit}>
         <h3 className={styles.title} style={{ marginBottom: "20px" }}>
-          {translate(category)}
+          {translate("category", category)}
         </h3>
         <div className={styles.grid}>
           {Object.keys(initState).map((key) => {

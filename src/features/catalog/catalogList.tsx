@@ -68,8 +68,6 @@ const CatalogList = () => {
     [cart, products, bookmarks]
   );
 
-  console.log("list rendered");
-
   if (!productsWithQuantityBookmarks || !cart || !bookmarks) {
     content = <>Loading...</>;
   } else if (isSuccess) {

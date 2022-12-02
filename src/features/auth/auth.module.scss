@@ -1,0 +1,62 @@
+@import "../../assets/styles/variables.scss";
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  background: $transparent-black;
+}
+
+.form {
+  width: 500px;
+  min-width: 450px;
+  padding: 30px 50px;
+  box-shadow: 0 0 5px $light-gray;
+  border-radius: $border-radius-sm;
+  background-color: $white;
+}
+
+.btn {
+  @include btn;
+}
+
+.title {
+  margin-bottom: 16px;
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: $light-gray;
+  }
+}
+.tip {
+  margin-bottom: 25px;
+  font-size: 0.9em;
+}
+
+.tip__question {
+  margin-right: 4px;
+}
+
+.tip__btn {
+  color: $blue;
+  font-size: 1em;
+  background: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.form__item {
+  margin-bottom: 25px;
+}
