@@ -34,11 +34,7 @@ const Login: React.FC<Props> = ({ onFormType }) => {
           Зарегистрироваться
         </button>
       </p>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
+      <form onSubmit={handeleSubmit}>
         {Object.keys(form).map((formKey) => (
           <div key={formKey} className={styles.form__item}>
             <TextInput
@@ -49,8 +45,9 @@ const Login: React.FC<Props> = ({ onFormType }) => {
             />
           </div>
         ))}
-
-        <button className={styles.btn}>Зарегестрироваться</button>
+        <button className={`${styles.btn} ${styles.btn_disabled}`}>
+          Войти
+        </button>
       </form>
     </>
   );

@@ -26,6 +26,11 @@
   @include btn;
 }
 
+.btn_disabled {
+  cursor: not-allowed;
+  background-color: #957fb0;
+}
+
 .title {
   margin-bottom: 16px;
   position: relative;
@@ -58,5 +63,5 @@
 }
 
 .form__item {
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }

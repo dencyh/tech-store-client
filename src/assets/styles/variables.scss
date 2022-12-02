@@ -72,7 +72,7 @@ $border-radius-sm: 5px;
 
 @mixin input($border-color) {
   width: 100%;
-  padding: 1em 0.6em 0.5em;
+  padding: 1em 0.6em 0.5em 0.6em;
   border: 1px solid $light-gray;
   border-radius: 5px;
   color: $dimmed-black;

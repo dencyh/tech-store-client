@@ -13,8 +13,12 @@
   @include label;
 }
 
+.label_password {
+  padding-right: 2.3em;
+}
+
 .input:focus + .label {
-  @include label-focus($light-blue);
+  @include label-focus($white);
 }
 
 .input:not([value=""]):not(:focus) + .label {
@@ -24,13 +28,35 @@
 .input_invalid {
   @include input(tomato);
   border-color: tomato;
+  &:hover {
+    border-color: tomato;
+  }
 }
 
-.label_invalid {
-  color: tomato;
-}
+// .label_invalid {
+//    color: tomato;
+// }
 
 .input:focus + .label_invalid {
   color: tomato;
   background-color: $white;
+}
+
+.error {
+  color: tomato;
+  margin-top: 3px;
+  font-size: 0.8em;
+}
+
+.show_password {
+  position: absolute;
+  color: $gray;
+  font-size: 0.9em;
+  top: 10px;
+  right: 5px;
+  border-radius: $border-radius-sm;
+  padding: 5px;
+  &:focus {
+    outline: 2px solid $light-blue;
+  }
 }

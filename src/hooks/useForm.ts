@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useForm = <T,>(initState: T, onSubmit: (form: T) => void) => {
+export const useForm = <T>(initState: T, onSubmit: (form: T) => void) => {
   const [form, setForm] = useState(initState);
   const handeleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

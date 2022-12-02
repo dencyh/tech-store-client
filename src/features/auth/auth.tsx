@@ -1,19 +1,35 @@
 import React, { useState } from "react";
 import Signup from "./signup";
 import styles from "./auth.module.scss";
-import { useParams } from "react-router-dom";
 import Login from "./login";
+import { AnyZodObject, ZodEffects } from "zod";
 
 interface Props {
   authRef?: React.RefObject<HTMLDivElement>;
+  onFormClose?: () => void;
 }
 
 export type FormType = "login" | "signup";
 
-const Auth: React.FC<Props> = ({ authRef }) => {
-  const [formType, setFormType] = useState<FormType>("signup");
+export const validateResource = (
+  schema: ZodEffects<AnyZodObject>,
+  input: any,
+  setErrors: (errors: any) => void
+) => {
+  try {
+    schema.parse(input);
+    setErrors({});
+  } catch (e: any) {
+    const { errors } = e;
+    const result = errors.reduce((acc: any, err: any) => {
+      return { ...acc, [err.path[0]]: err.message };
+    }, {});
+    setErrors(result);
+  }
+};
 
-  console.log(formType);
+const Auth: React.FC<Props> = ({ authRef, onFormClose }) => {
+  const [formType, setFormType] = useState<FormType>("signup");
 
   const handleFormType = (type: FormType) => {
     setFormType(type);
