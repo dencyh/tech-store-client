@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import TextInput from "../../components/common/form/textInput/textInput";
 import { useForm } from "../../hooks/useForm";
+import { useValidate } from "../../hooks/useValidate";
 import { CreateUserInput, createUserSchema } from "../../schemas/user.schema";
 import { translate } from "../../utils/translate";
-import { FormType, validateResource } from "./auth";
+import { FormType } from "./auth";
 import styles from "./auth.module.scss";
 
 const initialState: CreateUserInput = {
@@ -18,21 +19,15 @@ interface Props {
   onFormType: (type: FormType) => void;
 }
 const Signup: React.FC<Props> = ({ onFormType }) => {
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const setErrorsWrapper = (errors: any) => setErrors(errors);
-
   const { form, handleChange, handeleSubmit } = useForm(initialState, onSumbit);
 
+  const { isValid, errors } = useValidate(form, createUserSchema);
+
   function onSumbit() {
-    validateResource(createUserSchema, form, setErrorsWrapper);
-    if (Object.keys(errors).length > 0) return console.log("Ошибка в форме");
+    if (!isValid) return console.log("Ошибка в форме");
 
     console.log(form);
   }
-
-  useEffect(() => {
-    validateResource(createUserSchema, form, setErrorsWrapper);
-  }, [form]);
 
   return (
     <>

@@ -11,23 +11,6 @@ interface Props {
 
 export type FormType = "login" | "signup";
 
-export const validateResource = (
-  schema: ZodEffects<AnyZodObject>,
-  input: any,
-  setErrors: (errors: any) => void
-) => {
-  try {
-    schema.parse(input);
-    setErrors({});
-  } catch (e: any) {
-    const { errors } = e;
-    const result = errors.reduce((acc: any, err: any) => {
-      return { ...acc, [err.path[0]]: err.message };
-    }, {});
-    setErrors(result);
-  }
-};
-
 const Auth: React.FC<Props> = ({ authRef, onFormClose }) => {
   const [formType, setFormType] = useState<FormType>("signup");
 

@@ -14,3 +14,12 @@ export const createUserSchema = object({
 });
 
 export type CreateUserInput = TypeOf<typeof createUserSchema>;
+
+export const loginSchema = object({
+  email: string()
+    .min(1, "Обязательное поле")
+    .email("Некорректный адрес эл. почты"),
+  password: string().min(1, "Обязательное поле")
+});
+
+export type LoginInput = TypeOf<typeof loginSchema>;
