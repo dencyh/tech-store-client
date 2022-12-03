@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import styles from "./textInput.module.scss";
+import styles from "./input.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
@@ -12,18 +12,23 @@ interface Props
   value: string;
   onChange: ({ name, value }: { name: string; value: string }) => void;
   error?: string;
+  showError?: boolean;
 }
 
-const TextInput: React.FC<Props> = ({
+const Input: React.FC<Props> = ({
   label,
   type = "text",
   name,
   value,
   onChange,
   error = "",
+  showError = false,
   ...rest
 }) => {
-  const [showError, setShowError] = useState(false);
+  const [errorOnBlur, setErrorOnBlur] = useState(false);
+  useEffect(() => {
+    setErrorOnBlur(showError);
+  }, [showError]);
 
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = name.toLowerCase().includes("password");
@@ -37,17 +42,17 @@ const TextInput: React.FC<Props> = ({
         onChange={(e) => onChange({ name, value: e.target.value })}
         value={value}
         className={`${styles.input} ${
-          error && showError ? styles.input_invalid : ""
+          error && errorOnBlur ? styles.input_invalid : ""
         } ${isPassword ? styles.label_password : ""}`}
         {...rest}
-        onBlur={() => setShowError(true)}
+        onBlur={() => setErrorOnBlur(true)}
       />
 
       {label && (
         <label
           htmlFor={name}
           className={`${styles.label}  ${
-            error && showError ? styles.label_invalid : ""
+            error && errorOnBlur ? styles.label_invalid : ""
           } `}
         >
           {label}
@@ -66,9 +71,9 @@ const TextInput: React.FC<Props> = ({
           )}
         </button>
       )}
-      {error && showError && <p className={styles.error}>{error}</p>}
+      {error && errorOnBlur && <p className={styles.error}>{error}</p>}
     </div>
   );
 };
 
-export default TextInput;
+export default Input;

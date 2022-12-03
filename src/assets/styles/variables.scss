@@ -61,7 +61,7 @@ $border-radius-sm: 5px;
   pointer-events: none;
 
   position: absolute;
-  top: 1.3em;
+  top: 1.6em;
   transform: translateY(-50%);
   left: 0.6em;
 
@@ -72,7 +72,7 @@ $border-radius-sm: 5px;
 
 @mixin input($border-color) {
   width: 100%;
-  padding: 1em 0.6em 0.5em 0.6em;
+  padding: 1.5em 0.6em 0.5em 0.8em;
   border: 1px solid $light-gray;
   border-radius: 5px;
   color: $dimmed-black;
@@ -90,7 +90,7 @@ $border-radius-sm: 5px;
 }
 
 @mixin label-focus($label-bg) {
-  top: 0;
+  top: 12px;
   font-size: 0.8em;
   background-color: $label-bg;
   color: $dimmed-black;

@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import styles from "./textArea.module.scss";
+import styles from "./textarea.module.scss";
 
 interface Props
   extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "onChange"> {
@@ -12,7 +11,7 @@ interface Props
   error?: string;
 }
 
-const TextArea: React.FC<Props> = ({
+const Textarea: React.FC<Props> = ({
   label,
   type = "text",
   name,
@@ -40,4 +39,4 @@ const TextArea: React.FC<Props> = ({
   );
 };
 
-export default TextArea;
+export default Textarea;

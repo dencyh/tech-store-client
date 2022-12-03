@@ -18,11 +18,11 @@
 }
 
 .input:focus + .label {
-  @include label-focus($white);
+  @include label-focus(none);
 }
 
 .input:not([value=""]):not(:focus) + .label {
-  @include label-focus($white);
+  @include label-focus(none);
 }
 
 .input_invalid {
@@ -33,13 +33,8 @@
   }
 }
 
-// .label_invalid {
-//    color: tomato;
-// }
-
 .input:focus + .label_invalid {
   color: tomato;
-  background-color: $white;
 }
 
 .error {

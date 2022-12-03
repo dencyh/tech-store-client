@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import TextInput from "../../components/common/form/textInput/textInput";
+import Input from "../../components/common/form/input/input";
 import { useForm } from "../../hooks/useForm";
 import { useValidate } from "../../hooks/useValidate";
 import { CreateUserInput, createUserSchema } from "../../schemas/user.schema";
@@ -23,8 +23,13 @@ const Signup: React.FC<Props> = ({ onFormType }) => {
 
   const { isValid, errors } = useValidate(form, createUserSchema);
 
+  const [showErrors, setShowErrors] = useState(false);
+
   function onSumbit() {
-    if (!isValid) return console.log("Ошибка в форме");
+    if (!isValid) {
+      setShowErrors(true);
+      return console.log("Ошибка в форме");
+    }
 
     console.log(form);
   }
@@ -41,12 +46,13 @@ const Signup: React.FC<Props> = ({ onFormType }) => {
       <form onSubmit={handeleSubmit}>
         {Object.keys(form).map((formKey) => (
           <div key={formKey} className={styles.form__item}>
-            <TextInput
+            <Input
               label={translate("profile", formKey)}
               name={formKey}
               value={form[formKey as keyof typeof form]}
               onChange={handleChange}
               error={errors[formKey]}
+              showError={showErrors}
             />
           </div>
         ))}

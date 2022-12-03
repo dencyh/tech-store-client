@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Checkbox from "../../components/common/form/checkbox";
-import TextInput from "../../components/common/form/textInput/textInput";
+import Input from "../../components/common/form/input/input";
 import styles from "./filters.module.scss";
 
 const Filters = () => {

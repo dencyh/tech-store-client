@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import TextArea from "../../components/common/form/textArea/textArea";
-import TextInput from "../../components/common/form/textInput/textInput";
+import Textarea from "../../components/common/form/textarea/textarea";
+import Input from "../../components/common/form/input/input";
 import DND from "../../components/ui/dnd/dnd";
 import Layout from "../../pages/layout";
 import { translate } from "../../utils/translate";
@@ -103,7 +103,7 @@ const AddProduct = () => {
             if (key === "resolution") {
               return (
                 <div key={key} className={styles.resolution}>
-                  <TextInput
+                  <Input
                     key={"resolutionX"}
                     label={"W"}
                     name={"resolutionX"}
@@ -111,7 +111,7 @@ const AddProduct = () => {
                     onChange={handleChange}
                   />
                   <span>X</span>
-                  <TextInput
+                  <Input
                     key={"resolutionY"}
                     label={"H"}
                     name={"resolutionY"}
@@ -123,7 +123,7 @@ const AddProduct = () => {
             } else {
               return (
                 key !== "description" && (
-                  <TextInput
+                  <Input
                     key={key}
                     label={key}
                     name={key}
@@ -136,7 +136,7 @@ const AddProduct = () => {
           })}
         </div>
 
-        <TextArea
+        <Textarea
           label={"Описание"}
           name={"description"}
           rows={5}

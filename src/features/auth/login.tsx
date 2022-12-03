@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import TextInput from "../../components/common/form/textInput/textInput";
+import Input from "../../components/common/form/input/input";
 import { useForm } from "../../hooks/useForm";
+import { useValidate } from "../../hooks/useValidate";
+import { loginSchema } from "../../schemas/user.schema";
 import { translate } from "../../utils/translate";
 import { FormType } from "./auth";
 import styles from "./auth.module.scss";
@@ -16,10 +18,14 @@ interface Props {
 }
 const Login: React.FC<Props> = ({ onFormType }) => {
   const { form, handleChange, handeleSubmit } = useForm(initialState, onSumbit);
+  const [showErrors, setShowErrors] = useState(false);
+  const { isValid, errors } = useValidate(form, loginSchema);
 
   function onSumbit() {
-    console.log("Login");
-    console.log(form);
+    if (!isValid) {
+      setShowErrors(true);
+      return console.log("Ошибка в форме");
+    }
   }
 
   return (
@@ -37,11 +43,13 @@ const Login: React.FC<Props> = ({ onFormType }) => {
       <form onSubmit={handeleSubmit}>
         {Object.keys(form).map((formKey) => (
           <div key={formKey} className={styles.form__item}>
-            <TextInput
+            <Input
               label={translate("profile", formKey)}
               name={formKey}
               value={form[formKey as keyof typeof form]}
               onChange={handleChange}
+              error={errors[formKey]}
+              showError={showErrors}
             />
           </div>
         ))}
