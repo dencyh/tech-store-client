@@ -1,7 +1,11 @@
 import { toast } from "react-toastify";
-import { Bookmarks } from "../../types/bookmarks";
 import { Product } from "../../types/products/core.product";
 import { apiSlice } from "../api/apiSlice";
+
+export interface Bookmarks {
+  userId: string;
+  products: Product[];
+}
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

@@ -1,13 +1,19 @@
 import { ProductInCart } from "./../cart/cartSlice";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { method } from "lodash";
-import { Category } from "../../types/category";
 import { Product } from "../../types/products/core.product";
-import { Cart } from "../../types/cart";
-import { Bookmarks } from "../../types/bookmarks";
 
 export const TEST_USER_ID = "6388acc029fb5aa7d36d6b5e";
 export const USER_IN = false;
+
+export interface Category {
+  _id: string;
+  name: string;
+  type: string;
+  image: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export const apiSlice = createApi({
   reducerPath: "api",

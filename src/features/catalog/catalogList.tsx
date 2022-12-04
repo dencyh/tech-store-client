@@ -4,7 +4,6 @@ import { TEST_USER_ID, useGetCategoryProductsQuery } from "../api/apiSlice";
 import CatalogItem from "./catalogItem";
 import styles from "./catalog.module.scss";
 import { Product } from "../../types/products/core.product";
-import { Cart } from "../../types/cart";
 import { useGetCartQuery } from "../cart/cartSlice";
 import { useGetBookmarksQuery } from "../bookmarks/bookmarksSlice";
 

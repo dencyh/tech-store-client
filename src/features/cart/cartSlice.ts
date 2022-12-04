@@ -9,11 +9,15 @@ import { RootState } from "../../redux/store";
 import { apiSlice } from "../api/apiSlice";
 import { toast } from "react-toastify";
 import { Product } from "../../types/products/core.product";
-import { Cart } from "../../types/cart";
 
 export interface ProductInCart {
   productId: string;
   quantity: number;
+}
+
+export interface Cart {
+  userId: string;
+  productsInCart: ProductInCart[];
 }
 
 export const extendedApiSlice = apiSlice.injectEndpoints({

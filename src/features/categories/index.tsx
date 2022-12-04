@@ -3,8 +3,7 @@ import CategoryCard from "./categoryCard";
 import _ from "lodash";
 import styles from "./categories.module.scss";
 
-import { useGetCategoriesQuery } from "../api/apiSlice";
-import { Category } from "../../types/category";
+import { Category, useGetCategoriesQuery } from "../api/apiSlice";
 import { Spinner } from "../../components/ui/spinner/spinner";
 
 export const Categories = () => {

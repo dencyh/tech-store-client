@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Category } from "../api/apiSlice";
 import styles from "./categories.module.scss";
-import { Category } from "../../types/category";
 
 interface Props {
   category: Category;
