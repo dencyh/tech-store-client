@@ -16,14 +16,10 @@ import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser, selectUser } from "../auth/userSlice";
 
 const Cart = () => {
-  // const { data: cart } = useGetCartProductsQuery({ userId: TEST_USER_ID });
   const currentUser = useAppSelector(selectCurrentUser);
-  // console.log(currentUser);
-  const cart = useAppSelector(selectCartResult(currentUser?._id || "")).data;
-  // console.log(cart);
+  if (!currentUser) return <h1>Войдите, чтобы просматривать корзину</h1>;
 
-  // const localCart = useAppSelector(selectLocalCart);
-  // console.log(localCart);
+  const cart = useAppSelector(selectCartResult(currentUser?._id || "")).data;
 
   if (!cart?.productsInCart) return <Spinner text="Loading cart" />;
   return (

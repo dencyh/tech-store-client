@@ -12,6 +12,7 @@ import {
   productDecrement,
   ProductInCart,
   productIncrement,
+  selectLocalCart,
   useGetCartQuery,
   useUpdateCartMutation
 } from "../cart/cartSlice";
@@ -23,12 +24,19 @@ import {
   useUpdateBookmarsMutation
 } from "../bookmarks/bookmarksSlice";
 import BookmarkButton from "../../components/ui/bookmarkButton/bookmarkButton";
+import store from "../../redux/store";
+import { selectCurrentUser } from "../auth/userSlice";
 
 interface Props {
   product: Product & { quantity: number; bookmarks: boolean };
 }
 
 const CatalogItem: React.FC<Props> = ({ product }) => {
+  const dispatch = useAppDispatch();
+  const currentUser = useAppSelector(selectCurrentUser);
+
+  const localCart = useAppSelector(selectLocalCart);
+
   const [updateCart] = useUpdateCartMutation();
   const [updateBooksmarks] = useUpdateBookmarsMutation();
 
@@ -40,6 +48,10 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
       userId: TEST_USER_ID
     }
   );
+
+  const quantity = currentUser
+    ? product.quantity
+    : localCart.entities[product._id]?.quantity || 0;
 
   const handleBookmarks = (action: "add" | "remove") => {
     return function () {
@@ -155,10 +167,16 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
           </p>
         </div>
 
-        {product.quantity < 1 ? (
+        {quantity < 1 ? (
           <button
             className={styles.btn}
-            onClick={handleQuantityUpdate("increment")}
+            onClick={() => {
+              handleQuantityUpdate("increment")();
+              console.log("add to cart");
+              dispatch(
+                productIncrement({ productId: product._id, quantity: 1 })
+              );
+            }}
           >
             <span className={styles.btn__icon}>
               <FontAwesomeIcon icon={faCartShopping} />
@@ -168,9 +186,29 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
         ) : (
           <div className={styles.btn__container}>
             <QuantityButton
-              quantity={product.quantity}
-              onIncrement={handleQuantityUpdate("increment")}
-              onDecrement={handleQuantityUpdate("decrement")}
+              quantity={quantity}
+              onIncrement={
+                currentUser
+                  ? handleQuantityUpdate("increment")
+                  : () =>
+                      dispatch(
+                        productIncrement({
+                          productId: product._id,
+                          quantity: 1
+                        })
+                      )
+              }
+              onDecrement={
+                currentUser
+                  ? handleQuantityUpdate("decrement")
+                  : () =>
+                      dispatch(
+                        productDecrement({
+                          productId: product._id,
+                          quantity: 1
+                        })
+                      )
+              }
             />
           </div>
         )}

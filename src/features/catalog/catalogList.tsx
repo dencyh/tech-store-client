@@ -6,6 +6,7 @@ import styles from "./catalog.module.scss";
 import { Product } from "../../types/products/core.product";
 import { useGetCartQuery } from "../cart/cartSlice";
 import { useGetBookmarksQuery } from "../bookmarks/bookmarksSlice";
+import { Spinner } from "../../components/ui/spinner/spinner";
 
 const CatalogList = () => {
   const { category } = useParams();
@@ -28,8 +29,8 @@ const CatalogList = () => {
   );
 
   let content;
-  if (!cart || !bookmarks) {
-    content = <>Loading...</>;
+  if (!cartLoading || !bookmarksLoading) {
+    content = <Spinner />;
   }
 
   const productsWithQuantityBookmarks = useMemo(
@@ -67,7 +68,7 @@ const CatalogList = () => {
     [cart, products, bookmarks]
   );
 
-  if (!productsWithQuantityBookmarks || !cart || !bookmarks) {
+  if (!productsWithQuantityBookmarks) {
     content = <>Loading...</>;
   } else if (isSuccess) {
     content = (

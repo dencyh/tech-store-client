@@ -4,8 +4,13 @@ import { TEST_USER_ID } from "../api/apiSlice";
 import BookmarksItem from "./bookmarksItem";
 import { useGetBookmarksQuery } from "./bookmarksSlice";
 import styles from "./bookmarks.module.scss";
+import { useAppSelector } from "../../redux/hooks";
+import { selectCurrentUser } from "../auth/userSlice";
 
 const Bookmarks = () => {
+  const currentUser = useAppSelector(selectCurrentUser);
+  if (!currentUser) return <h1>Войдите, чтобы просматривать избранное</h1>;
+
   const { data: bookmarks, isLoading } = useGetBookmarksQuery({
     userId: TEST_USER_ID
   });

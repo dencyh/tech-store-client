@@ -12,7 +12,7 @@ interface Props {
 export type FormType = "login" | "signup";
 
 const Auth: React.FC<Props> = ({ authRef, onFormClose }) => {
-  const [formType, setFormType] = useState<FormType>("signup");
+  const [formType, setFormType] = useState<FormType>("login");
 
   const handleFormType = (type: FormType) => {
     setFormType(type);

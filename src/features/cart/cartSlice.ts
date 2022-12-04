@@ -10,6 +10,7 @@ import { apiSlice } from "../api/apiSlice";
 import { toast } from "react-toastify";
 import { Product } from "../../types/products/core.product";
 import { selectCurrentUser, selectUserResult } from "../auth/userSlice";
+import type { EntityState } from "@reduxjs/toolkit";
 
 export interface ProductInCart {
   productId: string;
@@ -79,7 +80,11 @@ const cartAdapter = createEntityAdapter<ProductInCart>({
   selectId: (product) => product.productId
 });
 
-const initialState = cartAdapter.getInitialState();
+const localCart = JSON.parse(
+  localStorage.getItem("bts_cart") || "false"
+) as EntityState<ProductInCart>;
+
+const initialState = localCart || cartAdapter.getInitialState();
 
 const cartSlice = createSlice({
   name: "cart",
@@ -94,6 +99,7 @@ const cartSlice = createSlice({
       } else {
         cartAdapter.addOne(state, action.payload);
       }
+      localStorage.setItem("bts_cart", JSON.stringify({ ...state }));
     },
     productDecrement(state, action: PayloadAction<ProductInCart>) {
       const { productId: productId, quantity } = action.payload;
@@ -104,6 +110,7 @@ const cartSlice = createSlice({
       } else if (!!isAdded) {
         isAdded.quantity -= 1;
       }
+      localStorage.setItem("bts_cart", JSON.stringify({ ...state }));
     }
   }
 });
@@ -113,6 +120,11 @@ export const { productIncrement, productDecrement } = cartSlice.actions;
 export default cartSlice.reducer;
 
 export const selectLocalCart = (state: RootState) => state.cart;
+export const selectLocalCartQuantity = (state: RootState) =>
+  Object.values(state.cart.entities).reduce(
+    (acc, product) => acc + (product?.quantity || 0),
+    0
+  );
 
 // export const {
 //   selectAll: selectAllProducts,
