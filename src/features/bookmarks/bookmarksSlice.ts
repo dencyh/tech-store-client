@@ -12,12 +12,16 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: ({ userId, products }) => ({
         url: `/bookmarks/${userId}`,
         method: "PUT",
-        body: { products }
+        body: { products },
+        credentials: "include"
       }),
       invalidatesTags: ["Bookmarks", "Product"]
     }),
     getBookmarks: builder.query<Bookmarks, { userId: string }>({
-      query: ({ userId }) => `/bookmarks/${userId}`,
+      query: ({ userId }) => ({
+        url: `/bookmarks/${userId}`,
+        credentials: "include"
+      }),
       providesTags: ["Bookmarks"]
     })
   })

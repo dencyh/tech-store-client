@@ -8,8 +8,12 @@ import AddProduct from "./features/products/addProduct";
 import CartPage from "./pages/cartPage";
 import BookmarksPage from "./pages/bookmarksPage";
 import ProfilePage from "./pages/profilePage";
+import { selectLoggedUser, useGetUserQuery } from "./features/auth/userSlice";
+import { useAppSelector } from "./redux/hooks";
 
 function App() {
+  const user = useAppSelector(selectLoggedUser);
+  console.log(user);
   return (
     <Routes>
       <Route path="/" element={<Home />} />

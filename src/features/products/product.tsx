@@ -21,8 +21,10 @@ const Product = () => {
     data: product,
     isLoading,
     isSuccess,
-    isError
+    isError,
+    error
   } = useGetProductQuery(id);
+  console.log(error);
 
   const handleChange = ({ name, value }: { name: string; value: string }) => {
     setValues((prev) => ({ ...prev, [name]: value }));

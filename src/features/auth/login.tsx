@@ -7,6 +7,7 @@ import { loginSchema } from "../../schemas/user.schema";
 import { translate } from "../../utils/translate";
 import { FormType } from "./auth";
 import styles from "./auth.module.scss";
+import { useUserLoginMutation } from "./userSlice";
 
 const initialState = {
   email: "",
@@ -21,11 +22,14 @@ const Login: React.FC<Props> = ({ onFormType }) => {
   const [showErrors, setShowErrors] = useState(false);
   const { isValid, errors } = useValidate(form, loginSchema);
 
+  const [userLogin] = useUserLoginMutation();
+
   function onSumbit() {
     if (!isValid) {
       setShowErrors(true);
       return console.log("Ошибка в форме");
     }
+    userLogin(form);
   }
 
   return (

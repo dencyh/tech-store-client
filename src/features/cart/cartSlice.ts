@@ -1,3 +1,4 @@
+import { TEST_USER_ID } from "./../api/apiSlice";
 import {
   createSlice,
   createEntityAdapter,
@@ -18,7 +19,10 @@ export interface ProductInCart {
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCart: builder.query<Cart, { userId: string }>({
-      query: ({ userId }) => `/cart/${userId}`,
+      query: ({ userId }) => ({
+        url: `/cart/${userId}`,
+        credentials: "include"
+      }),
       providesTags: ["Cart"]
     }),
     updateCart: builder.mutation<
@@ -28,7 +32,8 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: ({ userId, productsInCart }) => ({
         url: `/cart/${userId}`,
         method: "PUT",
-        body: { productsInCart }
+        body: { productsInCart },
+        credentials: "include"
       }),
       async onQueryStarted(
         { userId, productsInCart },
@@ -61,7 +66,8 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     >({
       query: ({ userId }) => ({
         url: `/cart/${userId}`,
-        method: "POST"
+        method: "POST",
+        credentials: "include"
       }),
       providesTags: ["Cart"]
     })
@@ -121,3 +127,14 @@ export const {
   useGetCartProductsQuery,
   useUpdateCartMutation
 } = extendedApiSlice;
+
+const selectCartResult = extendedApiSlice.endpoints.getCart.select({
+  userId: TEST_USER_ID
+});
+
+const emptyCart = {};
+
+export const selectCart = createSelector(
+  selectCartResult,
+  (cartResult) => cartResult?.data ?? emptyCart
+);

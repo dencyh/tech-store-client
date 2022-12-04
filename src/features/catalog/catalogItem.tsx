@@ -181,12 +181,7 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
           onAdd={handleBookmarks("add")}
           onRemove={handleBookmarks("remove")}
         />
-        <button className={styles.bookmark}>
-          <span className={styles.btn__icon}>
-            <FontAwesomeIcon icon={faBookmark} />
-          </span>
-          Добавить в израбнное
-        </button>
+
         <div>
           <p>В наличии</p>
           <p>Доставка 5-7 дней</p>
