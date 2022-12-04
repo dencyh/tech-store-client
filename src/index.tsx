@@ -6,13 +6,15 @@ import App from "./App";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
-import { extendedApiSlice } from "./features/auth/userSlice";
+import { selectCurrentUser, userApiSlice } from "./features/auth/userSlice";
+import { cartApiSlice } from "./features/cart/cartSlice";
+import { useAppSelector } from "./redux/hooks";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-store.dispatch(extendedApiSlice.endpoints.getUser.initiate());
+store.dispatch(userApiSlice.endpoints.getCurrentUser.initiate());
 
 root.render(
   <BrowserRouter>

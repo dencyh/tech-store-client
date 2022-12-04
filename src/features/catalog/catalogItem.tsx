@@ -12,7 +12,6 @@ import {
   productDecrement,
   ProductInCart,
   productIncrement,
-  selectAllProducts,
   useGetCartQuery,
   useUpdateCartMutation
 } from "../cart/cartSlice";

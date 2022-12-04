@@ -3,10 +3,10 @@ import Auth from "../features/auth/auth";
 import Layout from "./layout";
 
 const ProfilePage = () => {
-  const userIn = true;
-
   return (
-    <Layout>{userIn ? <h1>ProfilePage in development</h1> : <Auth />}</Layout>
+    <Layout>
+      <h1>ProfilePage in development</h1>
+    </Layout>
   );
 };
 export default ProfilePage;

@@ -9,14 +9,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  selectAllProducts,
-  selectCart,
+  selectCartQuantity,
+  useGetCartProductsQuery,
   useGetCartQuery
 } from "../cart/cartSlice";
 import { TEST_USER_ID } from "../api/apiSlice";
 import Auth from "../auth/auth";
 import { useAppSelector } from "../../redux/hooks";
-import { selectLoggedUser } from "../auth/userSlice";
+import { selectCurrentUser } from "../auth/userSlice";
 
 const menuItems = [
   { text: "Корзина", to: "/cart", icon: faCartShopping },
@@ -26,31 +26,10 @@ const menuItems = [
 ];
 
 const NavItems = () => {
-  const currentUser = useAppSelector(selectLoggedUser);
-  const localCart = useAppSelector(selectAllProducts);
-  const cart = useAppSelector(selectCart);
-  // || {
-  //   userId: null,
-  //   productsInCart: localCart
-  // };
-  console.log(cart);
+  const currentUser = useAppSelector(selectCurrentUser);
 
-  if (!cart) {
-    console.log(localCart);
-  }
-
-  const cartQuantity = 0;
-  // TODO move into selector in slice
-  // const cartQuantity = useMemo(() => {
-  //   if (cart) {
-  //     const quantity = Object.keys(cart.entities).reduce(
-  //       (acc, key) => acc + cart.entities[key].quantity,
-  //       0
-  //     );
-  //     return quantity;
-  //   }
-  //   return 0;
-  // }, [cart]);
+  const quantity =
+    useAppSelector(selectCartQuantity(currentUser?._id || "")) || 0;
 
   const [showAuth, setShowAuth] = useState(false);
 
@@ -86,8 +65,8 @@ const NavItems = () => {
             ) : (
               <Link to={item.to} className={styles.list__item}>
                 <FontAwesomeIcon icon={item.icon} />
-                {item.to === "/cart" && cartQuantity > 0 && (
-                  <span className={styles.cart_count}>{cartQuantity}</span>
+                {item.to === "/cart" && quantity > 0 && (
+                  <span className={styles.cart_count}>{quantity}</span>
                 )}
                 <div className="text-xs">{item.text}</div>
               </Link>

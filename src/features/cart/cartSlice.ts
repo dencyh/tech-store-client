@@ -9,6 +9,7 @@ import { RootState } from "../../redux/store";
 import { apiSlice } from "../api/apiSlice";
 import { toast } from "react-toastify";
 import { Product } from "../../types/products/core.product";
+import { selectCurrentUser, selectUserResult } from "../auth/userSlice";
 
 export interface ProductInCart {
   productId: string;
@@ -20,7 +21,7 @@ export interface Cart {
   productsInCart: ProductInCart[];
 }
 
-export const extendedApiSlice = apiSlice.injectEndpoints({
+export const cartApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCart: builder.query<Cart, { userId: string }>({
       query: ({ userId }) => ({
@@ -44,13 +45,9 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         { dispatch, queryFulfilled }
       ) {
         const patchResult = dispatch(
-          extendedApiSlice.util.updateQueryData(
-            "getCart",
-            { userId },
-            (draft) => {
-              draft.productsInCart = productsInCart;
-            }
-          )
+          cartApiSlice.util.updateQueryData("getCart", { userId }, (draft) => {
+            draft.productsInCart = productsInCart;
+          })
         );
         try {
           await queryFulfilled;
@@ -115,30 +112,34 @@ export const { productIncrement, productDecrement } = cartSlice.actions;
 
 export default cartSlice.reducer;
 
-export const {
-  selectAll: selectAllProducts,
-  selectById: selectProductById,
-  selectIds: selectProductIds
-} = cartAdapter.getSelectors((state: RootState) => state.cart);
+export const selectLocalCart = (state: RootState) => state.cart;
 
-export const selectCartQuantity = createSelector(
-  [selectAllProducts],
-  (products) => products.reduce((acc, product) => acc + product.quantity, 0)
-);
+// export const {
+//   selectAll: selectAllProducts,
+//   selectById: selectProductById,
+//   selectIds: selectProductIds
+// } = cartAdapter.getSelectors((state: RootState) => state.cart);
+
+// export const selectCartQuantity = createSelector(
+//   selectAllProducts,
+//   (products) => products.reduce((acc, product) => acc + product.quantity, 0)
+// );
+
+export const selectCartResult = (userId: string) =>
+  cartApiSlice.endpoints.getCartProducts.select({
+    userId
+  });
+
+export const selectCartQuantity = (userId: string) =>
+  createSelector(selectCartResult(userId), (cartItems) =>
+    cartItems.data?.productsInCart.reduce(
+      (acc, product) => acc + product.quantity,
+      0
+    )
+  );
 
 export const {
   useGetCartQuery,
   useGetCartProductsQuery,
   useUpdateCartMutation
-} = extendedApiSlice;
-
-const selectCartResult = extendedApiSlice.endpoints.getCart.select({
-  userId: TEST_USER_ID
-});
-
-const emptyCart = {};
-
-export const selectCart = createSelector(
-  selectCartResult,
-  (cartResult) => cartResult?.data ?? emptyCart
-);
+} = cartApiSlice;

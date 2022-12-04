@@ -6,12 +6,26 @@ import styles from "./cart.module.scss";
 import CartSummary from "./cartSummary";
 import CartItem from "./cartItem";
 import { TEST_USER_ID } from "../api/apiSlice";
-import { useGetCartProductsQuery } from "./cartSlice";
+import {
+  selectCartResult,
+  selectLocalCart,
+  useGetCartProductsQuery
+} from "./cartSlice";
+import { Spinner } from "../../components/ui/spinner/spinner";
+import { useAppSelector } from "../../redux/hooks";
+import { selectCurrentUser, selectUser } from "../auth/userSlice";
 
 const Cart = () => {
-  const { data: cart } = useGetCartProductsQuery({ userId: TEST_USER_ID });
+  // const { data: cart } = useGetCartProductsQuery({ userId: TEST_USER_ID });
+  const currentUser = useAppSelector(selectCurrentUser);
+  // console.log(currentUser);
+  const cart = useAppSelector(selectCartResult(currentUser?._id || "")).data;
+  // console.log(cart);
 
-  if (!cart?.productsInCart) return <div>Loading...</div>;
+  // const localCart = useAppSelector(selectLocalCart);
+  // console.log(localCart);
+
+  if (!cart?.productsInCart) return <Spinner text="Loading cart" />;
   return (
     <div className={styles.container}>
       <div className={styles.products}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "./pages/404";
 import Home from "./pages/homePage";
@@ -8,12 +8,25 @@ import AddProduct from "./features/products/addProduct";
 import CartPage from "./pages/cartPage";
 import BookmarksPage from "./pages/bookmarksPage";
 import ProfilePage from "./pages/profilePage";
-import { selectLoggedUser, useGetUserQuery } from "./features/auth/userSlice";
-import { useAppSelector } from "./redux/hooks";
+import {
+  fetchCurrentUser,
+  selectCurrentUser,
+  selectUser
+} from "./features/auth/userSlice";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
+import {
+  cartApiSlice,
+  useGetCartProductsQuery
+} from "./features/cart/cartSlice";
+import { createSelector } from "@reduxjs/toolkit";
+import store from "./redux/store";
 
 function App() {
-  const user = useAppSelector(selectLoggedUser);
-  console.log(user);
+  const currentUser = useAppSelector(selectCurrentUser);
+  const { data: cart } = useGetCartProductsQuery({
+    userId: currentUser?._id || ""
+  });
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />
