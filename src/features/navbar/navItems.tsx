@@ -9,9 +9,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  selectCartQuantity,
+  // selectCartQuantity,
   selectLocalCartQuantity,
-  useGetCartProductsQuery,
   useGetCartQuery
 } from "../cart/cartSlice";
 import { TEST_USER_ID } from "../api/apiSlice";
@@ -30,8 +29,8 @@ const NavItems = () => {
   const currentUser = useAppSelector(selectCurrentUser);
   const localQuantity = useAppSelector(selectLocalCartQuantity);
 
-  const quantity =
-    useAppSelector(selectCartQuantity(currentUser?._id || "")) || localQuantity;
+  const quantity = 1337;
+  // useAppSelector(selectCartQuantity(currentUser?._id || "")) || localQuantity;
 
   const [showAuth, setShowAuth] = useState(false);
 

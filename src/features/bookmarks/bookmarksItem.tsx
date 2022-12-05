@@ -7,10 +7,7 @@ import { Product } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";
 import { TEST_USER_ID } from "../api/apiSlice";
 import styles from "./bookmarks.module.scss";
-import {
-  useGetBookmarksQuery,
-  useUpdateBookmarsMutation
-} from "./bookmarksSlice";
+import { useUpdateBookmarsMutation } from "./bookmarksSlice";
 
 interface Props {
   product: Product;
@@ -24,35 +21,27 @@ const BookmarksItem: React.FC<Props> = ({ product }) => {
     "/" +
     product._id;
 
-  const [updateBooksmarks] = useUpdateBookmarsMutation();
-  const { data: bookmarks } = useGetBookmarksQuery({
-    userId: TEST_USER_ID
-  });
-
   const handleBookmarks = (action: "add" | "remove") => {
     return function () {
-      if (!bookmarks) return;
-      let newProducts = [...bookmarks.products].map(
-        (bookmarkItem) => bookmarkItem._id
-      );
-
-      switch (action) {
-        case "add": {
-          const isAdded = newProducts.find(
-            (productId) => productId === product._id
-          );
-          if (isAdded) return;
-          newProducts.push(product._id);
-          break;
-        }
-        case "remove": {
-          newProducts = newProducts.filter(
-            (productId) => productId !== product._id
-          );
-          break;
-        }
-      }
-      updateBooksmarks({ userId: TEST_USER_ID, products: newProducts });
+      // if (!bookmarks) return;
+      // let newProducts = [...bookmarks].map((bookmarkItem) => bookmarkItem._id);
+      // switch (action) {
+      //   case "add": {
+      //     const isAdded = newProducts.find(
+      //       (productId) => productId === product._id
+      //     );
+      //     if (isAdded) return;
+      //     newProducts.push(product._id);
+      //     break;
+      //   }
+      //   case "remove": {
+      //     newProducts = newProducts.filter(
+      //       (productId) => productId !== product._id
+      //     );
+      //     break;
+      //   }
+      // }
+      // updateBooksmarks({ userId: TEST_USER_ID, products: newProducts });
     };
   };
 

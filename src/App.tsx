@@ -8,23 +8,16 @@ import AddProduct from "./features/products/addProduct";
 import CartPage from "./pages/cartPage";
 import BookmarksPage from "./pages/bookmarksPage";
 import ProfilePage from "./pages/profilePage";
-import {
-  fetchCurrentUser,
-  selectCurrentUser,
-  selectUser
-} from "./features/auth/userSlice";
+import { selectCurrentUser } from "./features/auth/userSlice";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
-import {
-  cartApiSlice,
-  useGetCartProductsQuery
-} from "./features/cart/cartSlice";
-import { createSelector } from "@reduxjs/toolkit";
+import { selectLocalCart, useGetCartQuery } from "./features/cart/cartSlice";
 import store from "./redux/store";
 
 function App() {
   const currentUser = useAppSelector(selectCurrentUser);
-  const { data: cart } = useGetCartProductsQuery({
-    userId: currentUser?._id || ""
+  const localCart = useAppSelector(selectLocalCart);
+  const { data: cart = localCart } = useGetCartQuery(currentUser?._id || "", {
+    skip: !currentUser
   });
 
   return (

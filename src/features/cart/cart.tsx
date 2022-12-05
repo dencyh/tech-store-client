@@ -1,15 +1,15 @@
 import { faBan, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useMemo } from "react";
 import styles from "./cart.module.scss";
 import CartSummary from "./cartSummary";
 import CartItem from "./cartItem";
-import { TEST_USER_ID } from "../api/apiSlice";
+import { apiSlice, TEST_USER_ID } from "../api/apiSlice";
 import {
   selectCartResult,
   selectLocalCart,
-  useGetCartProductsQuery
+  useGetProductsByIdsQuery
 } from "./cartSlice";
 import { Spinner } from "../../components/ui/spinner/spinner";
 import { useAppSelector } from "../../redux/hooks";
@@ -17,14 +17,24 @@ import { selectCurrentUser, selectUser } from "../auth/userSlice";
 
 const Cart = () => {
   const currentUser = useAppSelector(selectCurrentUser);
-  if (!currentUser) return <h1>Войдите, чтобы просматривать корзину</h1>;
 
-  const cart = useAppSelector(selectCartResult(currentUser?._id || "")).data;
+  const localCart = useAppSelector(selectLocalCart);
+  // const { data: cart } = useAppSelector(
+  //   selectCartResult(currentUser?._id || "")
+  // );
 
-  if (!cart?.productsInCart) return <Spinner text="Loading cart" />;
+  // if (cart) {
+  console.log("↓".repeat(50), "LOCAL");
+  console.log(localCart);
+
+  //   console.log("↓".repeat(50), "API");
+  //   console.log(cart);
+  // }
+
+  // if (!cart) return <Spinner text="Loading cart" />;
   return (
     <div className={styles.container}>
-      <div className={styles.products}>
+      {/* <div className={styles.products}>
         <ul className={styles.products__list}>
           {cart.productsInCart.map((cartItem) => (
             <CartItem
@@ -35,7 +45,7 @@ const Cart = () => {
           ))}
         </ul>
       </div>
-      <CartSummary />
+      <CartSummary /> */}
     </div>
   );
 };

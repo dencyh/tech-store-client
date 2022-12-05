@@ -10,8 +10,8 @@ import { formatPrice } from "../../utils/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
   productDecrement,
-  ProductInCart,
   productIncrement,
+  selectCart,
   selectLocalCart,
   useGetCartQuery,
   useUpdateCartMutation
@@ -19,10 +19,7 @@ import {
 import { TEST_USER_ID } from "../api/apiSlice";
 import QuantityButton from "../../components/ui/quantityButton/quantityButton";
 import KeyFeatures from "./keyFeatures";
-import {
-  useGetBookmarksQuery,
-  useUpdateBookmarsMutation
-} from "../bookmarks/bookmarksSlice";
+import { useUpdateBookmarsMutation } from "../bookmarks/bookmarksSlice";
 import BookmarkButton from "../../components/ui/bookmarkButton/bookmarkButton";
 import store from "../../redux/store";
 import { selectCurrentUser } from "../auth/userSlice";
@@ -40,14 +37,7 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
   const [updateCart] = useUpdateCartMutation();
   const [updateBooksmarks] = useUpdateBookmarsMutation();
 
-  const { data: cart, isLoading: cartLoading } = useGetCartQuery({
-    userId: TEST_USER_ID
-  });
-  const { data: bookmarks, isLoading: bookmarksLoading } = useGetBookmarksQuery(
-    {
-      userId: TEST_USER_ID
-    }
-  );
+  const { data: cart } = useGetCartQuery(TEST_USER_ID, { skip: !currentUser });
 
   const quantity = currentUser
     ? product.quantity
@@ -55,71 +45,65 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
 
   const handleBookmarks = (action: "add" | "remove") => {
     return function () {
-      if (!bookmarks) return;
-      let newProducts = [...bookmarks.products].map(
-        (bookmarkItem) => bookmarkItem._id
-      );
-
-      switch (action) {
-        case "add": {
-          const isAdded = newProducts.find(
-            (productId) => productId === product._id
-          );
-          if (isAdded) return;
-          newProducts.push(product._id);
-          break;
-        }
-        case "remove": {
-          newProducts = newProducts.filter(
-            (productId) => productId !== product._id
-          );
-          break;
-        }
-      }
-      updateBooksmarks({ userId: TEST_USER_ID, products: newProducts });
+      // if (!bookmarks) return;
+      // let newProducts = [...bookmarks].map((bookmarkItem) => bookmarkItem._id);
+      // switch (action) {
+      //   case "add": {
+      //     const isAdded = newProducts.find(
+      //       (productId) => productId === product._id
+      //     );
+      //     if (isAdded) return;
+      //     newProducts.push(product._id);
+      //     break;
+      //   }
+      //   case "remove": {
+      //     newProducts = newProducts.filter(
+      //       (productId) => productId !== product._id
+      //     );
+      //     break;
+      //   }
+      // }
+      // updateBooksmarks({ userId: TEST_USER_ID, products: newProducts });
     };
   };
 
   const handleQuantityUpdate = (action: "increment" | "decrement") => {
     return function () {
-      if (!cart) return;
-      const { productsInCart } = cart;
-
-      let newCart = [...productsInCart];
-
-      const inCart = productsInCart.find(
-        (cartItem) => cartItem.productId === product._id
-      );
-
-      switch (action) {
-        case "increment": {
-          if (!inCart) {
-            newCart.push({ productId: product._id, quantity: 1 });
-          } else {
-            newCart = productsInCart.map((cartItem) =>
-              cartItem.productId === product._id
-                ? { ...cartItem, quantity: cartItem.quantity + 1 }
-                : cartItem
-            );
-          }
-          break;
-        }
-        case "decrement": {
-          if (inCart && inCart.quantity === 1) {
-            newCart = productsInCart.filter(
-              (cartItem) => cartItem.productId !== product._id
-            );
-          } else {
-            newCart = productsInCart.map((cartItem) =>
-              cartItem.productId === product._id
-                ? { ...cartItem, quantity: cartItem.quantity - 1 }
-                : cartItem
-            );
-          }
-          break;
-        }
-      }
-      updateCart({ userId: TEST_USER_ID, productsInCart: newCart });
+      // if (!cart) return;
+      // const { productsInCart } = cart;
+      // let newCart = [...productsInCart];
+      // const inCart = productsInCart.find(
+      //   (cartItem) => cartItem.productId === product._id
+      // );
+      // switch (action) {
+      //   case "increment": {
+      //     if (!inCart) {
+      //       newCart.push({ productId: product._id, quantity: 1 });
+      //     } else {
+      //       newCart = productsInCart.map((cartItem) =>
+      //         cartItem.productId === product._id
+      //           ? { ...cartItem, quantity: cartItem.quantity + 1 }
+      //           : cartItem
+      //       );
+      //     }
+      //     break;
+      //   }
+      //   case "decrement": {
+      //     if (inCart && inCart.quantity === 1) {
+      //       newCart = productsInCart.filter(
+      //         (cartItem) => cartItem.productId !== product._id
+      //       );
+      //     } else {
+      //       newCart = productsInCart.map((cartItem) =>
+      //         cartItem.productId === product._id
+      //           ? { ...cartItem, quantity: cartItem.quantity - 1 }
+      //           : cartItem
+      //       );
+      //     }
+      //     break;
+      //   }
+      // }
+      // updateCart({ userId: TEST_USER_ID, productsInCart: newCart });
     };
   };
 

@@ -1,13 +1,17 @@
-import { toast } from "react-toastify";
+import { TEST_USER_ID } from "./../api/apiSlice";
+import { RootState } from "./../../redux/store";
+import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 import { Product } from "../../types/products/core.product";
 import { apiSlice } from "../api/apiSlice";
+import type { EntityState } from "@reduxjs/toolkit";
 
-export interface Bookmarks {
-  userId: string;
-  products: Product[];
-}
+export const bookmarksAdapter = createEntityAdapter<Product>({
+  selectId: (product) => product._id
+});
 
-export const extendedApiSlice = apiSlice.injectEndpoints({
+export const initialState = bookmarksAdapter.getInitialState();
+
+export const bookmarksApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     updateBookmars: builder.mutation<
       Product[],
@@ -21,15 +25,42 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Bookmarks", "Product"]
     }),
-    getBookmarks: builder.query<Bookmarks, { userId: string }>({
-      query: ({ userId }) => ({
+    getBookmarks: builder.query<EntityState<Product>, string>({
+      query: (userId) => ({
         url: `/bookmarks/${userId}`,
         credentials: "include"
       }),
+      transformResponse: (response: Product[]) => {
+        return bookmarksAdapter.setAll(initialState, response);
+      },
       providesTags: ["Bookmarks"]
     })
   })
 });
+// export const getSelectors = (userId: string) => {
+//   const selectBookmarksResult =
+//     bookmarksApiSlice.endpoints.getBookmarks.select(userId);
 
+//   const adapterSelectors = createSelector(selectBookmarksResult, (result) =>
+//     bookmarksAdapter.getSelectors(() => result?.data ?? initialState)
+//   );
+// };
 export const { useUpdateBookmarsMutation, useGetBookmarksQuery } =
-  extendedApiSlice;
+  bookmarksApiSlice;
+
+export const getBookmarksSelectors = (userId: string) => {
+  const selectBookmarksResult =
+    bookmarksApiSlice.endpoints.getBookmarks.select(userId);
+
+  const selectBookmarksData = createSelector(
+    selectBookmarksResult,
+    (bookmarksResult) => bookmarksResult.data
+  );
+  const { selectAll: selectAllBookmarks } = bookmarksAdapter.getSelectors(
+    (state: RootState) => selectBookmarksData(state) ?? initialState
+  );
+
+  return {
+    selectAllBookmarks
+  };
+};

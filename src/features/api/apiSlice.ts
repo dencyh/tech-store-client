@@ -1,4 +1,3 @@
-import { ProductInCart } from "./../cart/cartSlice";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { method } from "lodash";
 import { Product } from "../../types/products/core.product";

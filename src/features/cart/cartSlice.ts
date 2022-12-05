@@ -1,4 +1,3 @@
-import { TEST_USER_ID } from "./../api/apiSlice";
 import {
   createSlice,
   createEntityAdapter,
@@ -9,31 +8,60 @@ import { RootState } from "../../redux/store";
 import { apiSlice } from "../api/apiSlice";
 import { toast } from "react-toastify";
 import { Product } from "../../types/products/core.product";
-import { selectCurrentUser, selectUserResult } from "../auth/userSlice";
 import type { EntityState } from "@reduxjs/toolkit";
 
-export interface ProductInCart {
+export interface ClientCartItem {
   productId: string;
   quantity: number;
 }
 
-export interface Cart {
-  userId: string;
-  productsInCart: ProductInCart[];
+export interface CartItem {
+  product: Product;
+  quantity: number;
 }
+
+export interface ClientCart {
+  userId: string;
+  productsInCart: ClientCartItem[];
+}
+
+const localCartAdapter = createEntityAdapter<ClientCartItem>({
+  selectId: (product) => product.productId
+});
+
+const cartAdapter = createEntityAdapter<CartItem>({
+  selectId: (cartItem) => cartItem.product._id
+});
+
+const localCart = JSON.parse(
+  localStorage.getItem("bts_cart") || "false"
+) as EntityState<ClientCartItem>;
+
+const initialState = localCart || localCartAdapter.getInitialState();
 
 export const cartApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getCart: builder.query<Cart, { userId: string }>({
-      query: ({ userId }) => ({
+    getCart: builder.query<EntityState<CartItem>, string>({
+      query: (userId) => ({
         url: `/cart/${userId}`,
         credentials: "include"
       }),
+      transformResponse: (response: CartItem[]) => {
+        const initialState = cartAdapter.getInitialState();
+        return cartAdapter.setAll(initialState, response);
+      },
       providesTags: ["Cart"]
     }),
+    getProductsByIds: builder.query<Product[], string[]>({
+      query: (cart) => ({
+        url: `/products/cart`,
+        method: "POST",
+        body: cart
+      })
+    }),
     updateCart: builder.mutation<
-      Cart,
-      { userId: string; productsInCart: ProductInCart[] }
+      ClientCart,
+      { userId: string; productsInCart: ClientCartItem[] }
     >({
       query: ({ userId, productsInCart }) => ({
         url: `/cart/${userId}`,
@@ -41,72 +69,60 @@ export const cartApiSlice = apiSlice.injectEndpoints({
         body: { productsInCart },
         credentials: "include"
       }),
-      async onQueryStarted(
-        { userId, productsInCart },
-        { dispatch, queryFulfilled }
-      ) {
-        const patchResult = dispatch(
-          cartApiSlice.util.updateQueryData("getCart", { userId }, (draft) => {
-            draft.productsInCart = productsInCart;
-          })
-        );
-        try {
-          await queryFulfilled;
-        } catch {
-          toast.error("Не удалось обновить корзину. Попробуйте позже");
-          patchResult.undo();
-        }
-      },
+      // async onQueryStarted(
+      //   { userId, productsInCart },
+      //   { dispatch, queryFulfilled }
+      // ) {
+      //   const patchResult = dispatch(
+      //     cartApiSlice.util.updateQueryData("getCart", { userId }, (draft) => {
+      //       draft.productsInCart = productsInCart;
+      //     })
+      //   );
+      //   try {
+      //     await queryFulfilled;
+      //   } catch {
+      //     toast.error("Не удалось обновить корзину. Попробуйте позже");
+      //     patchResult.undo();
+      //   }
+      // },
       invalidatesTags: ["Cart"]
-    }),
-    getCartProducts: builder.query<
-      {
-        userId: string;
-        productsInCart: { quantity: number; productId: Product }[];
-      },
-      { userId: string }
-    >({
-      query: ({ userId }) => ({
-        url: `/cart/${userId}`,
-        method: "POST",
-        credentials: "include"
-      }),
-      providesTags: ["Cart"]
     })
+    // getCartProducts: builder.query<any, { userId: string }>({
+    //   query: ({ userId }) => ({
+    //     url: `/cart/${userId}`,
+    //     method: "POST",
+    //     credentials: "include"
+    //   }),
+    //   transformResponse: (response: CartItem[]) => {
+    //     const initialState = cartAdapter.getInitialState();
+    //     return cartAdapter.setAll(initialState, response);
+    //   },
+    //   providesTags: ["Cart"]
+    // })
   })
 });
-
-const cartAdapter = createEntityAdapter<ProductInCart>({
-  selectId: (product) => product.productId
-});
-
-const localCart = JSON.parse(
-  localStorage.getItem("bts_cart") || "false"
-) as EntityState<ProductInCart>;
-
-const initialState = localCart || cartAdapter.getInitialState();
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    productIncrement(state, action: PayloadAction<ProductInCart>) {
+    productIncrement(state, action: PayloadAction<ClientCartItem>) {
       const { productId: productId, quantity } = action.payload;
       const isAdded = state.entities[productId];
 
       if (!!isAdded) {
         isAdded.quantity = isAdded.quantity + quantity;
       } else {
-        cartAdapter.addOne(state, action.payload);
+        localCartAdapter.addOne(state, action.payload);
       }
       localStorage.setItem("bts_cart", JSON.stringify({ ...state }));
     },
-    productDecrement(state, action: PayloadAction<ProductInCart>) {
+    productDecrement(state, action: PayloadAction<ClientCartItem>) {
       const { productId: productId, quantity } = action.payload;
       const isAdded = state.entities[productId];
 
       if (isAdded?.quantity === 1) {
-        cartAdapter.removeOne(state, isAdded.productId);
+        localCartAdapter.removeOne(state, isAdded.productId);
       } else if (!!isAdded) {
         isAdded.quantity -= 1;
       }
@@ -138,20 +154,24 @@ export const selectLocalCartQuantity = (state: RootState) =>
 // );
 
 export const selectCartResult = (userId: string) =>
-  cartApiSlice.endpoints.getCartProducts.select({
-    userId
-  });
+  cartApiSlice.endpoints.getCart.select(userId);
 
-export const selectCartQuantity = (userId: string) =>
-  createSelector(selectCartResult(userId), (cartItems) =>
-    cartItems.data?.productsInCart.reduce(
-      (acc, product) => acc + product.quantity,
-      0
-    )
+export const selectCart = (userId: string) =>
+  createSelector(
+    selectCartResult(userId),
+    (cartResult) => cartResult.data ?? null
   );
+
+// export const selectCartQuantity = (userId: string) =>
+//   createSelector(selectCartResult(userId), (cartItems) =>
+//     cartItems.data?.productsInCart.reduce(
+//       (acc, product) => acc + product.quantity,
+//       0
+//     )
+//   );
 
 export const {
   useGetCartQuery,
-  useGetCartProductsQuery,
-  useUpdateCartMutation
+  useUpdateCartMutation,
+  useGetProductsByIdsQuery
 } = cartApiSlice;
