@@ -5,11 +5,12 @@ import React, { useMemo } from "react";
 import styles from "./cart.module.scss";
 import CartSummary from "./cartSummary";
 import CartItem from "./cartItem";
-import { apiSlice, TEST_USER_ID } from "../api/apiSlice";
+import { apiSlice } from "../api/apiSlice";
 import {
   selectCartResult,
   selectLocalCart,
-  useGetProductsByIdsQuery
+  useGetProductsByIdsQuery,
+  getCartSelectors
 } from "./cartSlice";
 import { Spinner } from "../../components/ui/spinner/spinner";
 import { useAppSelector } from "../../redux/hooks";
@@ -19,33 +20,33 @@ const Cart = () => {
   const currentUser = useAppSelector(selectCurrentUser);
 
   const localCart = useAppSelector(selectLocalCart);
-  // const { data: cart } = useAppSelector(
-  //   selectCartResult(currentUser?._id || "")
-  // );
+  const cart = useAppSelector(
+    getCartSelectors(currentUser?._id || "").selectAllCart
+  );
 
   // if (cart) {
-  console.log("↓".repeat(50), "LOCAL");
-  console.log(localCart);
+  //   console.log("↓".repeat(50), "LOCAL");
+  //   console.log(localCart);
 
   //   console.log("↓".repeat(50), "API");
   //   console.log(cart);
   // }
 
-  // if (!cart) return <Spinner text="Loading cart" />;
+  if (!cart) return <Spinner text="Loading cart" />;
   return (
     <div className={styles.container}>
-      {/* <div className={styles.products}>
+      <div className={styles.products}>
         <ul className={styles.products__list}>
-          {cart.productsInCart.map((cartItem) => (
+          {cart.map((cartItem) => (
             <CartItem
-              key={cartItem.productId._id}
-              product={cartItem.productId}
+              key={cartItem.product._id}
+              product={cartItem.product}
               quantity={cartItem.quantity}
             />
           ))}
         </ul>
       </div>
-      <CartSummary /> */}
+      <CartSummary />
     </div>
   );
 };

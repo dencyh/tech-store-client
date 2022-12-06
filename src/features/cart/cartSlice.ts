@@ -1,17 +1,18 @@
+import { userApiSlice } from "./../auth/userSlice";
 import {
   createSlice,
   createEntityAdapter,
   createSelector
 } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../redux/store";
+import store, { RootState } from "../../redux/store";
 import { apiSlice } from "../api/apiSlice";
 import { toast } from "react-toastify";
 import { Product } from "../../types/products/core.product";
 import type { EntityState } from "@reduxjs/toolkit";
 
 export interface ClientCartItem {
-  productId: string;
+  product: string;
   quantity: number;
 }
 
@@ -26,7 +27,7 @@ export interface ClientCart {
 }
 
 const localCartAdapter = createEntityAdapter<ClientCartItem>({
-  selectId: (product) => product.productId
+  selectId: (product) => product.product
 });
 
 const cartAdapter = createEntityAdapter<CartItem>({
@@ -37,7 +38,8 @@ const localCart = JSON.parse(
   localStorage.getItem("bts_cart") || "false"
 ) as EntityState<ClientCartItem>;
 
-const initialState = localCart || localCartAdapter.getInitialState();
+const initialLocalState = localCart || localCartAdapter.getInitialState();
+const initialState = cartAdapter.getInitialState();
 
 export const cartApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -61,53 +63,42 @@ export const cartApiSlice = apiSlice.injectEndpoints({
     }),
     updateCart: builder.mutation<
       ClientCart,
-      { userId: string; productsInCart: ClientCartItem[] }
+      { userId: string; products: CartItem[] }
     >({
-      query: ({ userId, productsInCart }) => ({
+      query: ({ userId, products }) => ({
         url: `/cart/${userId}`,
         method: "PUT",
-        body: { productsInCart },
+        body: {
+          products: products.map((cartItem) => ({
+            product: cartItem.product._id,
+            quantity: cartItem.quantity
+          }))
+        },
         credentials: "include"
       }),
-      // async onQueryStarted(
-      //   { userId, productsInCart },
-      //   { dispatch, queryFulfilled }
-      // ) {
-      //   const patchResult = dispatch(
-      //     cartApiSlice.util.updateQueryData("getCart", { userId }, (draft) => {
-      //       draft.productsInCart = productsInCart;
-      //     })
-      //   );
-      //   try {
-      //     await queryFulfilled;
-      //   } catch {
-      //     toast.error("Не удалось обновить корзину. Попробуйте позже");
-      //     patchResult.undo();
-      //   }
-      // },
-      invalidatesTags: ["Cart"]
+      async onQueryStarted({ userId, products }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          cartApiSlice.util.updateQueryData("getCart", userId, (draft) => {
+            return cartAdapter.setAll(initialState, products);
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          toast.error("Не удалось обновить корзину. Попробуйте позже");
+          patchResult.undo();
+        }
+      }
     })
-    // getCartProducts: builder.query<any, { userId: string }>({
-    //   query: ({ userId }) => ({
-    //     url: `/cart/${userId}`,
-    //     method: "POST",
-    //     credentials: "include"
-    //   }),
-    //   transformResponse: (response: CartItem[]) => {
-    //     const initialState = cartAdapter.getInitialState();
-    //     return cartAdapter.setAll(initialState, response);
-    //   },
-    //   providesTags: ["Cart"]
-    // })
   })
 });
 
 const cartSlice = createSlice({
   name: "cart",
-  initialState,
+  initialState: initialLocalState,
   reducers: {
     productIncrement(state, action: PayloadAction<ClientCartItem>) {
-      const { productId: productId, quantity } = action.payload;
+      const { product: productId, quantity } = action.payload;
       const isAdded = state.entities[productId];
 
       if (!!isAdded) {
@@ -118,11 +109,11 @@ const cartSlice = createSlice({
       localStorage.setItem("bts_cart", JSON.stringify({ ...state }));
     },
     productDecrement(state, action: PayloadAction<ClientCartItem>) {
-      const { productId: productId, quantity } = action.payload;
+      const { product: productId, quantity } = action.payload;
       const isAdded = state.entities[productId];
 
       if (isAdded?.quantity === 1) {
-        localCartAdapter.removeOne(state, isAdded.productId);
+        localCartAdapter.removeOne(state, isAdded.product);
       } else if (!!isAdded) {
         isAdded.quantity -= 1;
       }
@@ -142,17 +133,6 @@ export const selectLocalCartQuantity = (state: RootState) =>
     0
   );
 
-// export const {
-//   selectAll: selectAllProducts,
-//   selectById: selectProductById,
-//   selectIds: selectProductIds
-// } = cartAdapter.getSelectors((state: RootState) => state.cart);
-
-// export const selectCartQuantity = createSelector(
-//   selectAllProducts,
-//   (products) => products.reduce((acc, product) => acc + product.quantity, 0)
-// );
-
 export const selectCartResult = (userId: string) =>
   cartApiSlice.endpoints.getCart.select(userId);
 
@@ -162,16 +142,24 @@ export const selectCart = (userId: string) =>
     (cartResult) => cartResult.data ?? null
   );
 
-// export const selectCartQuantity = (userId: string) =>
-//   createSelector(selectCartResult(userId), (cartItems) =>
-//     cartItems.data?.productsInCart.reduce(
-//       (acc, product) => acc + product.quantity,
-//       0
-//     )
-//   );
-
 export const {
   useGetCartQuery,
   useUpdateCartMutation,
   useGetProductsByIdsQuery
 } = cartApiSlice;
+
+export const getCartSelectors = (userId: string) => {
+  const selectCartResult = cartApiSlice.endpoints.getCart.select(userId);
+
+  const selectCartData = createSelector(
+    selectCartResult,
+    (result) => result.data
+  );
+  const { selectAll: selectAllCart } = cartAdapter.getSelectors(
+    (state: RootState) => selectCartData(state) ?? initialState
+  );
+
+  return {
+    selectAllCart
+  };
+};

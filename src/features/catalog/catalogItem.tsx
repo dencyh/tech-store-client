@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import styles from "./catalog.module.scss";
@@ -9,6 +9,9 @@ import { Product } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
+  CartItem,
+  ClientCartItem,
+  getCartSelectors,
   productDecrement,
   productIncrement,
   selectCart,
@@ -16,13 +19,17 @@ import {
   useGetCartQuery,
   useUpdateCartMutation
 } from "../cart/cartSlice";
-import { TEST_USER_ID } from "../api/apiSlice";
 import QuantityButton from "../../components/ui/quantityButton/quantityButton";
 import KeyFeatures from "./keyFeatures";
-import { useUpdateBookmarsMutation } from "../bookmarks/bookmarksSlice";
+import {
+  getBookmarksSelectors,
+  useGetBookmarksQuery,
+  useUpdateBookmarksMutation
+} from "../bookmarks/bookmarksSlice";
 import BookmarkButton from "../../components/ui/bookmarkButton/bookmarkButton";
 import store from "../../redux/store";
 import { selectCurrentUser } from "../auth/userSlice";
+import AddToCartButton from "../../components/ui/inCartButton/addToCartButton";
 
 interface Props {
   product: Product & { quantity: number; bookmarks: boolean };
@@ -35,75 +42,82 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
   const localCart = useAppSelector(selectLocalCart);
 
   const [updateCart] = useUpdateCartMutation();
-  const [updateBooksmarks] = useUpdateBookmarsMutation();
+  const [updateBooksmarks] = useUpdateBookmarksMutation();
 
-  const { data: cart } = useGetCartQuery(TEST_USER_ID, { skip: !currentUser });
+  const bookmarks = useAppSelector(
+    getBookmarksSelectors(currentUser?._id || "").selectAllBookmarks
+  );
+
+  const { data: cart } = useGetCartQuery(currentUser?._id || "");
+  const productsInCart = useAppSelector(
+    getCartSelectors(currentUser?._id || "").selectAllCart
+  );
 
   const quantity = currentUser
     ? product.quantity
     : localCart.entities[product._id]?.quantity || 0;
 
-  const handleBookmarks = (action: "add" | "remove") => {
-    return function () {
-      // if (!bookmarks) return;
-      // let newProducts = [...bookmarks].map((bookmarkItem) => bookmarkItem._id);
-      // switch (action) {
-      //   case "add": {
-      //     const isAdded = newProducts.find(
-      //       (productId) => productId === product._id
-      //     );
-      //     if (isAdded) return;
-      //     newProducts.push(product._id);
-      //     break;
-      //   }
-      //   case "remove": {
-      //     newProducts = newProducts.filter(
-      //       (productId) => productId !== product._id
-      //     );
-      //     break;
-      //   }
-      // }
-      // updateBooksmarks({ userId: TEST_USER_ID, products: newProducts });
-    };
-  };
+  const handleBookmarks = useCallback(
+    (action: "add" | "remove") => {
+      return function () {
+        if (!bookmarks) return;
+        let newList = [...bookmarks].map((product) => product._id);
+
+        switch (action) {
+          case "add": {
+            newList.push(product._id);
+            break;
+          }
+          case "remove": {
+            newList = newList.filter((productId) => productId !== product._id);
+            break;
+          }
+        }
+        console.log(bookmarks);
+        currentUser
+          ? updateBooksmarks({ userId: currentUser._id, products: newList })
+          : console.log("local bookmark");
+      };
+    },
+    [bookmarks, product, currentUser]
+  );
 
   const handleQuantityUpdate = (action: "increment" | "decrement") => {
     return function () {
-      // if (!cart) return;
-      // const { productsInCart } = cart;
-      // let newCart = [...productsInCart];
-      // const inCart = productsInCart.find(
-      //   (cartItem) => cartItem.productId === product._id
-      // );
-      // switch (action) {
-      //   case "increment": {
-      //     if (!inCart) {
-      //       newCart.push({ productId: product._id, quantity: 1 });
-      //     } else {
-      //       newCart = productsInCart.map((cartItem) =>
-      //         cartItem.productId === product._id
-      //           ? { ...cartItem, quantity: cartItem.quantity + 1 }
-      //           : cartItem
-      //       );
-      //     }
-      //     break;
-      //   }
-      //   case "decrement": {
-      //     if (inCart && inCart.quantity === 1) {
-      //       newCart = productsInCart.filter(
-      //         (cartItem) => cartItem.productId !== product._id
-      //       );
-      //     } else {
-      //       newCart = productsInCart.map((cartItem) =>
-      //         cartItem.productId === product._id
-      //           ? { ...cartItem, quantity: cartItem.quantity - 1 }
-      //           : cartItem
-      //       );
-      //     }
-      //     break;
-      //   }
-      // }
-      // updateCart({ userId: TEST_USER_ID, productsInCart: newCart });
+      if (!cart) return;
+      let newCart: CartItem[] = [...productsInCart];
+      const inCart = cart.entities[product._id];
+      switch (action) {
+        case "increment": {
+          if (!inCart) {
+            newCart.push({ product: product, quantity: 1 });
+          } else {
+            newCart = productsInCart.map((cartItem) =>
+              cartItem.product._id === product._id
+                ? { ...cartItem, quantity: cartItem.quantity + 1 }
+                : cartItem
+            );
+          }
+          break;
+        }
+        case "decrement": {
+          if (inCart && inCart.quantity === 1) {
+            newCart = newCart.filter(
+              (cartItem) => cartItem.product._id !== product._id
+            );
+          } else {
+            newCart = newCart.map((cartItem) =>
+              cartItem.product._id === product._id
+                ? { ...cartItem, quantity: cartItem.quantity - 1 }
+                : cartItem
+            );
+          }
+          break;
+        }
+      }
+      currentUser
+        ? updateCart({ userId: currentUser._id, products: newCart })
+        : console.log("local cart action");
     };
   };
 
@@ -152,21 +166,11 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
         </div>
 
         {quantity < 1 ? (
-          <button
-            className={styles.btn}
-            onClick={() => {
-              handleQuantityUpdate("increment")();
-              console.log("add to cart");
-              dispatch(
-                productIncrement({ productId: product._id, quantity: 1 })
-              );
-            }}
-          >
-            <span className={styles.btn__icon}>
-              <FontAwesomeIcon icon={faCartShopping} />
-            </span>
-            <span>В корзину</span>
-          </button>
+          <AddToCartButton
+            onAdd={handleQuantityUpdate("increment")}
+            onRemove={handleQuantityUpdate("decrement")}
+            inCart={!!cart?.entities[product._id]}
+          />
         ) : (
           <div className={styles.btn__container}>
             <QuantityButton
@@ -177,7 +181,7 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
                   : () =>
                       dispatch(
                         productIncrement({
-                          productId: product._id,
+                          product: product._id,
                           quantity: 1
                         })
                       )
@@ -188,7 +192,7 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
                   : () =>
                       dispatch(
                         productDecrement({
-                          productId: product._id,
+                          product: product._id,
                           quantity: 1
                         })
                       )

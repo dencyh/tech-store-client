@@ -1,4 +1,3 @@
-import { TEST_USER_ID } from "./../api/apiSlice";
 import { RootState } from "./../../redux/store";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 import { Product } from "../../types/products/core.product";
@@ -13,7 +12,7 @@ export const initialState = bookmarksAdapter.getInitialState();
 
 export const bookmarksApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    updateBookmars: builder.mutation<
+    updateBookmarks: builder.mutation<
       Product[],
       { userId: string; products: Product["_id"][] }
     >({
@@ -37,17 +36,11 @@ export const bookmarksApiSlice = apiSlice.injectEndpoints({
     })
   })
 });
-// export const getSelectors = (userId: string) => {
-//   const selectBookmarksResult =
-//     bookmarksApiSlice.endpoints.getBookmarks.select(userId);
 
-//   const adapterSelectors = createSelector(selectBookmarksResult, (result) =>
-//     bookmarksAdapter.getSelectors(() => result?.data ?? initialState)
-//   );
-// };
-export const { useUpdateBookmarsMutation, useGetBookmarksQuery } =
+export const { useUpdateBookmarksMutation, useGetBookmarksQuery } =
   bookmarksApiSlice;
 
+// getSelectors wrapper to pass userId
 export const getBookmarksSelectors = (userId: string) => {
   const selectBookmarksResult =
     bookmarksApiSlice.endpoints.getBookmarks.select(userId);

@@ -4,12 +4,18 @@
   margin-top: 20px;
 }
 
+.section {
+  display: flex;
+  justify-content: space-between;
+}
+
 .title {
   margin-bottom: 15px;
 }
 
 .list {
   display: flex;
+  flex-wrap: wrap;
   gap: 60px;
 }
 
@@ -59,4 +65,49 @@
   display: flex;
   margin: 5px 0 10px;
   color: $accent-color;
+}
+
+.cancel_btn {
+  font-size: 1.3em;
+  padding: 0px 5px;
+  border-radius: $border-radius-sm;
+  color: $dark-gray;
+
+  position: absolute;
+  top: 0;
+  right: -15px;
+
+  &:active {
+    transform: scale(96%);
+  }
+
+  &:focus {
+    outline: 2px solid $light-blue;
+  }
+
+  &:hover {
+    color: $dimmed-black;
+  }
+}
+
+.summary {
+  border-left: 1px solid $light-gray;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+
+.summary__count {
+  font-size: 1.2em;
+  font-weight: normal;
+}
+.summary__price {
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.btn {
+  margin-top: 20px;
+  @include btn;
 }

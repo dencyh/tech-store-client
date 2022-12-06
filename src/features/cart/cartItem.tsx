@@ -3,11 +3,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
 import CartQuantity from "../../components/ui/cartQuantity/cartQuantity";
+import { useAppSelector } from "../../redux/hooks";
 import { Product } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";
-import { TEST_USER_ID } from "../api/apiSlice";
+import { selectCurrentUser } from "../auth/userSlice";
 import styles from "./cart.module.scss";
-import { useGetCartQuery, useUpdateCartMutation } from "./cartSlice";
+import {
+  getCartSelectors,
+  useGetCartQuery,
+  useUpdateCartMutation
+} from "./cartSlice";
 
 interface Props {
   product: Product;
@@ -15,17 +20,21 @@ interface Props {
 }
 
 const CartItem: React.FC<Props> = ({ product, quantity }) => {
+  const currentUser = useAppSelector(selectCurrentUser);
   const [updateCart, { isLoading, isError, isSuccess }] =
     useUpdateCartMutation();
-  const { data: cart, isLoading: cartLoading } = useGetCartQuery(TEST_USER_ID);
 
   const imgUrl = process.env.REACT_APP_API_URL + "/" + product.imagePaths[0];
+
+  const cart = useAppSelector(
+    getCartSelectors(currentUser?._id || "").selectAllCart
+  );
 
   const handleQuantityUpdate = (
     action: "increment" | "decrement" | "delete"
   ) => {
     return function () {
-      // if (!cart) return;
+      if (!cart) return;
       // const { productsInCart } = cart;
       // let newCart = [...productsInCart];
       // const inCart = productsInCart.find(
@@ -65,7 +74,7 @@ const CartItem: React.FC<Props> = ({ product, quantity }) => {
       //     break;
       //   }
       // }
-      // updateCart({ userId: TEST_USER_ID, productsInCart: newCart });
+      // updateCart({ userId:, productsInCart: newCart });
     };
   };
 

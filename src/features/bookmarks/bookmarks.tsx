@@ -1,19 +1,12 @@
 import React, { useEffect, useMemo } from "react";
 import { Spinner } from "../../components/ui/spinner/spinner";
-import { TEST_USER_ID } from "../api/apiSlice";
 import BookmarksItem from "./bookmarksItem";
-import {
-  bookmarksAdapter,
-  bookmarksApiSlice,
-  getBookmarksSelectors,
-  initialState,
-  useGetBookmarksQuery
-} from "./bookmarksSlice";
+import { getBookmarksSelectors, useGetBookmarksQuery } from "./bookmarksSlice";
 import styles from "./bookmarks.module.scss";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser } from "../auth/userSlice";
-import { createSelector } from "@reduxjs/toolkit";
-import { RootState } from "../../redux/store";
+import { formatPrice } from "../../utils/formatPrice";
+import plural from "plural-ru";
 
 const Bookmarks = () => {
   const currentUser = useAppSelector(selectCurrentUser);
@@ -25,17 +18,31 @@ const Bookmarks = () => {
   const bookmarks = useAppSelector(
     getBookmarksSelectors(currentUser?._id || "").selectAllBookmarks
   );
-  console.log(bookmarks);
+
+  const count = bookmarks.length;
+  const price = useMemo(
+    () => bookmarks.reduce((acc, product) => acc + product.price, 0),
+    [bookmarks]
+  );
 
   if (isLoading) return <Spinner />;
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Избранное</h1>
-      <ul className={styles.list}>
-        {bookmarks.map((product) => (
-          <BookmarksItem key={product._id} product={product} />
-        ))}
-      </ul>
+      <div className={styles.section}>
+        <ul className={styles.list}>
+          {bookmarks.map((product) => (
+            <BookmarksItem key={product._id} product={product} />
+          ))}
+        </ul>
+        <div className={styles.summary}>
+          <h3 className={styles.summary__count}>
+            {plural(count, "%d продукт", "%d продукта", "%d продуктов")}
+          </h3>
+          <p className={styles.summary__price}>Сумма: {formatPrice(price)}</p>
+          <button className={styles.btn}>Добавить в корзину </button>
+        </div>
+      </div>
     </div>
   );
 };

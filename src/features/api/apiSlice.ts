@@ -2,7 +2,6 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { method } from "lodash";
 import { Product } from "../../types/products/core.product";
 
-export const TEST_USER_ID = "6388acc029fb5aa7d36d6b5e";
 export const USER_IN = false;
 
 export interface Category {

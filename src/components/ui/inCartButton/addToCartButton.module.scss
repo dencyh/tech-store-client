@@ -1,0 +1,16 @@
+@import "../../../assets/styles/variables.scss";
+
+.btn {
+  @include btn;
+}
+
+.btn_active {
+  background-color: $white;
+  color: $dimmed-black;
+  border: 2px solid $dimmed-black;
+}
+
+.btn__icon {
+  margin-right: 14px;
+  font-size: 14px;
+}

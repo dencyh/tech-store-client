@@ -35,6 +35,7 @@ $border-radius-sm: 5px;
 @mixin btn {
   width: 100%;
   height: 40px;
+  padding: 0 10px;
   font-size: 16px;
   font-weight: 600;
   border: none;

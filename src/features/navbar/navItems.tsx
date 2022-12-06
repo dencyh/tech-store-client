@@ -8,12 +8,7 @@ import {
   faHeart
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  // selectCartQuantity,
-  selectLocalCartQuantity,
-  useGetCartQuery
-} from "../cart/cartSlice";
-import { TEST_USER_ID } from "../api/apiSlice";
+import { getCartSelectors, selectLocalCartQuantity } from "../cart/cartSlice";
 import Auth from "../auth/auth";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser } from "../auth/userSlice";
@@ -27,10 +22,13 @@ const menuItems = [
 
 const NavItems = () => {
   const currentUser = useAppSelector(selectCurrentUser);
-  const localQuantity = useAppSelector(selectLocalCartQuantity);
+  const localCartQuantity = useAppSelector(selectLocalCartQuantity);
 
-  const quantity = 1337;
-  // useAppSelector(selectCartQuantity(currentUser?._id || "")) || localQuantity;
+  const cartQuantity = useAppSelector(
+    getCartSelectors(currentUser?._id || "").selectAllCart
+  ).reduce((acc, cartItem) => acc + cartItem.quantity, 0);
+
+  const quantity = currentUser ? cartQuantity : localCartQuantity;
 
   const [showAuth, setShowAuth] = useState(false);
 
