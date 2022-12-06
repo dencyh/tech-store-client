@@ -26,7 +26,8 @@ const CartItem: React.FC<Props> = ({ product, quantity }) => {
 
   const imgUrl = process.env.REACT_APP_API_URL + "/" + product.imagePaths[0];
 
-  const cart = useAppSelector(
+  const { data: cart } = useGetCartQuery(currentUser?._id || "");
+  const cartItems = useAppSelector(
     getCartSelectors(currentUser?._id || "").selectAllCart
   );
 
@@ -34,47 +35,46 @@ const CartItem: React.FC<Props> = ({ product, quantity }) => {
     action: "increment" | "decrement" | "delete"
   ) => {
     return function () {
-      if (!cart) return;
-      // const { productsInCart } = cart;
-      // let newCart = [...productsInCart];
-      // const inCart = productsInCart.find(
-      //   (cartItem) => cartItem.productId === product._id
-      // );
-      // switch (action) {
-      //   case "increment": {
-      //     if (!inCart) {
-      //       newCart.push({ productId: product._id, quantity: 1 });
-      //     } else {
-      //       newCart = productsInCart.map((cartItem) =>
-      //         cartItem.productId === product._id
-      //           ? { ...cartItem, quantity: cartItem.quantity + 1 }
-      //           : cartItem
-      //       );
-      //     }
-      //     break;
-      //   }
-      //   case "decrement": {
-      //     if (inCart && inCart.quantity === 1) {
-      //       newCart = productsInCart.filter(
-      //         (cartItem) => cartItem.productId !== product._id
-      //       );
-      //     } else {
-      //       newCart = productsInCart.map((cartItem) =>
-      //         cartItem.productId === product._id
-      //           ? { ...cartItem, quantity: cartItem.quantity - 1 }
-      //           : cartItem
-      //       );
-      //     }
-      //     break;
-      //   }
-      //   case "delete": {
-      //     newCart = productsInCart.filter(
-      //       (cartItem) => cartItem.productId !== product._id
-      //     );
-      //     break;
-      //   }
-      // }
-      // updateCart({ userId:, productsInCart: newCart });
+      if (!cart || !cartItems) return;
+      let newCart = [...cartItems];
+      const inCart = cart.entities[product._id];
+      switch (action) {
+        case "increment": {
+          if (!inCart) {
+            newCart.push({ product: product, quantity: 1 });
+          } else {
+            newCart = cartItems.map((cartItem) =>
+              cartItem.product._id === product._id
+                ? { ...cartItem, quantity: cartItem.quantity + 1 }
+                : cartItem
+            );
+          }
+          break;
+        }
+        case "decrement": {
+          if (inCart && inCart.quantity === 1) {
+            newCart = newCart.filter(
+              (cartItem) => cartItem.product._id !== product._id
+            );
+          } else {
+            newCart = newCart.map((cartItem) =>
+              cartItem.product._id === product._id
+                ? { ...cartItem, quantity: cartItem.quantity - 1 }
+                : cartItem
+            );
+          }
+          break;
+        }
+        case "delete": {
+          newCart = cartItems.filter(
+            (cartItem) => cartItem.product._id !== product._id
+          );
+          break;
+        }
+      }
+      currentUser
+        ? updateCart({ userId: currentUser._id, products: newCart })
+        : console.log("local cart action");
     };
   };
 
@@ -91,17 +91,24 @@ const CartItem: React.FC<Props> = ({ product, quantity }) => {
           </Link>
           <p className={styles.availability}>В наличии</p>
           <div className={styles.product__controls}>
-            <button className={styles.product__btn}>
+            <button
+              className={styles.product__btn}
+              aria-label="favorite-button"
+            >
               <FontAwesomeIcon
                 icon={faHeart}
                 className={styles.product__icon}
               />
               Посмотреть позже
             </button>
-            <button className={styles.product__btn}>
+            <button
+              className={styles.product__btn}
+              onClick={handleQuantityUpdate("delete")}
+            >
               <FontAwesomeIcon
                 icon={faTrash}
                 className={styles.product__icon}
+                aria-label="delete-button"
               />
               Удалить
             </button>

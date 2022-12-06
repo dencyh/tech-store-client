@@ -175,3 +175,15 @@
 .payment__btn {
   @include btn;
 }
+
+.promo_btn {
+  @include btn;
+  background-color: $white;
+  color: $dimmed-black;
+  margin-top: -5px;
+  padding-top: 10px;
+  margin-bottom: 15px;
+  height: 40px;
+  overflow: visible;
+  cursor: pointer;
+}
