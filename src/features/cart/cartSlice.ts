@@ -163,3 +163,46 @@ export const getCartSelectors = (userId: string) => {
     selectAllCart
   };
 };
+
+// Cart action
+// export const handleQuantityUpdate = (
+//   action: "increment" | "decrement",
+//   { cart, cartItems, product }: { cart: EntityState<CartItem>, cartItems }
+// ) => {
+//   return function () {
+//     if (!cart) return;
+//     let newCart: CartItem[] = [...cartItems];
+//     const inCart = cart.entities[product._id];
+//     switch (action) {
+//       case "increment": {
+//         if (!inCart) {
+//           newCart.push({ product: product, quantity: 1 });
+//         } else {
+//           newCart = cartItems.map((cartItem) =>
+//             cartItem.product._id === product._id
+//               ? { ...cartItem, quantity: cartItem.quantity + 1 }
+//               : cartItem
+//           );
+//         }
+//         break;
+//       }
+//       case "decrement": {
+//         if (inCart && inCart.quantity === 1) {
+//           newCart = newCart.filter(
+//             (cartItem) => cartItem.product._id !== product._id
+//           );
+//         } else {
+//           newCart = newCart.map((cartItem) =>
+//             cartItem.product._id === product._id
+//               ? { ...cartItem, quantity: cartItem.quantity - 1 }
+//               : cartItem
+//           );
+//         }
+//         break;
+//       }
+//     }
+//     currentUser
+//       ? updateCart({ userId: currentUser._id, products: newCart })
+//       : console.log("local cart action");
+//   };
+// };

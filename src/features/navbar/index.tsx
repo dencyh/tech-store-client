@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "../../components/ui/logo/logo";
-import Search from "../../components/common/search/index";
+import Search from "../search/search";
 import styles from "./navbar.module.scss";
 import NavItems from "./navItems";
 

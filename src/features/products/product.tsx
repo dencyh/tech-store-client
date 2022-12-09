@@ -7,8 +7,8 @@ import CardCheckbox from "../../components/common/form/cardCheckbox/cardCheckbox
 import { Spinner } from "../../components/ui/spinner/spinner";
 import NotFound from "../../pages/404";
 import { formatPrice } from "../../utils/formatPrice";
-import { useGetProductQuery } from "../api/apiSlice";
 import styles from "./product.module.scss";
+import { useGetProductQuery } from "./productSlice";
 
 const Product = () => {
   const { id } = useParams();
@@ -17,14 +17,7 @@ const Product = () => {
   const [values, setValues] = useState({
     color: ""
   });
-  const {
-    data: product,
-    isLoading,
-    isSuccess,
-    isError,
-    error
-  } = useGetProductQuery(id);
-  console.log(error);
+  const { data: product, isLoading, isSuccess } = useGetProductQuery(id);
 
   const handleChange = ({ name, value }: { name: string; value: string }) => {
     setValues((prev) => ({ ...prev, [name]: value }));
@@ -106,12 +99,7 @@ const Product = () => {
               </span>
               <span>Добавить в корзину</span>
             </button>
-            <button className={`${styles.btn} ${styles.btn_active}`}>
-              <span className={styles.btn__icon}>
-                <FontAwesomeIcon icon={faCartShopping} />
-              </span>
-              <span>Добавить в корзину</span>
-            </button>
+
             <button className={styles.bookmark}>
               <span className={styles.btn__icon}>
                 <FontAwesomeIcon icon={faBookmark} />

@@ -12,7 +12,7 @@ export interface Smartphone extends CoreProduct {
     cellularNetwork: string;
     simCount: number;
     batteryLife: number;
-    proccesor: string;
+    cpu: string;
     biometrics: Biometrics[];
   };
 }

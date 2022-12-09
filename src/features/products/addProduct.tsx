@@ -7,13 +7,9 @@ import Layout from "../../pages/layout";
 import { translate } from "../../utils/translate";
 import styles from "./product.module.scss";
 
-function isKey<T>(x: T, k: PropertyKey): k is keyof T {
-  return k in x;
-}
-
 const initState = {
   name: "",
-  brandName: "",
+  brand: "",
   color: "",
   price: "",
   releaseDate: "",
@@ -34,7 +30,8 @@ const initState = {
 };
 
 const AddProduct = () => {
-  const category = useParams().category || "";
+  const { type } = useParams();
+  if (!type) return null;
   const [values, setValues] = useState(initState);
 
   const handleChange = ({ name, value }: { name: string; value: string }) => {
@@ -50,15 +47,8 @@ const AddProduct = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const {
-      name,
-      brandName,
-      color,
-      price,
-      releaseDate,
-      description,
-      ...specs
-    } = values;
+    const { name, brand, color, price, releaseDate, description, ...specs } =
+      values;
 
     const {
       screenSize,
@@ -72,9 +62,9 @@ const AddProduct = () => {
     } = specs;
 
     const result = {
-      type: category,
+      type,
       name,
-      brandName,
+      brand,
       color,
       price: Number(price),
       releaseDate: Number(releaseDate),
@@ -96,7 +86,7 @@ const AddProduct = () => {
     <Layout>
       <form className={styles.form} onSubmit={handleSubmit}>
         <h3 className={styles.title} style={{ marginBottom: "20px" }}>
-          {translate("category", category)}
+          {translate("type", type)}
         </h3>
         <div className={styles.grid}>
           {Object.keys(initState).map((key) => {

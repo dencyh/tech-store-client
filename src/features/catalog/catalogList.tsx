@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useGetCategoryProductsQuery } from "../api/apiSlice";
 import CatalogItem from "./catalogItem";
 import styles from "./catalog.module.scss";
 import { Product } from "../../types/products/core.product";
@@ -9,14 +8,22 @@ import { Spinner } from "../../components/ui/spinner/spinner";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser } from "../auth/userSlice";
 import { useGetBookmarksQuery } from "../bookmarks/bookmarksSlice";
+import {
+  getProductsSelectors,
+  useGetCategoryProductsQuery
+} from "../products/productSlice";
 
 const CatalogList = () => {
-  const { category } = useParams();
-  if (!category) return null;
+  const { type } = useParams();
+  if (!type) return null;
 
   const currentUser = useAppSelector(selectCurrentUser);
 
-  const { data: products, isSuccess } = useGetCategoryProductsQuery(category);
+  const filters = useAppSelector((state) => state.filters.filters);
+  const { data, isSuccess, refetch } = useGetCategoryProductsQuery(filters);
+  const products = useAppSelector(
+    getProductsSelectors(filters).selectAllProducts
+  );
 
   const { data: cart, isLoading: cartLoading } = useGetCartQuery(
     currentUser?._id || "",
@@ -44,11 +51,11 @@ const CatalogList = () => {
 
   if (!productsWithQuantityBookmarks) {
     content = <>Loading...</>;
-  } else if (isSuccess) {
+  } else {
     content = (
       <>
         <Link
-          to={`/catalog/${category}/new`}
+          to={`/catalog/${type}/new`}
           className={`${styles.btn} ${styles.new__link}`}
         >
           Добавить продукт

@@ -21,7 +21,7 @@ const Checkbox: React.FC<Props> = ({
         className="check_input"
         type="checkbox"
         name={name}
-        value={value}
+        value={value.toString()}
         onChange={(e) => onChange({ name, value: e.target.value })}
         {...rest}
       />

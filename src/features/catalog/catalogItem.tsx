@@ -29,7 +29,7 @@ import {
 import BookmarkButton from "../../components/ui/bookmarkButton/bookmarkButton";
 import store from "../../redux/store";
 import { selectCurrentUser } from "../auth/userSlice";
-import AddToCartButton from "../../components/ui/inCartButton/addToCartButton";
+import AddToCartButton from "../../components/ui/addToCartButton/addToCartButton";
 
 interface Props {
   product: Product & { quantity: number; bookmarks: boolean };
@@ -42,7 +42,7 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
   const localCart = useAppSelector(selectLocalCart);
 
   const [updateCart] = useUpdateCartMutation();
-  const [updateBooksmarks] = useUpdateBookmarksMutation();
+  const [updateBookmarks] = useUpdateBookmarksMutation();
 
   const bookmarks = useAppSelector(
     getBookmarksSelectors(currentUser?._id || "").selectAllBookmarks
@@ -73,9 +73,8 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
             break;
           }
         }
-        console.log(bookmarks);
         currentUser
-          ? updateBooksmarks({ userId: currentUser._id, products: newList })
+          ? updateBookmarks({ userId: currentUser._id, products: newList })
           : console.log("local bookmark");
       };
     },

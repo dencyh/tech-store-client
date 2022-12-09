@@ -23,9 +23,9 @@ export interface CoreProduct {
   _id: string;
   name: string;
   price: number;
-  brandName: string;
+  brand: string;
   color: ProductColor;
-  description: string;
+  description?: string;
   // rating: Rating;
   releaseDate: number;
   imagePaths: string[];

@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
 import BookmarkButton from "../../components/ui/bookmarkButton/bookmarkButton";
-import AddToCartButton from "../../components/ui/inCartButton/addToCartButton";
+import AddToCartButton from "../../components/ui/addToCartButton/addToCartButton";
 import { useAppSelector } from "../../redux/hooks";
 import { Product } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";

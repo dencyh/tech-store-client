@@ -1,5 +1,5 @@
 const translations: { [key: string]: { [key: string]: string } } = {
-  category: {
+  type: {
     laptops: "Ноутбуки",
     smartphones: "Смартфоны",
     tablets: "Планшеты",
@@ -17,6 +17,24 @@ const translations: { [key: string]: { [key: string]: string } } = {
     email: "Электронная почта",
     password: "Пароль",
     passwordConfirmation: "Подтверждение пароля"
+  },
+  specs: {
+    os: "Операционная система",
+    name: "Название",
+    price: "Цена",
+    releaseDate: "Год выпуска",
+    screenSize: "Диагональ экрана",
+    resolution: "Разрешение",
+    refreshRate: "Частота обновления экрана",
+    cpu: "Процессор",
+    cpuCores: "Количество ядер",
+    gpu: "Видеокарта",
+    ram: "Оперативная память",
+    capacity: "Встроенная память",
+    cellularNetwork: "Стандарт сети",
+    simCount: "Количество сим-карт",
+    batteryLife: "Время автономной работы",
+    biometrics: "Биометрия"
   }
 };
 

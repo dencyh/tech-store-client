@@ -22,7 +22,7 @@ export type ProductColor = z.infer<typeof colorsEnum>;
 export const createProductSchema = {
   name: z.string({ required_error: "Product name is required" }),
   price: z.number({ required_error: "Price is required" }),
-  brandName: z.string({ required_error: "Brand name is required" }),
+  brand: z.string({ required_error: "Brand name is required" }),
   description: z.string().optional(),
   color: colorsEnum,
   releaseDate: z.number({ required_error: "Release date is required" }),

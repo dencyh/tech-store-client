@@ -7,6 +7,8 @@ interface Props {
   onAdd: () => void;
   onRemove?: () => void;
   inCart: boolean;
+  textAdd?: string;
+  textDelete?: string;
 }
 
 const AddToCartButton: React.FC<Props> = ({ onAdd, onRemove, inCart }) => {

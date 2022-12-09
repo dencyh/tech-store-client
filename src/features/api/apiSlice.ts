@@ -22,26 +22,8 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     getCategories: builder.query<Category[], void>({
       query: () => "/categories"
-    }),
-    getCategoryProducts: builder.query<Product[], string>({
-      query: (category) => `/products?type=${category}`
-    }),
-    getProduct: builder.query<Product, string>({
-      query: (id) => `/products/${id}`
-    }),
-    uploadImages: builder.mutation<Product, { id: string; images: FormData }>({
-      query: ({ id, images }) => ({
-        url: `/products/${id}`,
-        method: "PATCH",
-        body: images
-      })
     })
   })
 });
 
-export const {
-  useGetCategoriesQuery,
-  useGetCategoryProductsQuery,
-  useGetProductQuery,
-  useUploadImagesMutation
-} = apiSlice;
+export const { useGetCategoriesQuery } = apiSlice;
