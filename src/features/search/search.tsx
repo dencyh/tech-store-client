@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import styles from "./search.module.scss";
 import SearchButton from "../../components/ui/searchButton";
 import useDebounce from "../../hooks/useDebounce";
-import { useGetCategoryProductsQuery } from "../products/productSlice";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { addFilter } from "../filters/filtersSlice";
+import { setFilters } from "../filters/filtersSlice";
 
 const Search = () => {
   const { type } = useParams();
@@ -20,7 +19,7 @@ const Search = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(addFilter({ type, name: debounced }));
+    dispatch(setFilters({ type, name: debounced }));
   }, [debounced]);
 
   return (

@@ -1,27 +1,32 @@
 import { isArray } from "lodash";
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
+
+import CollapsibleList from "../../components/collapsibleList/collapsibleList";
 import Checkbox from "../../components/common/form/checkbox";
-import Input from "../../components/common/form/input/input";
-import { useAppSelector } from "../../redux/hooks";
+import PriceFilter from "../../components/priceFilter/priceFilter";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { formatSpecs } from "../../utils/formatSpecs";
 import { translate } from "../../utils/translate";
-import { getProductsSelectors } from "../products/productSlice";
-import FilterItem from "./filterItem";
 import styles from "./filters.module.scss";
-import { SpecsVariants, useGetSpecsQuery } from "./filtersSlice";
+import {
+  addFilters,
+  setFilters,
+  SpecsVariants,
+  useGetSpecsQuery
+} from "./filtersSlice";
 
 const initState = {};
+
+type FlatSpecs = Omit<SpecsVariants, "specs"> & SpecsVariants["specs"];
 
 const Filters = () => {
   const { type } = useParams();
   if (!type) return null;
 
-  const [value, setValue] = useState({});
-
   const { data: specsData = {} as SpecsVariants } = useGetSpecsQuery(type);
   const specs = useMemo(() => {
-    if (!specsData?._id) return null;
+    if (!specsData?._id) return {} as FlatSpecs;
     const { _id, specs, ...rest } = specsData;
 
     const flatObj = { ...rest, ...specs };
@@ -40,85 +45,67 @@ const Filters = () => {
           console.log("something else");
           return -1;
         }
-        // console.log(test);
-        // return 1;
       });
     }
-
-    console.log(output);
 
     return flatObj;
   }, [specsData]);
 
-  const handleChange = ({ name, value }: { name: string; value: string }) => {
-    console.log(value);
-    setValue((prev) => ({ ...prev, [name]: value }));
-  };
+  const [values, setValues] = useState<{} | typeof specs>({});
+  console.log(values);
 
-  const filters = useAppSelector((state) => state.filters.filters);
-  const products = useAppSelector(
-    getProductsSelectors(filters).selectAllProducts
+  const handleChange = useCallback(
+    ({ name, value }: { name: string; value: string; checked: boolean }) => {
+      dispatch(addFilters({ name: ["Macbook Air M1", "asus"] }));
+      if (!values[name as keyof typeof values]) {
+        setValues((prev) => {
+          return { ...prev, [name]: [value] };
+        });
+      } else {
+        setValues((prev) => {
+          return {
+            ...prev,
+            [name]: [...prev[name as keyof typeof values], value]
+          };
+        });
+      }
+      // setValues((prev) => {
+      //   return { ...prev, [name]: [value] };
+      // });
+    },
+    []
   );
 
-  const [values, setValues] = useState({});
+  const filters = useAppSelector((state) => state.filters.filters);
+
+  const dispatch = useAppDispatch();
 
   return (
     <aside className={styles.filters}>
       <div className={styles.filter_item}></div>
-      {specs &&
-        Object.keys(specs).map((key) => {
-          return (
-            <div key={key} className={styles.filter_item}>
-              <p className={styles.title}>{translate("specs", key)}</p>
-
-              <ul>
-                {specs[key as keyof typeof specs].map((variant) => (
-                  <li key={variant.toString()} className={styles.variant}>
-                    <Checkbox
-                      name="brand"
-                      value={""}
-                      label={formatSpecs(variant, key)}
-                      onChange={handleChange}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          );
-        })}
-      <div className={styles.filter_item}>
-        <p className={styles.title}>Цена</p>
-        <div className={styles.input_container}>
-          <label htmlFor="min">от</label>
-          <input
-            className={styles.input}
-            id="min"
-            type="text"
-            placeholder="мин."
-          />
-          <label htmlFor="max">до</label>
-          <input
-            className={styles.input}
-            id="max"
-            type="text"
-            placeholder="макс."
-          />
-        </div>
-      </div>
-
-      <div className={styles.filter_item}>
-        <p className={styles.title}>Бренд</p>
-        <ul>
-          <li>
-            <Checkbox
-              name="brand"
-              value={""}
-              label="Apple"
-              onChange={handleChange}
+      {Object.keys(specs).length > 0 &&
+        Object.keys(specs).map((key) =>
+          key === "price" ? (
+            <PriceFilter
+              key={key}
+              values={specs[key]}
+              title={translate("specs", key)}
             />
-          </li>
-        </ul>
-      </div>
+          ) : (
+            <CollapsibleList key={key} title={translate("specs", key)}>
+              {specs[key as keyof typeof specs].map((variant: any) => (
+                <li key={variant.toString()} className={styles.variant}>
+                  <Checkbox
+                    name={key}
+                    value={variant.toString()}
+                    label={formatSpecs(variant, key)}
+                    onChange={handleChange}
+                  />
+                </li>
+              ))}
+            </CollapsibleList>
+          )
+        )}
     </aside>
   );
 };

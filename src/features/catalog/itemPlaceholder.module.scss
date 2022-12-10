@@ -1,23 +1,17 @@
 @import "../../assets/styles/variables.scss";
 
-.link {
-  color: $link-color;
-}
+@keyframes placeholder-glow {
+  from {
+    filter: brightness(100%);
+  }
 
-.container {
-  width: 100%;
-  display: flex;
-  margin-top: 20px;
-}
+  50% {
+    filter: brightness(90%);
+  }
 
-.filters {
-  width: 270px;
-  margin-right: 50px;
-  border-right: 1px solid $light-gray;
-}
-
-.list {
-  flex-basis: 75%;
+  to {
+    filter: brightness(100%);
+  }
 }
 
 .item {
@@ -27,7 +21,7 @@
 
 .img {
   height: 220px;
-  width: 220px;
+  min-width: 220px;
   flex-basis: 20%;
   display: flex;
   justify-content: center;
@@ -35,12 +29,7 @@
 }
 
 .img > img {
-  height: inherit;
-  width: inherit;
-}
-
-.img_sm > img {
-  transform: scale(50%);
+  height: 50%;
 }
 
 .info {
@@ -51,11 +40,31 @@
 .title {
   margin-bottom: 5px;
   font-size: 24px;
+  height: 32px;
+  background-color: $lighter-gray;
+  border-radius: $border-radius-sm;
+  animation: 2.5s infinite placeholder-glow;
 }
 
 .reviews {
   margin-bottom: 10px;
   font-size: 14px;
+  height: 18px;
+  display: flex;
+  gap: 10px;
+}
+.reviews__rating {
+  width: 50px;
+  background: $lighter-gray;
+  border-radius: $border-radius-sm;
+  animation: 2.5s infinite placeholder-glow;
+}
+
+.reviews__count {
+  width: 80px;
+  background: $lighter-gray;
+  border-radius: $border-radius-sm;
+  animation: 2.5s infinite placeholder-glow;
 }
 
 .benefits {
@@ -67,6 +76,8 @@
 
 .badge {
   @include badge($accent-color);
+  color: $accent-color;
+  animation: 2.5s infinite placeholder-glow;
 }
 
 .features {
@@ -88,6 +99,13 @@
   display: flex;
   gap: 6px;
 }
+.feature > span {
+  background-color: $lighter-gray;
+  border-radius: $border-radius-sm;
+  color: $lighter-gray;
+  height: 16px;
+  animation: 2.5s infinite placeholder-glow;
+}
 
 .pricebox {
   flex-basis: 30%;
@@ -99,22 +117,15 @@
 .price {
   display: flex;
   gap: 10px;
-  color: $darker-gray;
   font-weight: 600;
   font-size: 24px;
 }
 
-.price_new {
-  color: $dimmed-black;
-}
-
-.price_old {
-  color: $dark-gray;
-  text-decoration-line: line-through;
-}
-
-.btn__container {
-  height: 40px;
+.price > p {
+  border-radius: $border-radius-sm;
+  background-color: $lighter-gray;
+  color: $lighter-gray;
+  animation: 2.5s infinite placeholder-glow;
 }
 
 .btn {
@@ -130,13 +141,6 @@
   background-color: $secondary-color;
   color: $white;
   display: block;
-}
-
-.new__link {
-  width: 250px;
-  padding: 10px;
-  text-align: center;
-  margin-bottom: 20px;
 }
 
 .btn__icon {
@@ -159,5 +163,14 @@
 .additional_info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 5px;
+}
+
+.additional_info > p {
+  background-color: $lighter-gray;
+  color: $lighter-gray;
+  width: fit-content;
+  font-size: 0.9em;
+  border-radius: $border-radius-sm;
+  animation: 2.5s infinite placeholder-glow;
 }

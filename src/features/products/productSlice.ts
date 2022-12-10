@@ -3,11 +3,7 @@ import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 import { Product } from "../../types/products/core.product";
 import { apiSlice } from "../api/apiSlice";
 import type { EntityState } from "@reduxjs/toolkit";
-import { Filters } from "../filters/filtersSlice";
-
-interface filterParams {
-  [key: string]: string;
-}
+import { FiltersParams } from "../filters/filtersSlice";
 
 export const productsAdapter = createEntityAdapter<Product>({
   selectId: (product) => product._id
@@ -19,17 +15,26 @@ export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCategoryProducts: builder.query<
       EntityState<Product>,
-      filterParams | void
+      FiltersParams | void
     >({
       query: (filters) => {
+        console.log(filters);
         const query = filters
-          ? "?" +
+          ? "" +
             Object.keys(filters)
-              .map((key) => (filters[key] ? `${key}=${filters[key]}` : ""))
+              .map((key) => {
+                if (!filters[key]) return "";
+                const value = filters[key];
+                if (typeof value === "string") {
+                  return `${key}=${value.replaceAll(" ", "%20")}`;
+                }
+                return `${key}=${value.join("%2C").replaceAll(" ", "%20")}`;
+              })
               .join("&")
               .replace(/\&$/, "")
           : "";
-        return `/products${query}`;
+        console.log(query);
+        return `/products?${query}`;
       },
       transformResponse: (response: Product[]) => {
         return productsAdapter.setAll(initialState, response);
@@ -56,7 +61,7 @@ export const {
   useUploadImagesMutation
 } = productsApiSlice;
 
-export const getProductsSelectors = (filters: Filters) => {
+export const getProductsSelectors = (filters: FiltersParams) => {
   const selectProductsResult =
     Object.keys(filters).length > 0
       ? productsApiSlice.endpoints.getCategoryProducts.select(filters)

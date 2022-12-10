@@ -2,18 +2,6 @@ import { Laptop } from "./laptop";
 import { Smartphone } from "./smartphone";
 
 type Rating = 1 | 2 | 3 | 4 | 5;
-type ProductColor =
-  | "белый"
-  | "желтый"
-  | "зеленый"
-  | "золотой"
-  | "коричневый"
-  | "розовый"
-  | "серебристый"
-  | "серый"
-  | "синий"
-  | "фиолетовый"
-  | "черный";
 
 export type Biometrics = "faceId" | "touchId";
 
@@ -24,7 +12,7 @@ export interface CoreProduct {
   name: string;
   price: number;
   brand: string;
-  color: ProductColor;
+  color: string;
   description?: string;
   // rating: Rating;
   releaseDate: number;

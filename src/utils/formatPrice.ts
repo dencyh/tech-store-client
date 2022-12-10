@@ -1,3 +1,3 @@
-export function formatPrice(price: number) {
-  return Intl.NumberFormat("ru-RU").format(price) + " ₽";
+export function formatPrice(price: number, noCurrency: boolean = false) {
+  return Intl.NumberFormat("ru-RU").format(price) + (noCurrency ? "" : "₽");
 }

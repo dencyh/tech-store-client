@@ -5,7 +5,14 @@ interface Props
   label?: string;
   name: string;
   value: string;
-  onChange: ({ name, value }: { name: string; value: string }) => void;
+  onChange: ({
+    name,
+    value
+  }: {
+    name: string;
+    value: string;
+    checked: boolean;
+  }) => void;
 }
 
 const Checkbox: React.FC<Props> = ({
@@ -15,6 +22,7 @@ const Checkbox: React.FC<Props> = ({
   onChange,
   ...rest
 }) => {
+  const [checked, setChecked] = value;
   return (
     <label className="checkbox_label">
       <input
@@ -22,7 +30,7 @@ const Checkbox: React.FC<Props> = ({
         type="checkbox"
         name={name}
         value={value.toString()}
-        onChange={(e) => onChange({ name, value: e.target.value })}
+        onChange={(e) => onChange({ name, value: value, checked: !value })}
         {...rest}
       />
       <span className="custom_checkbox"></span>
@@ -31,4 +39,4 @@ const Checkbox: React.FC<Props> = ({
   );
 };
 
-export default Checkbox;
+export default React.memo(Checkbox);

@@ -3,8 +3,8 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 import { Product } from "../../types/products/core.product";
 
-export interface Filters {
-  [key: string]: string;
+export interface FiltersParams {
+  [key: string]: string | string[];
 }
 
 export type SpecsVariety<T, S> = {
@@ -31,20 +31,23 @@ const filtersApiSlice = apiSlice.injectEndpoints({
 export const { useGetSpecsQuery } = filtersApiSlice;
 
 const initialState = {
-  filters: {} as Filters,
-  complexFilters: {} as Filters
+  filters: {} as FiltersParams,
+  complexFilters: {} as FiltersParams
 };
 
 const filtersSlice = createSlice({
   name: "filters",
   initialState,
   reducers: {
-    addFilter(state, action: PayloadAction<Filters>) {
+    setFilters(state, action: PayloadAction<FiltersParams>) {
       state.filters = action.payload;
+    },
+    addFilters(state, action: PayloadAction<FiltersParams>) {
+      state.filters = { ...state.filters, ...action.payload };
     }
   }
 });
 
-export const { addFilter } = filtersSlice.actions;
+export const { setFilters, addFilters } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

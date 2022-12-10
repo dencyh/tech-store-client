@@ -1,0 +1,24 @@
+@import "../../assets/styles/variables.scss";
+
+.container {
+  margin-bottom: 16px;
+  font-size: 0.9em;
+}
+
+.list {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.title {
+  font-weight: 700;
+  color: $dimmed-black;
+  margin-bottom: 8px;
+}
+
+.btn {
+  margin-top: 5px;
+  margin-left: 24px;
+  color: $blue;
+  text-align: center;
+}

@@ -40,7 +40,9 @@ body {
 // Custom checkbox
 
 .checkbox_label {
-  padding-left: 1.5rem;
+  // padding-left: 1.5rem;
+  display: flex;
+  gap: 4px;
   cursor: pointer;
 }
 
@@ -70,9 +72,10 @@ body {
 }
 
 .custom_checkbox {
+  display: inline-block;
   cursor: pointer;
-  margin-left: -1.5rem;
-  position: absolute;
+  // margin-left: -1.5rem;
+  // position: absolute;
   height: 20px;
   width: 20px;
   background-image: url("../img/checkbox/unchecked.svg");

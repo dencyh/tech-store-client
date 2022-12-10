@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import CatalogItem from "./catalogItem";
 import styles from "./catalog.module.scss";
@@ -12,6 +12,11 @@ import {
   getProductsSelectors,
   useGetCategoryProductsQuery
 } from "../products/productSlice";
+import ItemPlaceholder from "./itemPlaceholder";
+
+const placeholderProducts = Array(5)
+  .fill(0)
+  .map((_, index) => index);
 
 const CatalogList = () => {
   const { type } = useParams();
@@ -20,7 +25,7 @@ const CatalogList = () => {
   const currentUser = useAppSelector(selectCurrentUser);
 
   const filters = useAppSelector((state) => state.filters.filters);
-  const { data, isSuccess, refetch } = useGetCategoryProductsQuery(filters);
+  const { isFetching: productsFetching } = useGetCategoryProductsQuery(filters);
   const products = useAppSelector(
     getProductsSelectors(filters).selectAllProducts
   );
@@ -30,14 +35,15 @@ const CatalogList = () => {
     { skip: !currentUser }
   );
 
+  useEffect(() => {
+    console.log(productsFetching);
+  }, [productsFetching]);
+
   const { data: bookmarks } = useGetBookmarksQuery(currentUser?._id || "", {
     skip: !currentUser
   });
 
   let content;
-  if (!cartLoading) {
-    content = <Spinner />;
-  }
 
   const productsWithQuantityBookmarks = useMemo(
     () =>
@@ -49,25 +55,37 @@ const CatalogList = () => {
     [products, bookmarks, cart]
   );
 
-  if (!productsWithQuantityBookmarks) {
-    content = <>Loading...</>;
+  if (!productsWithQuantityBookmarks || productsFetching) {
+    content = (
+      <>
+        {placeholderProducts.map((index) => (
+          <ItemPlaceholder key={index} />
+        ))}
+      </>
+    );
   } else {
     content = (
       <>
-        <Link
-          to={`/catalog/${type}/new`}
-          className={`${styles.btn} ${styles.new__link}`}
-        >
-          Добавить продукт
-        </Link>
         {productsWithQuantityBookmarks.map((product) => (
-          <CatalogItem key={product._id} product={product} />
+          <>
+            <CatalogItem key={product._id} product={product} />
+          </>
         ))}
       </>
     );
   }
 
-  return <div className={styles.list}>{content}</div>;
+  return (
+    <div className={styles.list}>
+      <Link
+        to={`/catalog/${type}/new`}
+        className={`${styles.btn} ${styles.new__link}`}
+      >
+        Добавить продукт
+      </Link>
+      {content}
+    </div>
+  );
 };
 
 export default CatalogList;

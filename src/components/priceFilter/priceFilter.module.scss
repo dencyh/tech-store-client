@@ -1,0 +1,33 @@
+@import "../../assets/styles/variables.scss";
+
+.container {
+  margin-bottom: 16px;
+  font-size: 0.9em;
+}
+
+.input_container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.input {
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid $light-gray;
+  width: 36%;
+
+  &:hover {
+    border-color: $dark-gray;
+  }
+  &::placeholder {
+    font-size: 0.8em;
+  }
+}
+
+.title {
+  font-weight: 700;
+  color: $dimmed-black;
+  margin-bottom: 8px;
+}

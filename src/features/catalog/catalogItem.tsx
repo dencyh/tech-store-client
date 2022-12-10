@@ -10,11 +10,9 @@ import { formatPrice } from "../../utils/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
   CartItem,
-  ClientCartItem,
   getCartSelectors,
   productDecrement,
   productIncrement,
-  selectCart,
   selectLocalCart,
   useGetCartQuery,
   useUpdateCartMutation
@@ -23,13 +21,13 @@ import QuantityButton from "../../components/ui/quantityButton/quantityButton";
 import KeyFeatures from "./keyFeatures";
 import {
   getBookmarksSelectors,
-  useGetBookmarksQuery,
   useUpdateBookmarksMutation
 } from "../bookmarks/bookmarksSlice";
 import BookmarkButton from "../../components/ui/bookmarkButton/bookmarkButton";
 import store from "../../redux/store";
 import { selectCurrentUser } from "../auth/userSlice";
 import AddToCartButton from "../../components/ui/addToCartButton/addToCartButton";
+import PlaceholderImg from "../../assets/img/placeholder-camera-sm.png";
 
 interface Props {
   product: Product & { quantity: number; bookmarks: boolean };
@@ -122,7 +120,9 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
 
   const image = product.imagePaths ? product.imagePaths[0] : "";
 
-  const url = process.env.REACT_APP_API_URL + "/" + image;
+  const url = image
+    ? process.env.REACT_APP_API_URL + "/" + image
+    : PlaceholderImg;
 
   const productLink =
     "/products/" +
@@ -132,7 +132,7 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
 
   return (
     <div className={styles.item}>
-      <div className={styles.img}>
+      <div className={`${styles.img} ${!image ? styles.img_sm : ""}`}>
         <img src={url} alt={product.name} />
       </div>
       <div className={styles.info}>
@@ -206,7 +206,7 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
           onRemove={handleBookmarks("remove")}
         />
 
-        <div>
+        <div className={styles.additional_info}>
           <p>В наличии</p>
           <p>Доставка 5-7 дней</p>
         </div>

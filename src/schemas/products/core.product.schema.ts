@@ -3,28 +3,12 @@ import { createLaptopInput, createLaptopSchema } from "./laptop.shema";
 import { z } from "zod";
 import { createPhoneInput } from "./phone.shema";
 
-const colorsEnum = z.enum([
-  "белый",
-  "желтый",
-  "зеленый",
-  "золотой",
-  "коричневый",
-  "розовый",
-  "серебристый",
-  "серый",
-  "синий",
-  "фиолетовый",
-  "черный"
-]);
-
-export type ProductColor = z.infer<typeof colorsEnum>;
-
 export const createProductSchema = {
   name: z.string({ required_error: "Product name is required" }),
   price: z.number({ required_error: "Price is required" }),
   brand: z.string({ required_error: "Brand name is required" }),
   description: z.string().optional(),
-  color: colorsEnum,
+  color: z.string(),
   releaseDate: z.number({ required_error: "Release date is required" }),
   imagePaths: z.array(z.string()).optional()
 };
