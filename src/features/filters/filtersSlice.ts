@@ -2,6 +2,7 @@ import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 import { Product } from "../../types/products/core.product";
+import { isEqual } from "lodash";
 
 export interface FiltersParams {
   [key: string]: string | string[];
@@ -31,8 +32,7 @@ const filtersApiSlice = apiSlice.injectEndpoints({
 export const { useGetSpecsQuery } = filtersApiSlice;
 
 const initialState = {
-  filters: {} as FiltersParams,
-  complexFilters: {} as FiltersParams
+  filters: {} as FiltersParams
 };
 
 const filtersSlice = createSlice({
@@ -44,25 +44,27 @@ const filtersSlice = createSlice({
     },
     toggleFilters(state, action: PayloadAction<FiltersParams>) {
       const newFilter = action.payload;
-      const [[key, value]] = Object.entries(newFilter);
-      if (typeof value !== "string") return;
+      const [[key, jsonValue]] = Object.entries(newFilter);
 
-      const currentArr = state.filters[key];
+      if (typeof jsonValue !== "string") return;
+      const value = JSON.parse(jsonValue);
 
       if (key === "price") {
-        const arr = value.split(",");
-        state.filters[key] = arr;
+        state.filters[key] = value;
         return;
       }
 
+      const currentArr = state.filters[key];
       if (!currentArr) {
         state.filters[key] = [value];
       } else {
         if (!Array.isArray(currentArr)) return;
-        const isAdded = currentArr.find((filter) => filter === value);
+        const isAdded = currentArr.find((filter) => isEqual(filter, value));
 
         if (isAdded) {
-          state.filters[key] = currentArr.filter((filter) => filter !== value);
+          state.filters[key] = currentArr.filter(
+            (filter) => !isEqual(filter, value)
+          );
 
           if (state.filters[key].length === 0) {
             delete state.filters[key];

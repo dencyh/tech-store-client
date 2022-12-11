@@ -11,26 +11,28 @@ interface Props {
 }
 
 const PriceFilter: React.FC<Props> = ({ title, range, onChange }) => {
-  const [values, setValues] = useState({
+  const init = () => ({
     min: 0,
     max: range[range.length - 1]
   });
-  console.log(values);
+
+  const [values, setValues] = useState(init);
+  const [active, setActive] = useState(true);
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setValues((prev) => ({
       ...prev,
-      [e.target.name]:
-        Number(e.target.value) === 0
-          ? range[range.length - 1]
-          : Number(e.target.value)
+      [e.target.name]: Number(e.target.value)
     }));
   };
 
-  const debounced = useDebounce(`${values.min},${values.max}`, 600);
+  const debounced = useDebounce(
+    [values.min || init().min, values.max || init().max],
+    600
+  );
 
   useEffect(() => {
-    onChange({ name: "price", value: debounced });
+    onChange({ name: "price", value: JSON.stringify(debounced) });
   }, [debounced]);
 
   return (

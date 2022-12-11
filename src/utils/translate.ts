@@ -20,6 +20,7 @@ const translations: { [key: string]: { [key: string]: string } } = {
   },
   specs: {
     os: "Операционная система",
+    color: "Цвет",
     name: "Название",
     price: "Цена",
     releaseDate: "Год выпуска",

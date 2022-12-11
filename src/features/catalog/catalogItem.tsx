@@ -138,7 +138,7 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
       <div className={styles.info}>
         <h3 className={styles.title}>
           <Link className={styles.link} to={productLink}>
-            {product.name} {product._id}
+            {product.name}
           </Link>
         </h3>
         <p className={styles.reviews}>

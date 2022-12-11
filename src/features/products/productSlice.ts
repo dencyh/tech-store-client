@@ -1,9 +1,11 @@
+import { isArray } from "lodash";
 import { RootState } from "./../../redux/store";
 import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 import { Product } from "../../types/products/core.product";
 import { apiSlice } from "../api/apiSlice";
 import type { EntityState } from "@reduxjs/toolkit";
 import { FiltersParams } from "../filters/filtersSlice";
+import { useSearchParams } from "react-router-dom";
 
 export const productsAdapter = createEntityAdapter<Product>({
   selectId: (product) => product._id
@@ -18,23 +20,16 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       FiltersParams | void
     >({
       query: (filters) => {
-        console.log(filters);
-        const query = filters
-          ? "" +
-            Object.keys(filters)
-              .map((key) => {
-                if (!filters[key]) return "";
-                const value = filters[key];
-                if (typeof value === "string") {
-                  return `${key}=${value.replaceAll(" ", "%20")}`;
-                }
-                return `${key}=${value.join("%2C").replaceAll(" ", "%20")}`;
-              })
-              .join("&")
-              .replace(/\&$/, "")
-          : "";
-        console.log(query);
-        return `/products?${query}`;
+        let params = new URLSearchParams();
+        if (filters) {
+          for (const key in filters) {
+            const value = filters[key];
+            params.set(key, JSON.stringify(value));
+          }
+        }
+        console.log(params.toString());
+
+        return `/products?${params.toString()}`;
       },
       transformResponse: (response: Product[]) => {
         return productsAdapter.setAll(initialState, response);
