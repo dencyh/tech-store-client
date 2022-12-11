@@ -19,7 +19,7 @@ const Search = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(setFilters({ type, name: debounced }));
+    dispatch(setFilters({ type, search: debounced }));
   }, [debounced]);
 
   return (

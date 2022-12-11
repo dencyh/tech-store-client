@@ -12,17 +12,27 @@
 }
 
 .input {
-  font-size: 16px;
+  font-size: 1em;
   padding: 8px;
   border-radius: 5px;
   border: 1px solid $light-gray;
   width: 36%;
 
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
   &:hover {
     border-color: $dark-gray;
   }
   &::placeholder {
-    font-size: 0.8em;
+    font-size: 1em;
   }
 }
 

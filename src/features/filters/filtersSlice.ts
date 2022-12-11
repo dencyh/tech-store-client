@@ -42,12 +42,39 @@ const filtersSlice = createSlice({
     setFilters(state, action: PayloadAction<FiltersParams>) {
       state.filters = action.payload;
     },
-    addFilters(state, action: PayloadAction<FiltersParams>) {
-      state.filters = { ...state.filters, ...action.payload };
+    toggleFilters(state, action: PayloadAction<FiltersParams>) {
+      const newFilter = action.payload;
+      const [[key, value]] = Object.entries(newFilter);
+      if (typeof value !== "string") return;
+
+      const currentArr = state.filters[key];
+
+      if (key === "price") {
+        const arr = value.split(",");
+        state.filters[key] = arr;
+        return;
+      }
+
+      if (!currentArr) {
+        state.filters[key] = [value];
+      } else {
+        if (!Array.isArray(currentArr)) return;
+        const isAdded = currentArr.find((filter) => filter === value);
+
+        if (isAdded) {
+          state.filters[key] = currentArr.filter((filter) => filter !== value);
+
+          if (state.filters[key].length === 0) {
+            delete state.filters[key];
+          }
+        } else {
+          state.filters[key] = [...currentArr, value];
+        }
+      }
     }
   }
 });
 
-export const { setFilters, addFilters } = filtersSlice.actions;
+export const { setFilters, toggleFilters } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

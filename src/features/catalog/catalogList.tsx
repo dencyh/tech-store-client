@@ -1,10 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import CatalogItem from "./catalogItem";
 import styles from "./catalog.module.scss";
-import { Product } from "../../types/products/core.product";
 import { useGetCartQuery } from "../cart/cartSlice";
-import { Spinner } from "../../components/ui/spinner/spinner";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser } from "../auth/userSlice";
 import { useGetBookmarksQuery } from "../bookmarks/bookmarksSlice";
@@ -35,10 +33,6 @@ const CatalogList = () => {
     { skip: !currentUser }
   );
 
-  useEffect(() => {
-    console.log(productsFetching);
-  }, [productsFetching]);
-
   const { data: bookmarks } = useGetBookmarksQuery(currentUser?._id || "", {
     skip: !currentUser
   });
@@ -55,7 +49,7 @@ const CatalogList = () => {
     [products, bookmarks, cart]
   );
 
-  if (!productsWithQuantityBookmarks || productsFetching) {
+  if (productsFetching) {
     content = (
       <>
         {placeholderProducts.map((index) => (
@@ -67,9 +61,7 @@ const CatalogList = () => {
     content = (
       <>
         {productsWithQuantityBookmarks.map((product) => (
-          <>
-            <CatalogItem key={product._id} product={product} />
-          </>
+          <CatalogItem key={product._id} product={product} />
         ))}
       </>
     );

@@ -1,3 +1,10 @@
-export function formatPrice(price: number, noCurrency: boolean = false) {
-  return Intl.NumberFormat("ru-RU").format(price) + (noCurrency ? "" : "₽");
+type Options = {
+  showCurrency: boolean;
+};
+
+export function formatPrice(price: number, options?: Options) {
+  return (
+    Intl.NumberFormat("ru-RU").format(price) +
+    (options?.showCurrency ? "₽" : "")
+  );
 }

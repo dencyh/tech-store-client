@@ -15,10 +15,10 @@ const ItemPlaceholder = () => {
       </div>
       <div className={styles.info}>
         <h3 className={styles.title}></h3>
-        <p className={styles.reviews}>
+        <div className={styles.reviews}>
           <div className={styles.reviews__rating}></div>{" "}
           <div className={styles.reviews__count}></div>{" "}
-        </p>
+        </div>
 
         <ul className={styles.features}>
           <li className={styles.feature}>
