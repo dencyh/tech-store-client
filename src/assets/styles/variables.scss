@@ -5,6 +5,7 @@ $light-purple: #c6b7ff;
 $light-blue: #8fb3ff;
 $blue: #005ee0;
 $accent-color: #ffd039;
+$yellow: #facc15;
 $light-yellow: #fde68a;
 $white: white;
 $dimmed-black: #1d252c;
@@ -24,6 +25,8 @@ $slate: #94a3b8;
 $width-container: 1440px;
 
 $border-radius-sm: 5px;
+$border-radius-lg: 20px;
+$border-radius-xl: 25px;
 
 // Container
 @mixin container {

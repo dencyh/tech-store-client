@@ -1,0 +1,73 @@
+@import "../../assets/styles/variables.scss";
+
+.container {
+  max-width: 400px;
+  box-shadow: 0 0 8px $light-gray;
+  margin-top: 20px;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.summary {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  background: $light-slate;
+  padding: 10px;
+  border-radius: $border-radius-xl;
+  align-items: center;
+}
+
+.stars {
+  position: relative;
+  display: flex;
+  gap: 5px;
+}
+
+.stars_bg {
+  display: flex;
+  gap: 5px;
+  position: absolute;
+  overflow: hidden;
+}
+
+.star__item {
+  cursor: pointer;
+  color: $light-gray;
+}
+
+.star__item_active {
+  cursor: pointer;
+  color: $yellow;
+}
+
+.star__label {
+  cursor: pointer;
+  color: $light-gray;
+}
+
+.star__input {
+  appearance: none;
+}
+
+.active_star {
+  color: $yellow;
+  transition: all 200ms ease;
+}
+
+.rating_num {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: $darker-gray;
+}
+
+.reviews_count {
+  color: $dark-gray;
+  font-weight: 600;
+}

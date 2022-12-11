@@ -7,6 +7,7 @@ import CardCheckbox from "../../components/common/form/cardCheckbox/cardCheckbox
 import { Spinner } from "../../components/ui/spinner/spinner";
 import NotFound from "../../pages/404";
 import { formatPrice } from "../../utils/formatPrice";
+import Reviews from "../reviews/reviews";
 import styles from "./product.module.scss";
 import { useGetProductQuery } from "./productSlice";
 
@@ -109,6 +110,7 @@ const Product = () => {
             <p>Доставка 5-7 дней</p>
           </div>
         </div>
+        <Reviews />
       </>
     );
   }
