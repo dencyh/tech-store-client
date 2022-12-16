@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import useDebounce from "../../hooks/useDebounce";
 
 import { formatPrice } from "../../utils/formatPrice";
@@ -17,7 +17,6 @@ const PriceFilter: React.FC<Props> = ({ title, range, onChange }) => {
   });
 
   const [values, setValues] = useState(init);
-  const [active, setActive] = useState(true);
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setValues((prev) => ({
@@ -26,10 +25,12 @@ const PriceFilter: React.FC<Props> = ({ title, range, onChange }) => {
     }));
   };
 
-  const debounced = useDebounce(
-    [values.min || init().min, values.max || init().max],
-    600
+  const passValues = useCallback(
+    () => [values.min || init().min, values.max || init().max],
+    [values]
   );
+
+  const debounced = useDebounce(passValues, 600);
 
   useEffect(() => {
     onChange({ name: "price", value: JSON.stringify(debounced) });

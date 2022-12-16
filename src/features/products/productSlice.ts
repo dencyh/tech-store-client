@@ -27,7 +27,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             params.set(key, JSON.stringify(value));
           }
         }
-        console.log(params.toString());
+        // console.log(params.toString());
 
         return `/products?${params.toString()}`;
       },

@@ -6,10 +6,20 @@ import { useParams } from "react-router-dom";
 import CardCheckbox from "../../components/common/form/cardCheckbox/cardCheckbox";
 import { Spinner } from "../../components/ui/spinner/spinner";
 import NotFound from "../../pages/404";
+import { useAppSelector } from "../../redux/hooks";
+import { getConfigOptions } from "../../utils/findDiff";
 import { formatPrice } from "../../utils/formatPrice";
 import Reviews from "../reviews/reviews";
 import styles from "./product.module.scss";
-import { useGetProductQuery } from "./productSlice";
+import {
+  getProductsSelectors,
+  useGetCategoryProductsQuery,
+  useGetProductQuery
+} from "./productSlice";
+import SpecVariant from "./configOption";
+import ConfigOption from "./configOption";
+import { configKeys } from "../../utils/configKeys";
+import Config from "./config";
 
 const Product = () => {
   const { id } = useParams();
@@ -19,6 +29,20 @@ const Product = () => {
     color: ""
   });
   const { data: product, isLoading, isSuccess } = useGetProductQuery(id);
+  useGetCategoryProductsQuery(
+    { name: product?.name || "" },
+    {
+      skip: !product
+    }
+  );
+  const variants = useAppSelector(
+    getProductsSelectors({
+      name: product?.name || ""
+    }).selectAllProducts
+  );
+  // console.log(variants);
+  const config = getConfigOptions(variants, configKeys.laptops);
+  // console.log(re)
 
   const handleChange = ({ name, value }: { name: string; value: string }) => {
     setValues((prev) => ({ ...prev, [name]: value }));
@@ -37,47 +61,12 @@ const Product = () => {
     content = (
       <>
         <div>Ноутбуки &gt; Apple</div>
-        <div className={styles.wrapper}>
+        <div className={styles.inner_wrapper}>
           <div className={styles.main_image}>
             <img src={img} alt={product.name} />
           </div>
           <div className={styles.configuration}>
-            <ul>
-              <li className={styles.configuration__item}>
-                <h4 className={styles.configuration__title}>Цвет</h4>
-                <div className={styles.configuration__options}>
-                  <CardCheckbox
-                    value={values.color}
-                    label="Серебристый"
-                    name="color"
-                    onChange={handleChange}
-                  />
-                  <CardCheckbox
-                    value={values.color}
-                    label="Серый космос"
-                    name="color"
-                    onChange={handleChange}
-                  />
-                </div>
-              </li>
-              <li>
-                <h4 className={styles.configuration__title}>Память</h4>
-                <div className={styles.configuration__options}>
-                  <CardCheckbox
-                    value={values.color}
-                    label="512GB"
-                    name="color"
-                    onChange={handleChange}
-                  />
-                  <CardCheckbox
-                    value={values.color}
-                    label="1TB"
-                    name="color"
-                    onChange={handleChange}
-                  />
-                </div>
-              </li>
-            </ul>
+            <Config config={config} />
           </div>
           <div className={styles.details}>
             <h1 className={styles.title}>{product.name}</h1>

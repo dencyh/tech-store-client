@@ -19,7 +19,7 @@ const CardCheckbox: React.FC<Props> = ({
   return (
     <label className={styles.checkbox__label}>
       <input
-        type="checkbox"
+        type="radio"
         className={styles.checkbox__input}
         name={name}
         value={value}
