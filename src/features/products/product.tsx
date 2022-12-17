@@ -1,7 +1,7 @@
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { faCartShopping, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CardCheckbox from "../../components/common/form/cardCheckbox/cardCheckbox";
 import { Spinner } from "../../components/ui/spinner/spinner";
@@ -20,6 +20,10 @@ import SpecVariant from "./configOption";
 import ConfigOption from "./configOption";
 import { configKeys } from "../../utils/configKeys";
 import Config from "./config";
+import Benefits from "./benefits";
+import imgPlaceholder from "../../assets/img/placeholder-camera-sm.png";
+
+const baseImageUrl = process.env.REACT_APP_API_URL + "/";
 
 const Product = () => {
   const { id } = useParams();
@@ -40,12 +44,25 @@ const Product = () => {
       name: product?.name || ""
     }).selectAllProducts
   );
-  // console.log(variants);
-  const config = getConfigOptions(variants, configKeys.laptops);
-  // console.log(re)
+  const config = getConfigOptions(
+    variants,
+    configKeys[product?.type || "default"]
+  );
 
   const handleChange = ({ name, value }: { name: string; value: string }) => {
     setValues((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const [currentImage, setCurrentImage] = useState(imgPlaceholder);
+
+  useEffect(() => {
+    if (product) {
+      setCurrentImage(baseImageUrl + product?.imagePaths[0]);
+    }
+  }, [product]);
+
+  const handleImageSelect = (path: string) => {
+    setCurrentImage(path + ".png");
   };
 
   let content;
@@ -57,32 +74,54 @@ const Product = () => {
       </div>
     );
   } else if (isSuccess) {
-    const img = process.env.REACT_APP_API_URL + "/" + product?.imagePaths[0];
+    // const img = baseImageUrl + product.imagePaths[0];
+
+    const minRegExp = /.+(?=(.png$))/;
+    const minImages = product.imagePaths.map((img) => {
+      return baseImageUrl + img.match(minRegExp)?.[0];
+    });
+
     content = (
       <>
-        <div>Ноутбуки &gt; Apple</div>
+        {/* <div>Ноутбуки &gt; Apple</div> */}
         <div className={styles.inner_wrapper}>
+          <div className={styles.side_image_container}>
+            {minImages.map((img) => (
+              <div
+                className={`${styles.side_image} ${
+                  currentImage.includes(img) ? styles.active : ""
+                }`}
+                key={img}
+                aria-label="image-select"
+                onClick={() => handleImageSelect(img)}
+              >
+                <img src={img + ".min.png"} alt="gallery-image" />
+              </div>
+            ))}
+          </div>
           <div className={styles.main_image}>
-            <img src={img} alt={product.name} />
+            <img src={currentImage} alt={product.name} />
           </div>
           <div className={styles.configuration}>
             <Config config={config} />
+            <div>
+              <h3>Характеристики</h3>
+            </div>
           </div>
           <div className={styles.details}>
             <h1 className={styles.title}>{product.name}</h1>
             <p className={styles.reviews}>
               <span>
-                <FontAwesomeIcon icon={faStar} />
-                4.9
+                <FontAwesomeIcon
+                  icon={faStar}
+                  className={styles.reviews__star}
+                />{" "}
+                <span>4.9</span>
               </span>{" "}
-              <span>20 отзывов</span>{" "}
+              <span className={styles.reviews__count}>20 отзывов</span>{" "}
             </p>
             <p className={styles.price}>{formatPrice(product.price)}</p>
-            <div className={styles.benefits}>
-              <span className={styles.badge}>Бонусы</span>
-              <span className={styles.badge}>Бесплатная доставка</span>
-              <span className={styles.badge}>Доставка завтра</span>
-            </div>
+            <Benefits />
             <button className={styles.btn}>
               <span className={styles.btn__icon}>
                 <FontAwesomeIcon icon={faCartShopping} />

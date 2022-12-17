@@ -6,6 +6,7 @@ interface Props
   label: string;
   name: string;
   value: string;
+  unavailable?: boolean;
   onChange: ({ name, value }: { name: string; value: string }) => void;
 }
 
@@ -14,10 +15,15 @@ const CardCheckbox: React.FC<Props> = ({
   name,
   value,
   onChange,
+  unavailable,
   ...rest
 }) => {
   return (
-    <label className={styles.checkbox__label}>
+    <label
+      className={`${styles.checkbox__label} ${
+        unavailable ? styles.disabled : ""
+      }`}
+    >
       <input
         type="radio"
         className={styles.checkbox__input}

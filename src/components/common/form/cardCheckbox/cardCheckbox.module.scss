@@ -69,3 +69,8 @@
 .checkbox__tile:hover {
   border-color: $secondary-color;
 }
+
+.disabled > .checkbox__tile {
+  // cursor: not-allowed;
+  color: $gray;
+}

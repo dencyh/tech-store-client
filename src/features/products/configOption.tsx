@@ -14,6 +14,7 @@ interface Props {
       value: any;
     };
   };
+  onChange: () => void;
 }
 const ConfigOption: React.FC<Props> = ({ name, options }) => {
   const { id: currentProductId } = useParams();
@@ -23,13 +24,14 @@ const ConfigOption: React.FC<Props> = ({ name, options }) => {
   const [active, setActive] = useState<any>({});
 
   const handleChange = ({ name, value }: { name: string; value: string }) => {
-    console.log(JSON.parse(value));
-    // const [_, type, title] = location.pathname.split("/");
-    // navigate(`/${type}/${title}/${value}`);
+    const id = JSON.parse(value)[0];
+    console.log(id);
+    const [_, type, title] = location.pathname.split("/");
+    navigate(`/${type}/${title}/${id}`);
 
     // setValues((prev) => ({ ...prev, [name]: value }));
   };
-  console.log(options);
+  // console.log(options);
 
   return (
     <>
@@ -41,8 +43,9 @@ const ConfigOption: React.FC<Props> = ({ name, options }) => {
             value={JSON.stringify(options[key]._id)}
             label={formatSpecs(options[key].value, name)}
             name={name}
-            // checked={option._id === currentProductId}
+            checked={options[key]?._id.includes(currentProductId)}
             onChange={handleChange}
+            unavailable={!options[key]?._id.includes(currentProductId)}
           />
         ))}
       </form>

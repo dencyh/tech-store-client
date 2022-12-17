@@ -1,6 +1,10 @@
 import { isArray } from "lodash";
 import { RootState } from "./../../redux/store";
-import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
+import {
+  createEntityAdapter,
+  createSelector,
+  createSlice
+} from "@reduxjs/toolkit";
 import { Product } from "../../types/products/core.product";
 import { apiSlice } from "../api/apiSlice";
 import type { EntityState } from "@reduxjs/toolkit";
@@ -76,3 +80,17 @@ export const getProductsSelectors = (filters: FiltersParams) => {
     selectProductById
   };
 };
+
+const productsSlice = createSlice({
+  name: "products",
+  initialState,
+  reducers: {
+    setProductConfig: (state, action) => {
+      console.log("click");
+    }
+  }
+});
+
+export const { setProductConfig } = productsSlice.actions;
+
+export default productsSlice.reducer;

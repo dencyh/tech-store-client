@@ -10,10 +10,19 @@ const Config: React.FC<Props> = ({ config }) => {
 
   useEffect(() => {}, []);
 
+  const handleChange = () => {
+    console.log("change");
+  };
+
   return (
     <ul>
       {Object.keys(config).map((key) => (
-        <ConfigOption key={key} name={key} options={config[key]} />
+        <ConfigOption
+          key={key}
+          name={key}
+          options={config[key]}
+          onChange={handleChange}
+        />
       ))}
     </ul>
   );
