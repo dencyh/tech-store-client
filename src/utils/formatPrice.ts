@@ -1,10 +1,10 @@
 type Options = {
-  showCurrency: boolean;
+  currency: string;
 };
 
 export function formatPrice(price: number, options?: Options) {
   return (
     Intl.NumberFormat("ru-RU").format(price) +
-    (options?.showCurrency ? "₽" : "")
+    (options?.currency ? options.currency : " ₽")
   );
 }

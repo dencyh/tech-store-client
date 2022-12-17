@@ -3,9 +3,7 @@ import { faCartShopping, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import CardCheckbox from "../../components/common/form/cardCheckbox/cardCheckbox";
 import { Spinner } from "../../components/ui/spinner/spinner";
-import NotFound from "../../pages/404";
 import { useAppSelector } from "../../redux/hooks";
 import { getConfigOptions } from "../../utils/findDiff";
 import { formatPrice } from "../../utils/formatPrice";
@@ -16,12 +14,11 @@ import {
   useGetCategoryProductsQuery,
   useGetProductQuery
 } from "./productSlice";
-import SpecVariant from "./configOption";
-import ConfigOption from "./configOption";
 import { configKeys } from "../../utils/configKeys";
 import Config from "./config";
 import Benefits from "./benefits";
 import imgPlaceholder from "../../assets/img/placeholder-camera-sm.png";
+import Specs from "./specs";
 
 const baseImageUrl = process.env.REACT_APP_API_URL + "/";
 
@@ -99,15 +96,11 @@ const Product = () => {
               </div>
             ))}
           </div>
+
           <div className={styles.main_image}>
             <img src={currentImage} alt={product.name} />
           </div>
-          <div className={styles.configuration}>
-            <Config config={config} />
-            <div>
-              <h3>Характеристики</h3>
-            </div>
-          </div>
+
           <div className={styles.details}>
             <h1 className={styles.title}>{product.name}</h1>
             <p className={styles.reviews}>
@@ -136,7 +129,15 @@ const Product = () => {
               Посмотреть позже
             </button>
             <p>Доставка 5-7 дней</p>
+            <div className={styles.configuration}>
+              <h3>Конфигурация</h3>
+              <Config config={config} />
+            </div>
           </div>
+        </div>
+        <div className={styles.specs}>
+          <h3 className={styles.specs_title}>Характеристики</h3>
+          <Specs product={product} />
         </div>
         <Reviews />
       </>

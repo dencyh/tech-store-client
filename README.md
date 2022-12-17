@@ -6,4 +6,4 @@
 
 Online store
 Frontend: React, Redux, SASS<br>
-Backend: Express, Prisma, PostgresSQL
+Backend: Express, MongoDB

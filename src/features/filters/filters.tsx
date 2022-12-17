@@ -71,16 +71,13 @@ const Filters = () => {
               onChange={handleChange}
             />
           ) : (
-            <CollapsibleList
-              key={key}
-              title={translate("specs", key.split(".").slice(-1)[0])}
-            >
+            <CollapsibleList key={key} title={translate("specs", key)}>
               {specs[key as keyof typeof specs].map((variant: any) => (
                 <li key={variant.toString()} className={styles.variant}>
                   <Checkbox
                     name={key}
                     value={JSON.stringify(variant)}
-                    label={formatSpecs(variant, key.split(".").slice(-1)[0])}
+                    label={formatSpecs(variant, key)}
                     onChange={handleChange}
                   />
                 </li>

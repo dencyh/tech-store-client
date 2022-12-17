@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import CollapsibleList from "../../components/collapsibleList/collapsibleList";
 import CardCheckbox from "../../components/common/form/cardCheckbox/cardCheckbox";
 import { useAppSelector } from "../../redux/hooks";
 import { formatSpecs } from "../../utils/formatSpecs";
+import { translate } from "../../utils/translate";
 import styles from "./product.module.scss";
 import { getProductsSelectors, useGetProductQuery } from "./productSlice";
 
@@ -31,11 +33,13 @@ const ConfigOption: React.FC<Props> = ({ name, options }) => {
 
     // setValues((prev) => ({ ...prev, [name]: value }));
   };
-  // console.log(options);
+  console.log(options['"серый"']);
 
   return (
-    <>
-      <h4 className={styles.configuration__title}>{name}</h4>
+    <li style={{ marginBottom: "20px" }}>
+      <h4 className={styles.configuration__title}>
+        {translate("specs", name)}
+      </h4>
       <form className={styles.configuration__options}>
         {Object.keys(options).map((key) => (
           <CardCheckbox
@@ -49,7 +53,7 @@ const ConfigOption: React.FC<Props> = ({ name, options }) => {
           />
         ))}
       </form>
-    </>
+    </li>
   );
 };
 export default ConfigOption;

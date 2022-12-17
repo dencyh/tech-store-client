@@ -1,0 +1,25 @@
+@import "../../../assets/styles/variables.scss";
+
+.feature {
+  display: flex;
+  gap: 10px;
+}
+
+.table {
+  color: black;
+  background-color: white;
+  width: 100%;
+  // max-width: 650px;
+  border-collapse: collapse;
+  font-size: 1.1em;
+}
+.th {
+  font-weight: 700;
+}
+.table_zebra > *:nth-child(even) {
+  background-color: $light-slate;
+}
+
+.tr > * {
+  padding: 16px 4px;
+}

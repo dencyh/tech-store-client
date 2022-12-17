@@ -19,25 +19,25 @@ export function formatSpecs(value: any, name: string) {
     case "color":
       result = value[0].toUpperCase() + value.slice(1);
       break;
-    case "resolution":
+    case "specs.resolution":
       result = value.join(" x ");
       break;
-    case "screenSize":
+    case "specs.screenSize":
       result = value.toString() + '"';
       break;
-    case "refreshRate":
+    case "specs.refreshRate":
       result = value.toString() + " Гц";
       break;
-    case "capacity":
+    case "specs.capacity":
       result = formatMemory(value);
       break;
-    case "ram":
+    case "specs.ram":
       result = formatMemory(value);
       break;
-    case "batteryLife":
+    case "specs.batteryLife":
       result = value + " ч";
       break;
-    case "biometrics":
+    case "specs.biometrics":
       result = value
         .map((item: keyof typeof biometrics) => biometrics[item])
         .join(", ");

@@ -9,13 +9,15 @@
 
 .inner_wrapper {
   @include container;
+  position: relative;
   display: flex;
+  justify-content: space-around;
   min-height: 500;
   margin-top: 20px;
 }
 
 .main_image {
-  width: 500px;
+  min-width: 500px;
   height: 500px;
   margin-right: 50px;
 }
@@ -23,6 +25,7 @@
 .side_image_container {
   margin-right: 15px;
   height: 500px;
+  min-width: 60px;
   display: flex;
   gap: 10px;
   justify-content: center;
@@ -80,7 +83,7 @@
 
 .price {
   font-size: 32px;
-  font-weight: 500;
+  font-weight: 400;
   margin-bottom: 8px;
 }
 
@@ -135,6 +138,11 @@
 }
 
 .configuration {
+  position: absolute;
+  border-top: 1px solid $light-gray;
+  top: 65%;
+  padding-top: 20px;
+
   flex-basis: 25%;
   margin-right: 15px;
 }
@@ -171,4 +179,14 @@
   display: flex;
   gap: 10px;
   align-items: center;
+}
+
+.specs_title {
+  margin-bottom: 10px;
+}
+
+.specs {
+  margin-left: 40px;
+  width: 60%;
+  margin-bottom: 30px;
 }

@@ -19,23 +19,23 @@ const translations: { [key: string]: { [key: string]: string } } = {
     passwordConfirmation: "Подтверждение пароля"
   },
   specs: {
-    os: "Операционная система",
+    "specs.os": "Операционная система",
     color: "Цвет",
     name: "Название",
     price: "Цена",
     releaseDate: "Год выпуска",
-    screenSize: "Диагональ экрана",
-    resolution: "Разрешение",
-    refreshRate: "Частота обновления экрана",
-    cpu: "Процессор",
-    cpuCores: "Количество ядер",
-    gpu: "Видеокарта",
-    ram: "Оперативная память",
-    capacity: "Встроенная память",
-    cellularNetwork: "Стандарт сети",
-    simCount: "Количество сим-карт",
-    batteryLife: "Время автономной работы",
-    biometrics: "Биометрия"
+    "specs.screenSize": "Диагональ экрана",
+    "specs.resolution": "Разрешение",
+    "specs.refreshRate": "Частота обновления экрана",
+    "specs.cpu": "Процессор",
+    "specs.cpuCores": "Количество ядер",
+    "specs.gpu": "Видеокарта",
+    "specs.ram": "Оперативная память",
+    "specs.capacity": "Встроенная память",
+    "specs.cellularNetwork": "Стандарт сети",
+    "specs.simCount": "Количество сим-карт",
+    "specs.batteryLife": "Время автономной работы",
+    "specs.biometrics": "Биометрия"
   }
 };
 

@@ -1,8 +1,14 @@
 @import "../../assets/styles/variables.scss";
 
 .container {
-  max-width: 400px;
-  box-shadow: 0 0 8px $light-gray;
+  display: flex;
+  gap: 80px;
+  color: $dimmed-black;
+}
+
+.inner_container {
+  max-width: 350px;
+  border-left: 1px solid $light-gray;
   margin-top: 20px;
   padding: 20px;
 }
@@ -13,14 +19,17 @@
   justify-content: center;
   align-items: center;
 }
+.section_title {
+  font-size: 28px;
+  margin-bottom: 18px;
+}
 
 .summary {
   position: relative;
   display: flex;
   gap: 10px;
-  background: $light-slate;
+  font-size: 1.3em;
   padding: 10px;
-  border-radius: $border-radius-xl;
   align-items: center;
 }
 
@@ -51,6 +60,18 @@
   cursor: pointer;
   color: $light-gray;
 }
+.start_summary_container {
+  cursor: pointer;
+  display: flex;
+
+  justify-content: space-between;
+}
+.star_number {
+  color: $dark-gray;
+  font-weight: 700;
+  font-size: 0.9em;
+  margin-right: 4px;
+}
 
 .star__input {
   appearance: none;
@@ -61,13 +82,68 @@
   transition: all 200ms ease;
 }
 
+.rating_container {
+  margin: 4px 0 15px;
+}
+
 .rating_num {
-  font-size: 0.8em;
+  margin-left: 4px;
   font-weight: 700;
   color: $darker-gray;
 }
 
-.reviews_count {
-  color: $dark-gray;
-  font-weight: 600;
+.reviews_list {
+  margin-top: 50px;
+  width: 60%;
+}
+
+.review_date {
+  color: $darker-gray;
+  font-size: 0.9em;
+}
+
+.review_section {
+  margin-bottom: 8px;
+
+  &:first-child {
+    margin-top: 10px;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.summary_stars_reviews {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1em;
+}
+
+.summary_stars_reviews > span {
+  font-size: 0.9rem;
+  color: $link-color;
+  cursor: pointer;
+}
+
+.percent {
+  margin: 0 8px;
+  position: relative;
+  border-radius: $border-radius-lg;
+  border: 1px solid $light-gray;
+  height: 15px;
+  width: 120px;
+}
+
+.percent_active {
+  position: absolute;
+  height: 15px;
+  border-radius: $border-radius-lg;
+  background: $secondary-color;
+}
+
+.btn {
+  @include btn;
+  margin-top: 15px;
 }

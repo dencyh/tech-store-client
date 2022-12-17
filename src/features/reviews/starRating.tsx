@@ -7,8 +7,13 @@ const startArr = Array(5)
   .fill(0)
   .map((_, i) => i + 1);
 
-const StarRating = () => {
-  const [rating, setRating] = useState(0);
+interface Props {
+  value?: number;
+  canWrite?: boolean;
+}
+
+const StarRating: React.FC<Props> = ({ value, canWrite }) => {
+  const [rating, setRating] = useState(value || 0);
   const [hovered, setHovered] = useState(0);
   return (
     <form className={styles.stars}>
@@ -18,9 +23,9 @@ const StarRating = () => {
           <FontAwesomeIcon
             icon={faStar}
             className={value <= (hovered || rating) ? styles.active_star : ""}
-            onClick={() => setRating(value)}
-            onMouseOver={() => setHovered(value)}
-            onMouseOut={() => setHovered(0)}
+            onClick={canWrite ? () => setRating(value) : undefined}
+            onMouseOver={canWrite ? () => setHovered(value) : undefined}
+            onMouseOut={canWrite ? () => setHovered(0) : undefined}
           />
         </label>
       ))}
