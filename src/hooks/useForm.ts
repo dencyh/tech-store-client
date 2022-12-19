@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export const useForm = <T>(initState: T, onSubmit: (form: T) => void) => {
   const [form, setForm] = useState(initState);
-  const handeleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit(form);
   };
@@ -12,5 +12,5 @@ export const useForm = <T>(initState: T, onSubmit: (form: T) => void) => {
       [name]: value
     }));
   };
-  return { form, handleChange, handeleSubmit };
+  return { form, handleChange, handleSubmit };
 };

@@ -12,7 +12,7 @@ interface Props {
 }
 const Rating: React.FC<Props> = ({ value }) => {
   return (
-    <>
+    <div className={styles.average}>
       <ul className={styles.stars}>
         {arr.map((item) => (
           <li key={item} className={styles.star__item}>
@@ -21,7 +21,7 @@ const Rating: React.FC<Props> = ({ value }) => {
         ))}
         <li
           className={styles.stars_bg}
-          style={{ width: `${Math.floor((value / 5) * 50)}%` }}
+          style={{ width: `${Math.floor((value / 5) * 100)}%` }}
         >
           {arr.map((item) => (
             <div key={item} className={styles.star__item_active}>
@@ -29,12 +29,11 @@ const Rating: React.FC<Props> = ({ value }) => {
             </div>
           ))}
         </li>
-
-        <li>
-          <span className={styles.rating_num}>{value}</span>
-        </li>
       </ul>{" "}
-    </>
+      <p>
+        <span className={styles.rating_num}>{value}</span>
+      </p>
+    </div>
   );
 };
 export default Rating;

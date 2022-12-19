@@ -18,7 +18,7 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_API_URL + "/api"
   }),
-  tagTypes: ["Category", "Product", "Cart", "Bookmarks", "User"],
+  tagTypes: ["Category", "Product", "Cart", "Bookmarks", "User", "Review"],
   endpoints: (builder) => ({
     getCategories: builder.query<Category[], void>({
       query: () => "/categories"

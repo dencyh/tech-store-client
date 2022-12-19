@@ -18,13 +18,13 @@ interface Props {
   onFormType: (type: FormType) => void;
 }
 const Login: React.FC<Props> = ({ onFormType }) => {
-  const { form, handleChange, handeleSubmit } = useForm(initialState, onSumbit);
+  const { form, handleChange, handleSubmit } = useForm(initialState, onSubmit);
   const [showErrors, setShowErrors] = useState(false);
   const { isValid, errors } = useValidate(form, loginSchema);
 
   const [userLogin] = useUserLoginMutation();
 
-  function onSumbit() {
+  function onSubmit() {
     if (!isValid) {
       setShowErrors(true);
       return console.log("Ошибка в форме");
@@ -44,7 +44,7 @@ const Login: React.FC<Props> = ({ onFormType }) => {
           Зарегистрироваться
         </button>
       </p>
-      <form onSubmit={handeleSubmit}>
+      <form onSubmit={handleSubmit}>
         {Object.keys(form).map((formKey) => (
           <div key={formKey} className={styles.form__item}>
             <Input

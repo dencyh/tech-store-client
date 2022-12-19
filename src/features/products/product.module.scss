@@ -22,6 +22,11 @@
   margin-right: 50px;
 }
 
+.main_image > img {
+  min-width: 500px;
+  height: 500px;
+}
+
 .side_image_container {
   margin-right: 15px;
   height: 500px;
@@ -140,7 +145,7 @@
 .configuration {
   position: absolute;
   border-top: 1px solid $light-gray;
-  top: 65%;
+  top: 60%;
   padding-top: 20px;
 
   flex-basis: 25%;

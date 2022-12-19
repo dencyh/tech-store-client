@@ -7,7 +7,7 @@
 
 .input {
   @include input($light-blue);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .label {
@@ -15,7 +15,7 @@
 }
 
 .input:focus + .label {
-  @include label-focus($light-blue);
+  @include label-focus(none);
 }
 
 // .input:not([value=""]):not(:focus) + .label {
@@ -23,7 +23,7 @@
 // }
 
 .input:not(:focus):not(:empty) + .label {
-  @include label-focus($white);
+  @include label-focus(none);
 }
 
 .input_invalid {

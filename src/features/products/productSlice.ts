@@ -1,4 +1,3 @@
-import { isArray } from "lodash";
 import { RootState } from "./../../redux/store";
 import {
   createEntityAdapter,

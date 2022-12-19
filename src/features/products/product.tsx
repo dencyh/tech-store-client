@@ -19,6 +19,7 @@ import Config from "./config";
 import Benefits from "./benefits";
 import imgPlaceholder from "../../assets/img/placeholder-camera-sm.png";
 import Specs from "./specs";
+import { useGetReviewsQuery } from "../reviews/reviewsSlice";
 
 const baseImageUrl = process.env.REACT_APP_API_URL + "/";
 
@@ -26,9 +27,6 @@ const Product = () => {
   const { id } = useParams();
   if (!id) return null;
 
-  const [values, setValues] = useState({
-    color: ""
-  });
   const { data: product, isLoading, isSuccess } = useGetProductQuery(id);
   useGetCategoryProductsQuery(
     { name: product?.name || "" },
@@ -45,10 +43,6 @@ const Product = () => {
     variants,
     configKeys[product?.type || "default"]
   );
-
-  const handleChange = ({ name, value }: { name: string; value: string }) => {
-    setValues((prev) => ({ ...prev, [name]: value }));
-  };
 
   const [currentImage, setCurrentImage] = useState(imgPlaceholder);
 
@@ -71,8 +65,6 @@ const Product = () => {
       </div>
     );
   } else if (isSuccess) {
-    // const img = baseImageUrl + product.imagePaths[0];
-
     const minRegExp = /.+(?=(.png$))/;
     const minImages = product.imagePaths.map((img) => {
       return baseImageUrl + img.match(minRegExp)?.[0];
@@ -128,7 +120,7 @@ const Product = () => {
               </span>
               Посмотреть позже
             </button>
-            <p>Доставка 5-7 дней</p>
+            {/* <p>Доставка 5-7 дней</p> */}
             <div className={styles.configuration}>
               <h3>Конфигурация</h3>
               <Config config={config} />

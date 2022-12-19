@@ -73,10 +73,10 @@ const ItemPlaceholder = () => {
           }}
         />
 
-        <div className={styles.additional_info}>
-          <p>В наличии</p>
-          <p>Доставка 5-7 дней</p>
-        </div>
+        {/* <div className={styles.additional_info}> */}
+        {/* <p>В наличии</p> */}
+        {/* <p>Доставка 5-7 дней</p> */}
+        {/* </div> */}
       </div>
     </div>
   );

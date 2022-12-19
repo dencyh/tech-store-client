@@ -16,7 +16,7 @@ const StarRating: React.FC<Props> = ({ value, canWrite }) => {
   const [rating, setRating] = useState(value || 0);
   const [hovered, setHovered] = useState(0);
   return (
-    <form className={styles.stars}>
+    <ul className={styles.stars}>
       {startArr.map((value) => (
         <label key={value} className={styles.star__label}>
           <input type="radio" className={styles.star__input} value={value} />
@@ -29,7 +29,7 @@ const StarRating: React.FC<Props> = ({ value, canWrite }) => {
           />
         </label>
       ))}
-    </form>
+    </ul>
   );
 };
 export default StarRating;

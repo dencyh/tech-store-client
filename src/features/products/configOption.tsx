@@ -27,13 +27,11 @@ const ConfigOption: React.FC<Props> = ({ name, options }) => {
 
   const handleChange = ({ name, value }: { name: string; value: string }) => {
     const id = JSON.parse(value)[0];
-    console.log(id);
     const [_, type, title] = location.pathname.split("/");
     navigate(`/${type}/${title}/${id}`);
 
     // setValues((prev) => ({ ...prev, [name]: value }));
   };
-  console.log(options['"серый"']);
 
   return (
     <li style={{ marginBottom: "20px" }}>
