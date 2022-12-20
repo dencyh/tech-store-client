@@ -24,13 +24,13 @@ export const productsApiSlice = apiSlice.injectEndpoints({
     >({
       query: (filters) => {
         let params = new URLSearchParams();
-        if (filters) {
+        if (typeof filters === "object" && Object.keys(filters).length > 0) {
           for (const key in filters) {
             const value = filters[key];
             params.set(key, JSON.stringify(value));
           }
         }
-        // console.log(params.toString());
+        console.log(params.toString());
 
         return `/products?${params.toString()}`;
       },

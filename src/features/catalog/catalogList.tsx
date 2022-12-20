@@ -11,14 +11,14 @@ import {
   useGetCategoryProductsQuery
 } from "../products/productSlice";
 import ItemPlaceholder from "./itemPlaceholder";
+import { filter } from "lodash";
 
 const placeholderProducts = Array(5)
   .fill(0)
   .map((_, index) => index);
 
 const CatalogList = () => {
-  const { type } = useParams();
-  if (!type) return null;
+  const { type = "" } = useParams();
 
   const currentUser = useAppSelector(selectCurrentUser);
 
@@ -27,6 +27,7 @@ const CatalogList = () => {
   const products = useAppSelector(
     getProductsSelectors(filters).selectAllProducts
   );
+  console.log(products);
 
   const { data: cart, isLoading: cartLoading } = useGetCartQuery(
     currentUser?._id || "",
@@ -69,12 +70,12 @@ const CatalogList = () => {
 
   return (
     <div className={styles.list}>
-      <Link
+      {/* <Link
         to={`/catalog/${type}/new`}
         className={`${styles.btn} ${styles.new__link}`}
       >
         Добавить продукт
-      </Link>
+      </Link> */}
       {content}
     </div>
   );
