@@ -1,81 +1,27 @@
-import React, { useCallback, useEffect, useMemo } from "react";
-import { Link, useParams } from "react-router-dom";
-
-import styles from "./catalog.module.scss";
+import React from "react";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faStar } from "@fortawesome/free-solid-svg-icons";
-import { faBookmark } from "@fortawesome/free-regular-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { Product } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import {
-  CartItem,
-  getCartSelectors,
-  productDecrement,
-  productIncrement,
-  selectLocalCart,
-  useGetCartQuery,
-  useUpdateCartMutation
-} from "../cart/cartSlice";
+import { useAppSelector } from "../../redux/hooks";
 import QuantityButton from "../../components/ui/quantityButton/quantityButton";
 import KeyFeatures from "./keyFeatures";
-import {
-  getBookmarksSelectors,
-  useUpdateBookmarksMutation
-} from "../bookmarks/bookmarksSlice";
 import BookmarkButton from "../../components/ui/bookmarkButton/bookmarkButton";
-import store from "../../redux/store";
 import { selectCurrentUser } from "../auth/userSlice";
 import AddToCartButton from "../../components/ui/addToCartButton/addToCartButton";
 import PlaceholderImg from "../../assets/img/placeholder-camera-sm.png";
 import { useCart } from "../../hooks/useCart";
+import { useBookmark } from "../../hooks/useBookmark";
+import styles from "./catalog.module.scss";
 
 interface Props {
   product: Product & { quantity: number; bookmarks: boolean };
 }
 
 const CatalogItem: React.FC<Props> = ({ product }) => {
-  const currentUser = useAppSelector(selectCurrentUser);
-
-  const localCart = useAppSelector(selectLocalCart);
-
-  const [updateBookmarks] = useUpdateBookmarksMutation();
-
-  const bookmarks = useAppSelector(
-    getBookmarksSelectors(currentUser?._id || "").selectAllBookmarks
-  );
-
-  const { data: cart } = useGetCartQuery(currentUser?._id || "");
-
-  const quantity = currentUser
-    ? product.quantity
-    : localCart.entities[product._id]?.quantity || 0;
-
-  const handleBookmarks = useCallback(
-    (action: "add" | "remove") => {
-      return function () {
-        if (!bookmarks) return;
-        let newList = [...bookmarks].map((product) => product._id);
-
-        switch (action) {
-          case "add": {
-            newList.push(product._id);
-            break;
-          }
-          case "remove": {
-            newList = newList.filter((productId) => productId !== product._id);
-            break;
-          }
-        }
-        currentUser
-          ? updateBookmarks({ userId: currentUser._id, products: newList })
-          : console.log("local bookmark");
-      };
-    },
-    [bookmarks, product, currentUser]
-  );
-
-  const { updateQuantity } = useCart(product);
+  const { updateQuantity, productInCart } = useCart(product);
+  const { handleBookmarks } = useBookmark(product);
 
   const image = product.imagePaths ? product.imagePaths[0] : "";
 
@@ -123,16 +69,16 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
           </p>
         </div>
 
-        {quantity < 1 ? (
+        {productInCart && productInCart.quantity < 1 ? (
           <AddToCartButton
             onAdd={updateQuantity("increment")}
             onRemove={updateQuantity("decrement")}
-            inCart={!!cart?.entities[product._id]}
+            inCart={!!productInCart}
           />
         ) : (
           <div className={styles.btn__container}>
             <QuantityButton
-              quantity={quantity}
+              quantity={productInCart?.quantity || 0}
               onIncrement={updateQuantity("increment")}
               onDecrement={updateQuantity("decrement")}
             />

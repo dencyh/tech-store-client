@@ -22,7 +22,7 @@ export const bookmarksApiSlice = apiSlice.injectEndpoints({
         body: { products },
         credentials: "include"
       }),
-      invalidatesTags: ["Bookmarks", "Product"]
+      invalidatesTags: ["Bookmarks"]
     }),
     getBookmarks: builder.query<EntityState<Product>, string>({
       query: (userId) => ({

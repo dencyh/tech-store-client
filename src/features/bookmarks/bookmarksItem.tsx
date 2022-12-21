@@ -1,47 +1,21 @@
-import {
-  faCross,
-  faCrosshairs,
-  faStar,
-  faXmark
-} from "@fortawesome/free-solid-svg-icons";
+import { faStar, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
-import BookmarkButton from "../../components/ui/bookmarkButton/bookmarkButton";
 import AddToCartButton from "../../components/ui/addToCartButton/addToCartButton";
-import { useAppSelector } from "../../redux/hooks";
 import { Product } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";
-import { selectCurrentUser } from "../auth/userSlice";
-import {
-  CartItem,
-  getCartSelectors,
-  useGetCartQuery,
-  useUpdateCartMutation
-} from "../cart/cartSlice";
+
 import styles from "./bookmarks.module.scss";
-import {
-  getBookmarksSelectors,
-  useUpdateBookmarksMutation
-} from "./bookmarksSlice";
+
+import { useCart } from "../../hooks/useCart";
+import { useBookmark } from "../../hooks/useBookmark";
 
 interface Props {
   product: Product;
 }
 const BookmarksItem: React.FC<Props> = ({ product }) => {
-  const currentUser = useAppSelector(selectCurrentUser);
   const imgUrl = process.env.REACT_APP_API_URL + "/" + product.imagePaths[0];
-
-  const [updateBookmarks] = useUpdateBookmarksMutation();
-  const [updateCart] = useUpdateCartMutation();
-
-  const { data: cart } = useGetCartQuery(currentUser?._id || "");
-  const cartItems = useAppSelector(
-    getCartSelectors(currentUser?._id || "").selectAllCart
-  );
-  const bookmarks = useAppSelector(
-    getBookmarksSelectors(currentUser?._id || "").selectAllBookmarks
-  );
 
   const productLink =
     "/products/" +
@@ -49,55 +23,9 @@ const BookmarksItem: React.FC<Props> = ({ product }) => {
     "/" +
     product._id;
 
-  const handleRemoveBookmark = () => {
-    if (!bookmarks) return;
-    let newList = [...bookmarks]
-      .filter((item) => item._id !== product._id)
-      .map((item) => item._id);
+  const { handleBookmarks } = useBookmark(product);
 
-    currentUser
-      ? updateBookmarks({ userId: currentUser._id, products: newList })
-      : console.log("add local");
-  };
-
-  const handleQuantityUpdate = (action: "increment" | "decrement") => {
-    return function () {
-      if (!cart) return;
-      let newCart: CartItem[] = [...cartItems];
-      const inCart = cart.entities[product._id];
-      switch (action) {
-        case "increment": {
-          if (!inCart) {
-            newCart.push({ product: product, quantity: 1 });
-          } else {
-            newCart = cartItems.map((cartItem) =>
-              cartItem.product._id === product._id
-                ? { ...cartItem, quantity: cartItem.quantity + 1 }
-                : cartItem
-            );
-          }
-          break;
-        }
-        case "decrement": {
-          if (inCart && inCart.quantity === 1) {
-            newCart = newCart.filter(
-              (cartItem) => cartItem.product._id !== product._id
-            );
-          } else {
-            newCart = newCart.map((cartItem) =>
-              cartItem.product._id === product._id
-                ? { ...cartItem, quantity: cartItem.quantity - 1 }
-                : cartItem
-            );
-          }
-          break;
-        }
-      }
-      currentUser
-        ? updateCart({ userId: currentUser._id, products: newCart })
-        : console.log("local cart action");
-    };
-  };
+  const { updateQuantity, productInCart } = useCart(product);
 
   return (
     <li className={styles.item}>
@@ -117,13 +45,13 @@ const BookmarksItem: React.FC<Props> = ({ product }) => {
       </div>
 
       <AddToCartButton
-        onAdd={handleQuantityUpdate("increment")}
-        onRemove={handleQuantityUpdate("decrement")}
-        inCart={!!cart?.entities[product._id]}
+        onAdd={updateQuantity("increment")}
+        onRemove={updateQuantity("decrement")}
+        inCart={!!productInCart}
       />
       <button
         className={styles.cancel_btn}
-        onClick={handleRemoveBookmark}
+        onClick={handleBookmarks("remove")}
         aria-label="remove-bookmark"
       >
         <FontAwesomeIcon icon={faXmark} />

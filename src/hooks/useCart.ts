@@ -13,7 +13,9 @@ import { Product } from "../types/products/core.product";
 export const useCart = (product: Product) => {
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector(selectCurrentUser);
-  const { data: cart } = useGetCartQuery(currentUser?._id || "");
+  const { data: cart } = useGetCartQuery(currentUser?._id || "", {
+    skip: !currentUser
+  });
   const productInCart = cart?.entities[product._id || ""];
   const productsInCart = useAppSelector(
     getCartSelectors(currentUser?._id || "").selectAllCart
@@ -44,7 +46,6 @@ export const useCart = (product: Product) => {
   };
 
   // Update API cart
-
   const [updateCart] = useUpdateCartMutation();
 
   const handleQuantityUpdate = (action: "increment" | "decrement") => {
@@ -86,17 +87,12 @@ export const useCart = (product: Product) => {
     };
   };
 
+  // Final function updates local cart or API cart if user logged in
   const updateQuantity = currentUser
     ? handleQuantityUpdate
     : localQuantityUpdate;
 
-  // const updateQuantity = handleQuantityUpdate;
-
-  // const handleQuantityUpdate = (action: "increment" | "decrement") => () =>
-  //   undefined;
-
   return {
-    // handleQuantityUpdate,
     productInCart,
     updateQuantity
   };

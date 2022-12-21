@@ -25,6 +25,7 @@ import BookmarkButton from "../../components/ui/bookmarkButton/bookmarkButton";
 import { useCart } from "../../hooks/useCart";
 import QuantityButton from "../../components/ui/quantityButton/quantityButton";
 import { Product as ProductType } from "../../types/products/core.product";
+import { useBookmark } from "../../hooks/useBookmark";
 
 const baseImageUrl = process.env.REACT_APP_API_URL + "/";
 
@@ -33,9 +34,15 @@ const Product = () => {
   if (!id) return null;
 
   const { data: product, isLoading, isSuccess } = useGetProductQuery(id);
+
   const { productInCart, updateQuantity } = useCart(
     product || ({} as ProductType)
   );
+
+  const { handleBookmarks, inBookmarks } = useBookmark(
+    product || ({} as ProductType)
+  );
+
   useGetCategoryProductsQuery(
     { name: product?.name || "" },
     {
@@ -132,13 +139,9 @@ const Product = () => {
               )}
 
               <BookmarkButton
-                inBookmarks={false}
-                onAdd={function (): void {
-                  throw new Error("Function not implemented.");
-                }}
-                onRemove={function (): void {
-                  throw new Error("Function not implemented.");
-                }}
+                inBookmarks={!!inBookmarks}
+                onAdd={handleBookmarks("add")}
+                onRemove={handleBookmarks("remove")}
               />
             </div>
 
