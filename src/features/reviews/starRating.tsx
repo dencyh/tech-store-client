@@ -1,6 +1,6 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./reviews.module.scss";
 
 const startArr = Array(5)
@@ -8,13 +8,27 @@ const startArr = Array(5)
   .map((_, i) => i + 1);
 
 interface Props {
+  name?: string;
   value?: number;
-  canWrite?: boolean;
+  onChange?: ({
+    name,
+    value
+  }: {
+    name: string;
+    value: string | number;
+  }) => void;
 }
 
-const StarRating: React.FC<Props> = ({ value, canWrite }) => {
+const StarRating: React.FC<Props> = ({ value, name, onChange }) => {
   const [rating, setRating] = useState(value || 0);
   const [hovered, setHovered] = useState(0);
+
+  useEffect(() => {
+    if (onChange && name) {
+      onChange({ name: name || "", value: rating });
+    }
+  }, [rating]);
+
   return (
     <ul className={styles.stars}>
       {startArr.map((value) => (
@@ -23,9 +37,9 @@ const StarRating: React.FC<Props> = ({ value, canWrite }) => {
           <FontAwesomeIcon
             icon={faStar}
             className={value <= (hovered || rating) ? styles.active_star : ""}
-            onClick={canWrite ? () => setRating(value) : undefined}
-            onMouseOver={canWrite ? () => setHovered(value) : undefined}
-            onMouseOut={canWrite ? () => setHovered(0) : undefined}
+            onClick={onChange ? () => setRating(value) : undefined}
+            onMouseOver={onChange ? () => setHovered(value) : undefined}
+            onMouseOut={onChange ? () => setHovered(0) : undefined}
           />
         </label>
       ))}

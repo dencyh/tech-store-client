@@ -6,7 +6,13 @@ export const useForm = <T>(initState: T, onSubmit: (form: T) => void) => {
     e.preventDefault();
     onSubmit(form);
   };
-  const handleChange = ({ name, value }: { name: string; value: string }) => {
+  const handleChange = ({
+    name,
+    value
+  }: {
+    name: string;
+    value: string | number;
+  }) => {
     setForm((prevState) => ({
       ...prevState,
       [name]: value

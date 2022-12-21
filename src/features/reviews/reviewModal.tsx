@@ -20,6 +20,8 @@ interface Props {
 const ReviewModal: React.FC<Props> = ({ onClose }) => {
   const { form, handleChange, handleSubmit } = useForm(initValues, onSubmit);
 
+  console.log(form);
+
   function onSubmit() {
     console.log(123);
   }
@@ -28,7 +30,7 @@ const ReviewModal: React.FC<Props> = ({ onClose }) => {
 
   useEffect(() => {
     const handler = (e: any) => {
-      if (modalRef.current?.contains(e.target)) {
+      if (!modalRef.current?.contains(e.target)) {
         onClose();
       }
     };
@@ -45,52 +47,28 @@ const ReviewModal: React.FC<Props> = ({ onClose }) => {
       <form className={styles.modal} ref={modalRef} onSubmit={handleSubmit}>
         <div className={styles.score}>
           <h3>Ваша оценка</h3>
-          <StarRating canWrite />
+          <StarRating value={form.score} name="score" onChange={handleChange} />
         </div>
         <Textarea
           rows={5}
           label="Достоинства"
-          name={""}
-          value={""}
-          onChange={function ({
-            name,
-            value
-          }: {
-            name: string;
-            value: string;
-          }): void {
-            throw new Error("Function not implemented.");
-          }}
+          name="advantages"
+          value={form.advantages}
+          onChange={handleChange}
         />
         <Textarea
           rows={5}
           label="Недостатки"
-          name={""}
-          value={""}
-          onChange={function ({
-            name,
-            value
-          }: {
-            name: string;
-            value: string;
-          }): void {
-            throw new Error("Function not implemented.");
-          }}
+          name="disadvantages"
+          value={form.disadvantages}
+          onChange={handleChange}
         />
         <Textarea
           rows={5}
           label="Комментарий"
           name={""}
-          value={""}
-          onChange={function ({
-            name,
-            value
-          }: {
-            name: string;
-            value: string;
-          }): void {
-            throw new Error("Function not implemented.");
-          }}
+          value={form.comment}
+          onChange={handleChange}
         />
 
         <button className={styles.btn}>Отправить</button>
