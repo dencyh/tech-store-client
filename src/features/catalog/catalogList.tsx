@@ -27,7 +27,6 @@ const CatalogList = () => {
   const products = useAppSelector(
     getProductsSelectors(filters).selectAllProducts
   );
-  console.log(products);
 
   const { data: cart, isLoading: cartLoading } = useGetCartQuery(
     currentUser?._id || "",

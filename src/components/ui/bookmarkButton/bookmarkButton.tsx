@@ -35,7 +35,7 @@ const BookmarkButton: React.FC<Props> = ({
           <span className={styles.btn__icon}>
             <FontAwesomeIcon icon={faBookmarkRegular} />
           </span>
-          <span>{textAdd || "Добавить в израбнное"}</span>
+          <span>{textAdd || "Добавить в избранное"}</span>
         </>
       )}
     </button>

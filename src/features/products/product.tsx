@@ -20,6 +20,11 @@ import Benefits from "./benefits";
 import imgPlaceholder from "../../assets/img/placeholder-camera-sm.png";
 import Specs from "./specs";
 import { useGetReviewsQuery } from "../reviews/reviewsSlice";
+import AddToCartButton from "../../components/ui/addToCartButton/addToCartButton";
+import BookmarkButton from "../../components/ui/bookmarkButton/bookmarkButton";
+import { useCart } from "../../hooks/useCart";
+import QuantityButton from "../../components/ui/quantityButton/quantityButton";
+import { Product as ProductType } from "../../types/products/core.product";
 
 const baseImageUrl = process.env.REACT_APP_API_URL + "/";
 
@@ -28,6 +33,9 @@ const Product = () => {
   if (!id) return null;
 
   const { data: product, isLoading, isSuccess } = useGetProductQuery(id);
+  const { productInCart, updateQuantity } = useCart(
+    product || ({} as ProductType)
+  );
   useGetCategoryProductsQuery(
     { name: product?.name || "" },
     {
@@ -107,22 +115,36 @@ const Product = () => {
             </p>
             <p className={styles.price}>{formatPrice(product.price)}</p>
             <Benefits />
-            <button className={styles.btn}>
-              <span className={styles.btn__icon}>
-                <FontAwesomeIcon icon={faCartShopping} />
-              </span>
-              <span>Добавить в корзину</span>
-            </button>
+            <div className={styles.btn_container}>
+              {productInCart && productInCart.quantity < 1 ? (
+                <AddToCartButton
+                  onAdd={updateQuantity("increment")}
+                  inCart={false}
+                />
+              ) : (
+                <div className={styles.btn__container}>
+                  <QuantityButton
+                    quantity={productInCart?.quantity || 0}
+                    onIncrement={updateQuantity("increment")}
+                    onDecrement={updateQuantity("decrement")}
+                  />
+                </div>
+              )}
 
-            <button className={styles.bookmark}>
-              <span className={styles.btn__icon}>
-                <FontAwesomeIcon icon={faBookmark} />
-              </span>
-              Посмотреть позже
-            </button>
+              <BookmarkButton
+                inBookmarks={false}
+                onAdd={function (): void {
+                  throw new Error("Function not implemented.");
+                }}
+                onRemove={function (): void {
+                  throw new Error("Function not implemented.");
+                }}
+              />
+            </div>
+
             {/* <p>Доставка 5-7 дней</p> */}
             <div className={styles.configuration}>
-              <h3>Конфигурация</h3>
+              <h3 className={styles.configuration__title}>Конфигурация:</h3>
               <Config config={config} />
             </div>
           </div>

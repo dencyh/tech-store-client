@@ -28,18 +28,17 @@ import store from "../../redux/store";
 import { selectCurrentUser } from "../auth/userSlice";
 import AddToCartButton from "../../components/ui/addToCartButton/addToCartButton";
 import PlaceholderImg from "../../assets/img/placeholder-camera-sm.png";
+import { useCart } from "../../hooks/useCart";
 
 interface Props {
   product: Product & { quantity: number; bookmarks: boolean };
 }
 
 const CatalogItem: React.FC<Props> = ({ product }) => {
-  const dispatch = useAppDispatch();
   const currentUser = useAppSelector(selectCurrentUser);
 
   const localCart = useAppSelector(selectLocalCart);
 
-  const [updateCart] = useUpdateCartMutation();
   const [updateBookmarks] = useUpdateBookmarksMutation();
 
   const bookmarks = useAppSelector(
@@ -47,9 +46,6 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
   );
 
   const { data: cart } = useGetCartQuery(currentUser?._id || "");
-  const productsInCart = useAppSelector(
-    getCartSelectors(currentUser?._id || "").selectAllCart
-  );
 
   const quantity = currentUser
     ? product.quantity
@@ -79,44 +75,7 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
     [bookmarks, product, currentUser]
   );
 
-  const handleQuantityUpdate = (action: "increment" | "decrement") => {
-    return function () {
-      if (!cart) return;
-      let newCart: CartItem[] = [...productsInCart];
-      const inCart = cart.entities[product._id];
-      switch (action) {
-        case "increment": {
-          if (!inCart) {
-            newCart.push({ product: product, quantity: 1 });
-          } else {
-            newCart = productsInCart.map((cartItem) =>
-              cartItem.product._id === product._id
-                ? { ...cartItem, quantity: cartItem.quantity + 1 }
-                : cartItem
-            );
-          }
-          break;
-        }
-        case "decrement": {
-          if (inCart && inCart.quantity === 1) {
-            newCart = newCart.filter(
-              (cartItem) => cartItem.product._id !== product._id
-            );
-          } else {
-            newCart = newCart.map((cartItem) =>
-              cartItem.product._id === product._id
-                ? { ...cartItem, quantity: cartItem.quantity - 1 }
-                : cartItem
-            );
-          }
-          break;
-        }
-      }
-      currentUser
-        ? updateCart({ userId: currentUser._id, products: newCart })
-        : console.log("local cart action");
-    };
-  };
+  const { updateQuantity } = useCart(product);
 
   const image = product.imagePaths ? product.imagePaths[0] : "";
 
@@ -166,36 +125,16 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
 
         {quantity < 1 ? (
           <AddToCartButton
-            onAdd={handleQuantityUpdate("increment")}
-            onRemove={handleQuantityUpdate("decrement")}
+            onAdd={updateQuantity("increment")}
+            onRemove={updateQuantity("decrement")}
             inCart={!!cart?.entities[product._id]}
           />
         ) : (
           <div className={styles.btn__container}>
             <QuantityButton
               quantity={quantity}
-              onIncrement={
-                currentUser
-                  ? handleQuantityUpdate("increment")
-                  : () =>
-                      dispatch(
-                        productIncrement({
-                          product: product._id,
-                          quantity: 1
-                        })
-                      )
-              }
-              onDecrement={
-                currentUser
-                  ? handleQuantityUpdate("decrement")
-                  : () =>
-                      dispatch(
-                        productDecrement({
-                          product: product._id,
-                          quantity: 1
-                        })
-                      )
-              }
+              onIncrement={updateQuantity("increment")}
+              onDecrement={updateQuantity("decrement")}
             />
           </div>
         )}
