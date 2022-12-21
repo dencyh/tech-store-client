@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./search.module.scss";
-import SearchButton from "../../components/ui/searchButton";
+import SearchButton from "../../components/buttons/searchButton";
 import useDebounce from "../../hooks/useDebounce";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";

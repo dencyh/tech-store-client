@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import Textarea from "../../components/common/form/textarea/textarea";
-import Input from "../../components/common/form/input/input";
+import Textarea from "../../components/form/textarea/textarea";
+import Input from "../../components/form/input/input";
 import DND from "../../components/ui/dnd/dnd";
 import Layout from "../../pages/layout";
 import { translate } from "../../utils/translate";

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-import Textarea from "../../components/common/form/textarea/textarea";
+import Textarea from "../../components/form/textarea/textarea";
 import { useForm } from "../../hooks/useForm";
 import styles from "./reviews.module.scss";
 import { ReviewInput } from "./reviewsSlice";

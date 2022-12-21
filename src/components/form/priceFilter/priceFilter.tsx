@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import useDebounce from "../../hooks/useDebounce";
+import useDebounce from "../../../hooks/useDebounce";
 
-import { formatPrice } from "../../utils/formatPrice";
+import { formatPrice } from "../../../utils/formatPrice";
 import styles from "./priceFilter.module.scss";
 
 interface Props {

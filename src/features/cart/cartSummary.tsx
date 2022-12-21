@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import Input from "../../components/common/form/input/input";
+import Input from "../../components/form/input/input";
 import { useAppSelector } from "../../redux/hooks";
 import { formatPrice } from "../../utils/formatPrice";
 import { selectCurrentUser } from "../auth/userSlice";

@@ -20,10 +20,10 @@ import Benefits from "./benefits";
 import imgPlaceholder from "../../assets/img/placeholder-camera-sm.png";
 import Specs from "./specs";
 import { useGetReviewsQuery } from "../reviews/reviewsSlice";
-import AddToCartButton from "../../components/ui/addToCartButton/addToCartButton";
-import BookmarkButton from "../../components/ui/bookmarkButton/bookmarkButton";
+import AddToCartButton from "../../components/buttons/addToCartButton/addToCartButton";
+import BookmarkButton from "../../components/buttons/bookmarkButton/bookmarkButton";
 import { useCart } from "../../hooks/useCart";
-import QuantityButton from "../../components/ui/quantityButton/quantityButton";
+import QuantityButton from "../../components/buttons/quantityButton/quantityButton";
 import { Product as ProductType } from "../../types/products/core.product";
 import { useBookmark } from "../../hooks/useBookmark";
 

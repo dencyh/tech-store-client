@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Input from "../../components/common/form/input/input";
+import Input from "../../components/form/input/input";
 import { useForm } from "../../hooks/useForm";
 import { useValidate } from "../../hooks/useValidate";
 import { loginSchema } from "../../schemas/user.schema";

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import CollapsibleList from "../../components/collapsibleList/collapsibleList";
-import CardCheckbox from "../../components/common/form/cardCheckbox/cardCheckbox";
+import CollapsibleList from "../../components/ui/collapsibleList/collapsibleList";
+import CardCheckbox from "../../components/form/cardCheckbox/cardCheckbox";
 import { useAppSelector } from "../../redux/hooks";
 import { formatSpecs } from "../../utils/formatSpecs";
 import { translate } from "../../utils/translate";

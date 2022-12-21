@@ -2,9 +2,9 @@ import { isArray, omit } from "lodash";
 import React, { useCallback, useEffect, useMemo } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 
-import CollapsibleList from "../../components/collapsibleList/collapsibleList";
-import Checkbox from "../../components/common/form/checkbox";
-import PriceFilter from "../../components/priceFilter/priceFilter";
+import CollapsibleList from "../../components/ui/collapsibleList/collapsibleList";
+import Checkbox from "../../components/form/checkbox";
+import PriceFilter from "../../components/form/priceFilter/priceFilter";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { flattenObject } from "../../utils/flattenObject";
 import { formatSpecs } from "../../utils/formatSpecs";
