@@ -58,11 +58,10 @@ export const {
   useUploadImagesMutation
 } = productsApiSlice;
 
-export const getProductsSelectors = (filters: FiltersParams) => {
-  const selectProductsResult =
-    Object.keys(filters).length > 0
-      ? productsApiSlice.endpoints.getCategoryProducts.select(filters)
-      : productsApiSlice.endpoints.getCategoryProducts.select();
+export const getProductsSelectors = (filters?: FiltersParams) => {
+  const selectProductsResult = filters
+    ? productsApiSlice.endpoints.getCategoryProducts.select(filters)
+    : productsApiSlice.endpoints.getCategoryProducts.select();
 
   const selectProductsData = createSelector(
     selectProductsResult,

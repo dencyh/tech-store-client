@@ -1,0 +1,35 @@
+@import "../../assets/styles/variables.scss";
+
+.outer__container {
+  background-color: $secondary-desaturated;
+  margin-top: 20px;
+  padding: 30px 50px 40px 90px;
+  border-radius: $border-radius-lg;
+  overflow-x: hidden;
+}
+
+.container {
+  margin-top: 25px;
+  overflow-x: hidden;
+}
+
+.slider {
+  display: flex;
+  gap: 20px;
+  // transform: translateX(-100%);
+}
+
+.title {
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  font-weight: normal;
+  font-size: 1em;
+}
+
+.slider__item {
+  padding: 10px;
+  border-radius: $border-radius-lg;
+  background-color: $white;
+}

@@ -21,7 +21,10 @@
 
 .item {
   position: relative;
-  max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 200px;
 
   &::after {
     content: "";
@@ -38,6 +41,7 @@
 }
 
 .img {
+  margin: 0 auto;
   width: 150px;
   height: 150px;
 }

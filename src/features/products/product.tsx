@@ -123,7 +123,7 @@ const Product = () => {
             <p className={styles.price}>{formatPrice(product.price)}</p>
             <Benefits />
             <div className={styles.btn_container}>
-              {productInCart && productInCart.quantity < 1 ? (
+              {!productInCart ? (
                 <AddToCartButton
                   onAdd={updateQuantity("increment")}
                   inCart={false}
@@ -131,7 +131,7 @@ const Product = () => {
               ) : (
                 <div className={styles.btn__container}>
                   <QuantityButton
-                    quantity={productInCart?.quantity || 0}
+                    quantity={productInCart.quantity}
                     onIncrement={updateQuantity("increment")}
                     onDecrement={updateQuantity("decrement")}
                   />

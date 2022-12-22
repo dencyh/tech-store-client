@@ -69,7 +69,7 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
           </p>
         </div>
 
-        {productInCart && productInCart.quantity < 1 ? (
+        {!productInCart ? (
           <AddToCartButton
             onAdd={updateQuantity("increment")}
             onRemove={updateQuantity("decrement")}
@@ -78,7 +78,7 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
         ) : (
           <div className={styles.btn__container}>
             <QuantityButton
-              quantity={productInCart?.quantity || 0}
+              quantity={productInCart.quantity}
               onIncrement={updateQuantity("increment")}
               onDecrement={updateQuantity("decrement")}
             />
