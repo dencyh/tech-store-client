@@ -1,11 +1,12 @@
 import React from "react";
 import Auth from "../features/auth/auth";
+import Profile from "../features/profile/profile";
 import Layout from "./layout";
 
 const ProfilePage = () => {
   return (
     <Layout>
-      <h1>ProfilePage in development</h1>
+      <Profile />
     </Layout>
   );
 };

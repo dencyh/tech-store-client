@@ -1,0 +1,59 @@
+@import "../../assets/styles/variables.scss";
+
+.sidebar_container {
+  min-width: 200px;
+  font-size: 0.9em;
+  color: $dark-gray;
+  border-right: 1px solid $light-gray;
+}
+
+.sidebar_section {
+  margin-top: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid $light-gray;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.sidebar_section_title {
+  color: $dimmed-black;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.sidebar_item {
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: all 200ms ease;
+
+  &:hover {
+    color: $link-color;
+    text-decoration: underline;
+  }
+}
+
+.active_item {
+  position: relative;
+  background-color: $secondary-light;
+
+  &::before {
+    content: "";
+    position: absolute;
+    height: 80%;
+    width: 5px;
+    border-end-end-radius: 15px;
+    border-start-end-radius: 15px;
+    background-color: $secondary-color;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.sidebar_icon {
+  display: inline-block;
+  width: 24px;
+  text-align: left;
+}

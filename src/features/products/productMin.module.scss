@@ -24,11 +24,13 @@
 
 .link {
   color: $link-color;
-  font-size: 0.9em;
+  margin-bottom: 8px;
 }
 
 .name {
   margin-bottom: 5px;
+  font-size: 0.9em;
+  font-weight: normal;
 }
 
 .price {

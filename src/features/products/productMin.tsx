@@ -9,6 +9,7 @@ import { useCart } from "../../hooks/useCart";
 import { useBookmark } from "../../hooks/useBookmark";
 import Rating from "../reviews/rating";
 import styles from "./productMin.module.scss";
+import StarRating from "../reviews/starRating";
 
 interface Props {
   product: Product;
@@ -27,13 +28,14 @@ const ProductMin: React.FC<Props> = ({ product }) => {
   const { updateQuantity, productInCart } = useCart(product);
 
   return (
-    <li className={styles.item}>
+    <div className={styles.item}>
       <Link className={styles.link} to={productLink}>
         <div className={styles.img}>
           <img src={imgUrl} alt={product.name} />
         </div>
         <h3 className={styles.name}>{product.name}</h3>
         <p className={styles.price}>{formatPrice(product.price)}</p>
+        <StarRating value={3} />
       </Link>
 
       <AddToCartButton
@@ -41,7 +43,7 @@ const ProductMin: React.FC<Props> = ({ product }) => {
         onRemove={updateQuantity("decrement")}
         inCart={!!productInCart}
       />
-    </li>
+    </div>
   );
 };
 export default ProductMin;

@@ -28,7 +28,7 @@ const Bookmarks = () => {
   if (isLoading) return <Spinner />;
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Избранное</h1>
+      <h2 className={styles.title}>Избранное</h2>
       <div className={styles.section}>
         <ul className={styles.list}>
           {bookmarks.map((product) => (

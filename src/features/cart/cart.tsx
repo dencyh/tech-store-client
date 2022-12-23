@@ -34,20 +34,23 @@ const Cart = () => {
 
   if (!cart) return <Spinner text="Loading cart" />;
   return (
-    <div className={styles.container}>
-      <div className={styles.products}>
-        <ul className={styles.products__list}>
-          {cart.map((cartItem) => (
-            <CartItem
-              key={cartItem.product._id}
-              product={cartItem.product}
-              quantity={cartItem.quantity}
-            />
-          ))}
-        </ul>
+    <>
+      <h1 className={styles.title}>Корзина</h1>
+      <div className={styles.container}>
+        <div className={styles.products}>
+          <ul className={styles.products__list}>
+            {cart.map((cartItem) => (
+              <CartItem
+                key={cartItem.product._id}
+                product={cartItem.product}
+                quantity={cartItem.quantity}
+              />
+            ))}
+          </ul>
+        </div>
+        <CartSummary />
       </div>
-      <CartSummary />
-    </div>
+    </>
   );
 };
 export default Cart;

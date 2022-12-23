@@ -7,8 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setFilters } from "../filters/filtersSlice";
 
 const Search = () => {
-  const { type } = useParams();
-  if (!type) return null;
+  const { type = "" } = useParams();
   const [query, setQuery] = useState("");
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);

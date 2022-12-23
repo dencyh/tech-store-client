@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Logo from "../components/ui/logo/logo";
 import CatalogList from "../features/catalog/catalogList";
 import Categories from "../features/categories";
+import Navbar from "../features/navbar";
 import ProductCompact from "../features/products/productMin";
 import {
   getProductsSelectors,
@@ -23,7 +24,9 @@ const HomePage = () => {
   return (
     <Layout>
       <Categories />
-      <Slider title="Популярное">{sliderItems}</Slider>
+      <Slider title="Новинки">{sliderItems}</Slider>
+      <Slider title="Рекомендации">{sliderItems}</Slider>
+      <Slider title="Скидки">{sliderItems}</Slider>
     </Layout>
   );
 };
