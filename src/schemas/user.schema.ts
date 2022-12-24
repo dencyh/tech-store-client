@@ -23,3 +23,15 @@ export const loginSchema = object({
 });
 
 export type LoginInput = TypeOf<typeof loginSchema>;
+
+export const updateUserSchema = object({
+  firstName: string().min(1, "Обязательное поле").optional(),
+  lastName: string().min(1, "Обязательное поле").optional(),
+  password: string()
+    .min(6, "Пароль должен содержать минимум 6 символов")
+    .optional(),
+  email: string()
+    .min(1, "Обязательное поле")
+    .email("Некорректный адрес эл. почты")
+    .optional()
+});

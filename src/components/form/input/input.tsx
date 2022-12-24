@@ -60,6 +60,7 @@ const Input: React.FC<Props> = ({
       )}
       {isPassword && (
         <button
+          type="button"
           className={styles.show_password}
           aria-label="show/hide password"
           onClick={() => setShowPassword(!showPassword)}

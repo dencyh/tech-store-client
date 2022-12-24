@@ -33,12 +33,26 @@ export const userApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `/users/me`,
         credentials: "include"
-      })
+      }),
+      providesTags: ["User"]
+    }),
+    updateUser: builder.mutation<User, { [key: string]: string }>({
+      query: (query) => ({
+        url: `/users/update`,
+        method: "POST",
+        body: query,
+        credentials: "include"
+      }),
+      invalidatesTags: ["User"]
     })
   })
 });
 
-export const { useUserLoginMutation, useGetCurrentUserQuery } = userApiSlice;
+export const {
+  useUserLoginMutation,
+  useGetCurrentUserQuery,
+  useUpdateUserMutation
+} = userApiSlice;
 
 export const selectUserResult = userApiSlice.endpoints.getCurrentUser.select();
 

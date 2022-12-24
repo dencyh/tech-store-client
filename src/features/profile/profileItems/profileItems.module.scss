@@ -1,0 +1,66 @@
+@import "../../../assets/styles/variables.scss";
+
+.container {
+  width: 100%;
+}
+
+.title {
+  margin-bottom: 16px;
+}
+
+.details_container {
+  margin-top: 15px;
+  width: 50%;
+  min-width: fit-content;
+  padding: 10px 15px 10px;
+  box-shadow: 0 0 5px $light-gray;
+  border-radius: $border-radius-md;
+}
+
+.details_item {
+  position: relative;
+  padding: 20px 0px;
+  border-bottom: 1px solid $light-gray;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.item_title {
+  color: $dark-gray;
+  font-size: 0.85em;
+  font-weight: normal;
+  margin-bottom: 5px;
+}
+
+.right_middle {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.btn {
+  font-size: 0.9em;
+  color: $primary-color;
+  margin-right: 12px;
+  &:hover {
+    text-decoration: underline;
+    color: black;
+  }
+}
+
+.btn_primary {
+  font-size: 1em;
+  text-decoration: underline;
+  color: $link-color;
+  &:hover {
+    color: $link-color;
+    filter: brightness(75%);
+  }
+}
+
+// .edit_form {
+//   margin-top: 12px;
+// }

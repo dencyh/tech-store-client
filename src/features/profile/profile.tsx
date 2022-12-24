@@ -9,6 +9,7 @@ import Details from "./profileItems/details";
 import Addresses from "./profileItems/addresses";
 import Bookmarks from "../bookmarks/bookmarks";
 import UserReviews from "./profileItems/userReviews";
+import { Spinner } from "../../components/ui/spinner/spinner";
 
 const Profile = () => {
   const currentUser = useAppSelector(selectCurrentUser);
@@ -39,11 +40,19 @@ const Profile = () => {
 
   return (
     <>
-      <h2 className={styles.title}>Добрый день, {currentUser?.firstName}!</h2>
-      <div className={styles.container}>
-        <Sidebar />
-        {content}
-      </div>
+      {!currentUser ? (
+        <Spinner />
+      ) : (
+        <>
+          <h2 className={styles.title}>
+            Добрый день, {currentUser?.firstName}!
+          </h2>
+          <div className={styles.container}>
+            <Sidebar />
+            {content}
+          </div>
+        </>
+      )}
     </>
   );
 };
