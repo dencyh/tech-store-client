@@ -1,12 +1,9 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import Rating from "./rating";
 import ReviewItem from "./reviewItem";
-import ReviewModal from "./reviewModal";
 import styles from "./reviews.module.scss";
 import { useGetReviewsQuery } from "./reviewsSlice";
 import Summary from "./summary";
-import SummaryItem from "./summaryItem";
 
 const initSummary = {
   5: 0,

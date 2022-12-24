@@ -1,6 +1,6 @@
 import { isArray, omit } from "lodash";
-import React, { useCallback, useEffect, useMemo } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import React, { useCallback, useMemo } from "react";
+import { useParams } from "react-router-dom";
 
 import CollapsibleList from "../../components/ui/collapsibleList/collapsibleList";
 import Checkbox from "../../components/form/checkbox";
@@ -17,8 +17,6 @@ type FlatSpecs = Omit<SpecsVariants, "specs"> & SpecsVariants["specs"];
 const Filters = () => {
   const { type } = useParams();
   if (!type) return null;
-
-  let [searchParams, setSearchParams] = useSearchParams();
 
   const { data: specsData = {} as SpecsVariants } = useGetSpecsQuery(type);
 
@@ -44,17 +42,12 @@ const Filters = () => {
 
   const handleChange = useCallback(
     ({ name, value }: { name: string; value: string }) => {
-      // console.log(name, value, "dispatch");
-      // console.log(value);
       dispatch(toggleFilters({ [name]: value }));
     },
     []
   );
 
   const filters = useAppSelector((state) => state.filters.filters);
-  // useEffect(() => {
-  //   setSearchParams(filters);
-  // }, [filters]);
 
   const dispatch = useAppDispatch();
 

@@ -136,9 +136,7 @@ const AddProduct = () => {
         <button className={styles.btn}>Сохранить</button>
       </form>
 
-      {/* <form className={styles.form}> */}
       <DND />
-      {/* </form> */}
     </Layout>
   );
 };

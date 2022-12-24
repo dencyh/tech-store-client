@@ -3,10 +3,7 @@ import Input from "../../../components/form/input/input";
 import { useForm } from "../../../hooks/useForm";
 import { useValidate } from "../../../hooks/useValidate";
 import { useAppSelector } from "../../../redux/hooks";
-import {
-  createUserSchema,
-  updateUserSchema
-} from "../../../schemas/user.schema";
+import { updateUserSchema } from "../../../schemas/user.schema";
 import { selectCurrentUser, useUpdateUserMutation } from "../../auth/userSlice";
 import styles from "./profileItems.module.scss";
 

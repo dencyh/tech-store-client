@@ -14,7 +14,7 @@ import { selectLocalCart, useGetCartQuery } from "./features/cart/cartSlice";
 
 function App() {
   const currentUser = useAppSelector(selectCurrentUser);
-  const localCart = useAppSelector(selectLocalCart);
+  useAppSelector(selectLocalCart);
   useGetCartQuery(currentUser?._id || "", {
     skip: !currentUser
   });

@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import CollapsibleList from "../../components/ui/collapsibleList/collapsibleList";
 import CardCheckbox from "../../components/form/cardCheckbox/cardCheckbox";
-import { useAppSelector } from "../../redux/hooks";
 import { formatSpecs } from "../../utils/formatSpecs";
 import { translate } from "../../utils/translate";
 import styles from "./product.module.scss";
-import { getProductsSelectors, useGetProductQuery } from "./productSlice";
 
 interface Props {
   name: string;
@@ -23,14 +20,11 @@ const ConfigOption: React.FC<Props> = ({ name, options }) => {
   if (!currentProductId) return null;
   const navigate = useNavigate();
   const location = useLocation();
-  const [active, setActive] = useState<any>({});
 
-  const handleChange = ({ name, value }: { name: string; value: string }) => {
+  const handleChange = ({ value }: { name: string; value: string }) => {
     const id = JSON.parse(value)[0];
     const [_, type, title] = location.pathname.split("/");
     navigate(`/${type}/${title}/${id}`);
-
-    // setValues((prev) => ({ ...prev, [name]: value }));
   };
 
   return (

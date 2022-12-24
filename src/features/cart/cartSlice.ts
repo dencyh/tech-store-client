@@ -1,15 +1,13 @@
-import { userApiSlice } from "./../auth/userSlice";
 import {
   createSlice,
   createEntityAdapter,
   createSelector
 } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import store, { RootState } from "../../redux/store";
+import type { PayloadAction, EntityState } from "@reduxjs/toolkit";
+import { RootState } from "../../redux/store";
 import { apiSlice } from "../api/apiSlice";
 import { toast } from "react-toastify";
 import { Product } from "../../types/products/core.product";
-import type { EntityState } from "@reduxjs/toolkit";
 
 export interface ClientCartItem {
   product: string;
@@ -163,46 +161,3 @@ export const getCartSelectors = (userId: string) => {
     selectAllCart
   };
 };
-
-// Cart action
-// export const handleQuantityUpdate = (
-//   action: "increment" | "decrement",
-//   { cart, cartItems, product }: { cart: EntityState<CartItem>, cartItems }
-// ) => {
-//   return function () {
-//     if (!cart) return;
-//     let newCart: CartItem[] = [...cartItems];
-//     const inCart = cart.entities[product._id];
-//     switch (action) {
-//       case "increment": {
-//         if (!inCart) {
-//           newCart.push({ product: product, quantity: 1 });
-//         } else {
-//           newCart = cartItems.map((cartItem) =>
-//             cartItem.product._id === product._id
-//               ? { ...cartItem, quantity: cartItem.quantity + 1 }
-//               : cartItem
-//           );
-//         }
-//         break;
-//       }
-//       case "decrement": {
-//         if (inCart && inCart.quantity === 1) {
-//           newCart = newCart.filter(
-//             (cartItem) => cartItem.product._id !== product._id
-//           );
-//         } else {
-//           newCart = newCart.map((cartItem) =>
-//             cartItem.product._id === product._id
-//               ? { ...cartItem, quantity: cartItem.quantity - 1 }
-//               : cartItem
-//           );
-//         }
-//         break;
-//       }
-//     }
-//     currentUser
-//       ? updateCart({ userId: currentUser._id, products: newCart })
-//       : console.log("local cart action");
-//   };
-// };

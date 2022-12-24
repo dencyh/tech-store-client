@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./navbar.module.scss";
 import {
@@ -16,7 +16,6 @@ import { selectCurrentUser } from "../auth/userSlice";
 const menuItems = [
   { text: "Корзина", to: "/cart", icon: faCartShopping },
   { text: "Избранное", to: "/bookmarks", icon: faHeart },
-  // { text: "Заказы", to: "/orders", icon: faCube },
   { text: "Профиль", to: "/profile", icon: faUser }
 ];
 

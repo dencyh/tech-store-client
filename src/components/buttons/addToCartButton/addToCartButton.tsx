@@ -1,6 +1,6 @@
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React from "react";
 import styles from "./addToCartButton.module.scss";
 
 interface Props {

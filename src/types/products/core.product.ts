@@ -14,7 +14,6 @@ export interface CoreProduct {
   brand: string;
   color: string;
   description?: string;
-  // rating: Rating;
   releaseDate: number;
   imagePaths: string[];
 }

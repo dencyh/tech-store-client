@@ -1,6 +1,4 @@
-import { divide } from "lodash";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useUploadImagesMutation } from "../../../features/products/productSlice";
 import { Spinner } from "../spinner/spinner";
 import styles from "./dnd.module.scss";

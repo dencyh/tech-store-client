@@ -1,5 +1,3 @@
-import { faStar, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
 import AddToCartButton from "../../components/buttons/addToCartButton/addToCartButton";
@@ -7,7 +5,6 @@ import { Product } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";
 import { useCart } from "../../hooks/useCart";
 import { useBookmark } from "../../hooks/useBookmark";
-import Rating from "../reviews/rating";
 import styles from "./productMin.module.scss";
 import StarRating from "../reviews/starRating";
 

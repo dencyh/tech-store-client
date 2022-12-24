@@ -1,5 +1,4 @@
-import { faBookmark } from "@fortawesome/free-regular-svg-icons";
-import { faCartShopping, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -19,7 +18,6 @@ import Config from "./config";
 import Benefits from "./benefits";
 import imgPlaceholder from "../../assets/img/placeholder-camera-sm.png";
 import Specs from "./specs";
-import { useGetReviewsQuery } from "../reviews/reviewsSlice";
 import AddToCartButton from "../../components/buttons/addToCartButton/addToCartButton";
 import BookmarkButton from "../../components/buttons/bookmarkButton/bookmarkButton";
 import { useCart } from "../../hooks/useCart";

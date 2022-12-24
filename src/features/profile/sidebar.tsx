@@ -1,3 +1,4 @@
+import React from "react";
 import {
   faBox,
   faComment,
@@ -7,8 +8,7 @@ import {
   faUser
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { objectKeys } from "../../utils/objectIterator";
 import styles from "./sidebar.module.scss";
 

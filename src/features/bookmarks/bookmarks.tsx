@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import { Spinner } from "../../components/ui/spinner/spinner";
 import { getBookmarksSelectors, useGetBookmarksQuery } from "./bookmarksSlice";
 import styles from "./bookmarks.module.scss";

@@ -1,8 +1,4 @@
-import { createEntityAdapter } from "@reduxjs/toolkit";
-import { Product } from "../../types/products/core.product";
 import { apiSlice } from "../api/apiSlice";
-import type { EntityState } from "@reduxjs/toolkit";
-import { FiltersParams } from "../filters/filtersSlice";
 import { User } from "../auth/userSlice";
 
 export interface Review {

@@ -1,8 +1,5 @@
-import React, { useCallback, useEffect, useMemo } from "react";
-import { Link, useParams } from "react-router-dom";
+import React from "react";
 import styles from "./itemPlaceholder.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faStar } from "@fortawesome/free-solid-svg-icons";
 import BookmarkButton from "../../components/buttons/bookmarkButton/bookmarkButton";
 import AddToCartButton from "../../components/buttons/addToCartButton/addToCartButton";
 import PlaceholderImg from "../../assets/img/placeholder-camera-sm.png";

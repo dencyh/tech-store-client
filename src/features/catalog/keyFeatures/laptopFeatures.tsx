@@ -1,5 +1,4 @@
 import React from "react";
-import { Product } from "../../../types/products/core.product";
 import { Laptop } from "../../../types/products/laptop";
 import styles from "../catalog.module.scss";
 

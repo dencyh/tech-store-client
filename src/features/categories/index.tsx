@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import CategoryCard from "./categoryCard";
 import _ from "lodash";
 import styles from "./categories.module.scss";

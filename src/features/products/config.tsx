@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ProductConfig } from "../../utils/findDiff";
 import ConfigOption from "./configOption";
 
@@ -6,10 +6,6 @@ interface Props {
   config: ProductConfig;
 }
 const Config: React.FC<Props> = ({ config }) => {
-  const [activeConfig, setActiveConfig] = useState({});
-
-  useEffect(() => {}, []);
-
   const handleChange = () => {
     console.log("change");
   };

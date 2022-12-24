@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Signup from "./signup";
 import styles from "./auth.module.scss";
 import Login from "./login";
-import { AnyZodObject, ZodEffects } from "zod";
 
 interface Props {
   authRef?: React.RefObject<HTMLDivElement>;

@@ -4,11 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { Product } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";
-import { useAppSelector } from "../../redux/hooks";
 import QuantityButton from "../../components/buttons/quantityButton/quantityButton";
 import KeyFeatures from "./keyFeatures";
 import BookmarkButton from "../../components/buttons/bookmarkButton/bookmarkButton";
-import { selectCurrentUser } from "../auth/userSlice";
 import AddToCartButton from "../../components/buttons/addToCartButton/addToCartButton";
 import PlaceholderImg from "../../assets/img/placeholder-camera-sm.png";
 import { useCart } from "../../hooks/useCart";
@@ -90,11 +88,6 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
           onAdd={handleBookmarks("add")}
           onRemove={handleBookmarks("remove")}
         />
-
-        {/* <div className={styles.additional_info}> */}
-        {/* <p>В наличии</p> */}
-        {/* <p>Доставка 5-7 дней</p> */}
-        {/* </div> */}
       </div>
     </div>
   );

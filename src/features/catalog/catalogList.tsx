@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import CatalogItem from "./catalogItem";
 import styles from "./catalog.module.scss";
 import { useGetCartQuery } from "../cart/cartSlice";
@@ -11,7 +11,6 @@ import {
   useGetCategoryProductsQuery
 } from "../products/productSlice";
 import ItemPlaceholder from "./itemPlaceholder";
-import { filter } from "lodash";
 
 const placeholderProducts = Array(5)
   .fill(0)

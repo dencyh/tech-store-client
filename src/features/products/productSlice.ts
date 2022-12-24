@@ -8,7 +8,6 @@ import { Product } from "../../types/products/core.product";
 import { apiSlice } from "../api/apiSlice";
 import type { EntityState } from "@reduxjs/toolkit";
 import { FiltersParams } from "../filters/filtersSlice";
-import { useSearchParams } from "react-router-dom";
 
 export const productsAdapter = createEntityAdapter<Product>({
   selectId: (product) => product._id
@@ -23,7 +22,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       FiltersParams | void
     >({
       query: (filters) => {
-        let params = new URLSearchParams();
+        const params = new URLSearchParams();
         if (typeof filters === "object" && Object.keys(filters).length > 0) {
           for (const key in filters) {
             const value = filters[key];

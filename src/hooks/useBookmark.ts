@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { selectCurrentUser } from "../features/auth/userSlice";
 import {
   getBookmarksSelectors,
