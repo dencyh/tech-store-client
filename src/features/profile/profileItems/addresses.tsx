@@ -1,4 +1,5 @@
 import React from "react";
+import Map from "../../../components/map/map";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../auth/userSlice";
 import styles from "./profileItems.module.scss";
@@ -11,6 +12,7 @@ const Addresses = () => {
       <button className={`${styles.btn} ${styles.btn_primary}`}>
         Добавить адрес
       </button>
+      <Map />
       <div className={styles.details_container}>
         <div className={styles.details_item}>
           <h5 className={styles.item_title}>

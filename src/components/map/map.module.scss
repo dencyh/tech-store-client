@@ -1,0 +1,8 @@
+@import "../../assets/styles/variables.scss";
+
+.map {
+  width: 500px;
+  height: 500px;
+  border: 1px solid $light-gray;
+  border-radius: $border-radius-lg;
+}
