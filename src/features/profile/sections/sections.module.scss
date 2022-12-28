@@ -41,6 +41,24 @@
   transform: translateY(-50%);
 }
 
+.form_controls * > {
+  display: inline-block;
+}
+
+.form_btn {
+  @include btn;
+  background-color: white;
+  color: $primary-color;
+  border: 2px solid $dark-gray;
+  max-width: 150px;
+  transition: all 200ms ease;
+
+  &:hover {
+    color: white;
+    background-color: $primary-color;
+  }
+}
+
 .btn {
   font-size: 0.9em;
   color: $primary-color;
@@ -60,7 +78,3 @@
     filter: brightness(75%);
   }
 }
-
-// .edit_form {
-//   margin-top: 12px;
-// }

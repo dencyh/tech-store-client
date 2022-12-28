@@ -1,4 +1,5 @@
-import { RootState } from "./../../redux/store";
+import { AddressInput } from "./../profile/sections/addresses";
+import { RootState } from "../../redux/store";
 import {
   createAsyncThunk,
   createSelector,
@@ -15,6 +16,12 @@ export interface User {
   lastName: string;
   session: string;
   verified: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Address extends AddressInput {
+  _id: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -44,6 +51,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
         credentials: "include"
       }),
       invalidatesTags: ["User"]
+    }),
+    createAddress: builder.mutation<Address, AddressInput>({
+      query: (query) => ({
+        url: `/address`,
+        method: "POST",
+        body: query,
+        credentials: "include"
+      })
     })
   })
 });
@@ -51,7 +66,8 @@ export const userApiSlice = apiSlice.injectEndpoints({
 export const {
   useUserLoginMutation,
   useGetCurrentUserQuery,
-  useUpdateUserMutation
+  useUpdateUserMutation,
+  useCreateAddressMutation
 } = userApiSlice;
 
 export const selectUserResult = userApiSlice.endpoints.getCurrentUser.select();

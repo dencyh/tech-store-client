@@ -1,5 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
-import { User } from "../auth/userSlice";
+import { User } from "../user/userSlice";
 
 export interface Review {
   _id: string;

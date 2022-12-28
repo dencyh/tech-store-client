@@ -23,5 +23,5 @@ export const useForm = <T>(initState: T, onSubmit: (form: T) => void) => {
       [name]: value
     }));
   };
-  return { form, handleChange, handleSubmit };
+  return { form, handleChange, handleSubmit, setForm };
 };

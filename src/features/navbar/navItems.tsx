@@ -9,9 +9,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getCartSelectors, selectLocalCartQuantity } from "../cart/cartSlice";
-import Auth from "../auth/auth";
+import Auth from "../user/auth";
 import { useAppSelector } from "../../redux/hooks";
-import { selectCurrentUser } from "../auth/userSlice";
+import { selectCurrentUser } from "../user/userSlice";
 
 const menuItems = [
   { text: "Корзина", to: "/cart", icon: faCartShopping },

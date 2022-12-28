@@ -8,7 +8,7 @@ import AddProduct from "./features/products/addProduct";
 import CartPage from "./pages/cartPage";
 import BookmarksPage from "./pages/bookmarksPage";
 import ProfilePage from "./pages/profilePage";
-import { selectCurrentUser } from "./features/auth/userSlice";
+import { selectCurrentUser } from "./features/user/userSlice";
 import { useAppSelector } from "./redux/hooks";
 import { selectLocalCart, useGetCartQuery } from "./features/cart/cartSlice";
 

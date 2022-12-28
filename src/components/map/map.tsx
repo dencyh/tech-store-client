@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { AddressInput } from "../../features/profile/sections/addresses";
 import { ymapsLoader } from "../../utils/ymapsLoader";
 import styles from "./map.module.scss";
 import Marker from "./marker";
 
-const Map = () => {
+interface Props {
+  onSubmit: (address: AddressInput) => void;
+}
+
+const Map: React.FC<Props> = ({ onSubmit }) => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const [coords, setCoords] = useState([0, 0]);
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState<AddressInput>({} as AddressInput);
   const [userActive, setUserActive] = useState(true);
 
   useEffect(() => {
@@ -26,15 +30,30 @@ const Map = () => {
 
         map.events
           .add("actionbegin", () => {
-            setAddress("");
+            setAddress({} as AddressInput);
             setUserActive(true);
           })
           .add("boundschange", function (e: any) {
             setUserActive(false);
             const newCenter = e.get("newCenter");
-            setCoords(newCenter);
             ymaps.geocode(newCenter, { kind: "house" }).then((res: any) => {
-              setAddress(res.geoObjects.get(0).properties.get("name"));
+              const newAddress = res.geoObjects.get(0).properties;
+              const addressArr = newAddress
+                .get("metaDataProperty")
+                .GeocoderMetaData.Address.Components.map(
+                  (entry: { kind: string; name: string }) => [
+                    entry.kind,
+                    entry.name
+                  ]
+                );
+              const addressObj = Object.fromEntries(addressArr) as AddressInput;
+              setAddress({
+                ...addressObj,
+                text: newAddress.get("text"),
+                coords: newCenter,
+                apartment: "",
+                comment: ""
+              });
             });
           });
       }
@@ -63,7 +82,16 @@ const Map = () => {
     <div>
       {isLoading && <div>Loading...</div>}
       <div className={styles.map} id="map">
-        <h3 className={styles.address}>{address}</h3>
+        <h3 className={styles.address}>
+          {address.text || "Выберите ваш адрес"}
+        </h3>
+        <button
+          className={`${styles.btn} ${address.text ? "" : styles.btn_disabled}`}
+          disabled={!!!address.text}
+          onClick={() => onSubmit(address)}
+        >
+          Выбрать
+        </button>
         <div className={styles.marker_container}>
           <Marker userActive={userActive} />
         </div>

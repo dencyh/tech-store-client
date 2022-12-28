@@ -42,3 +42,20 @@
 [class*="ground-pane"] {
   filter: saturate(0.5);
 }
+
+.btn {
+  @include btn;
+  position: absolute;
+  z-index: 1001;
+  max-width: 200px;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  transition: background-color 300ms ease;
+}
+
+.btn_disabled {
+  background-color: $gray;
+  cursor: not-allowed;
+}

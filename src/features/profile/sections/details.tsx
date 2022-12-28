@@ -1,11 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
-import Input from "../../../components/form/input/input";
 import { Spinner } from "../../../components/ui/spinner/spinner";
-import { useForm } from "../../../hooks/useForm";
 import { useAppSelector } from "../../../redux/hooks";
-import { selectCurrentUser } from "../../auth/userSlice";
-import EditableField from "./editableField";
-import styles from "./profileItems.module.scss";
+import { selectCurrentUser } from "../../user/userSlice";
+import EditableField from "./components/editableField";
+import styles from "./sections.module.scss";
 
 const Details = () => {
   const currentUser = useAppSelector(selectCurrentUser);

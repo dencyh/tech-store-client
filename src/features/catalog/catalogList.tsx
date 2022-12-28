@@ -4,7 +4,7 @@ import CatalogItem from "./catalogItem";
 import styles from "./catalog.module.scss";
 import { useGetCartQuery } from "../cart/cartSlice";
 import { useAppSelector } from "../../redux/hooks";
-import { selectCurrentUser } from "../auth/userSlice";
+import { selectCurrentUser } from "../user/userSlice";
 import { useGetBookmarksQuery } from "../bookmarks/bookmarksSlice";
 import {
   getProductsSelectors,

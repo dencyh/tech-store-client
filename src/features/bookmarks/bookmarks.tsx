@@ -3,7 +3,7 @@ import { Spinner } from "../../components/ui/spinner/spinner";
 import { getBookmarksSelectors, useGetBookmarksQuery } from "./bookmarksSlice";
 import styles from "./bookmarks.module.scss";
 import { useAppSelector } from "../../redux/hooks";
-import { selectCurrentUser } from "../auth/userSlice";
+import { selectCurrentUser } from "../user/userSlice";
 import { formatPrice } from "../../utils/formatPrice";
 import plural from "plural-ru";
 import BookmarksItem from "./bookmarksItem";

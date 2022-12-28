@@ -1,14 +1,14 @@
 import React from "react";
 import { useAppSelector } from "../../redux/hooks";
-import { selectCurrentUser } from "../auth/userSlice";
+import { selectCurrentUser } from "../user/userSlice";
 import Sidebar from "./sidebar";
 import styles from "./profile.module.scss";
 import { useParams } from "react-router-dom";
-import Orders from "./profileItems/orders";
-import Details from "./profileItems/details";
-import Addresses from "./profileItems/addresses";
+import Orders from "./sections/orders";
+import Details from "./sections/details";
+import Addresses from "./sections/addresses";
 import Bookmarks from "../bookmarks/bookmarks";
-import UserReviews from "./profileItems/userReviews";
+import UserReviews from "./sections/userReviews";
 import { Spinner } from "../../components/ui/spinner/spinner";
 
 const Profile = () => {

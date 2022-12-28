@@ -1,4 +1,4 @@
-import { selectCurrentUser } from "../features/auth/userSlice";
+import { selectCurrentUser } from "../features/user/userSlice";
 import {
   CartItem,
   getCartSelectors,

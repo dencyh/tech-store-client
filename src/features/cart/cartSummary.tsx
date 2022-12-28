@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import Input from "../../components/form/input/input";
 import { useAppSelector } from "../../redux/hooks";
 import { formatPrice } from "../../utils/formatPrice";
-import { selectCurrentUser } from "../auth/userSlice";
+import { selectCurrentUser } from "../user/userSlice";
 import styles from "./cart.module.scss";
 import { getCartSelectors } from "./cartSlice";
 

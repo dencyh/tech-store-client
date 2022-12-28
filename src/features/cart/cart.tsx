@@ -5,7 +5,7 @@ import CartItem from "./cartItem";
 import { selectLocalCart, getCartSelectors } from "./cartSlice";
 import { Spinner } from "../../components/ui/spinner/spinner";
 import { useAppSelector } from "../../redux/hooks";
-import { selectCurrentUser } from "../auth/userSlice";
+import { selectCurrentUser } from "../user/userSlice";
 
 const Cart = () => {
   const currentUser = useAppSelector(selectCurrentUser);

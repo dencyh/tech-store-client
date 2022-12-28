@@ -6,7 +6,7 @@ import CartQuantity from "../../components/ui/cartQuantity/cartQuantity";
 import { useAppSelector } from "../../redux/hooks";
 import { Product } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";
-import { selectCurrentUser } from "../auth/userSlice";
+import { selectCurrentUser } from "../user/userSlice";
 import styles from "./cart.module.scss";
 import {
   getCartSelectors,
