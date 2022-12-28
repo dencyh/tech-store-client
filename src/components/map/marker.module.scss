@@ -1,0 +1,19 @@
+.pin {
+  transition: all 1.5s ease;
+  transform: translateY(5%);
+}
+
+.pin_to {
+  transform: translateY(-9%);
+}
+
+.shadow {
+  transform-origin: center;
+  transition: all 1.5s ease;
+  filter: blur(0px);
+  transform: scaleX(70%);
+}
+
+.shadow_to {
+  filter: blur(5px);
+}

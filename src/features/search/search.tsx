@@ -13,7 +13,7 @@ const Search = () => {
     setQuery(e.target.value);
   };
 
-  const debounced = useDebounce(query, 600);
+  const { debounced } = useDebounce(query, 600);
 
   const dispatch = useAppDispatch();
 

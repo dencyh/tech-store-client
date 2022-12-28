@@ -17,7 +17,8 @@
     "jsx": "react-jsx",
     "downlevelIteration": true,
     "noImplicitAny": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "noImplicitThis": false
   },
   "include": ["src", "types"]
 }

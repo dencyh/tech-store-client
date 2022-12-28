@@ -1,12 +1,12 @@
-interface ymapsContainer {
+interface YmapsLoader {
   promise: Promise<unknown> | undefined;
   load: () => Promise<unknown>;
 }
 
-export const ymapsHelper: ymapsContainer = {
+export const ymapsLoader: YmapsLoader = {
   promise: undefined,
   load(): Promise<any> {
-    const src = `https://api-maps.yandex.ru/2.1/?apikey=empty&lang=en_RU`;
+    const src = `https://api-maps.yandex.ru/2.1/?apikey=${process.env.REACT_APP_YANDEX_MAPS_API}&lang=ru_RU`;
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.src = src;
