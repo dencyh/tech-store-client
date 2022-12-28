@@ -5,6 +5,7 @@ import styles from "./categories.module.scss";
 
 import { Category, useGetCategoriesQuery } from "../api/apiSlice";
 import { Spinner } from "../../components/ui/spinner/spinner";
+import Loader from "../../components/loader/loader";
 
 export const Categories = () => {
   const {
@@ -18,11 +19,11 @@ export const Categories = () => {
   let content;
 
   if (isLoading) {
-    content = <Spinner text="Loading" />;
+    content = <Loader />;
   } else if (isSuccess) {
     content = (
       <div className={styles.categories}>
-        {categories.map((category: Category) => (
+        {categories!.map((category: Category) => (
           <CategoryCard key={category._id} category={category} />
         ))}
       </div>

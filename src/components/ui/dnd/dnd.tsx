@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useUploadImagesMutation } from "../../../features/products/productSlice";
+import Loader from "../../loader/loader";
 import { Spinner } from "../spinner/spinner";
 import styles from "./dnd.module.scss";
 
@@ -77,7 +78,7 @@ const DND = () => {
             onDragOver={(e) => handleDragStart(e)}
           >
             {isLoading ? (
-              <Spinner text="Идет загрузка" />
+              <Loader />
             ) : (
               <>
                 <span className={styles.tip}>

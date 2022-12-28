@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import Loader from "../../../components/loader/loader";
 import { Spinner } from "../../../components/ui/spinner/spinner";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../user/userSlice";
@@ -14,7 +15,7 @@ const Details = () => {
       <h3 className={styles.title}>Личные данные</h3>
 
       {!currentUser ? (
-        <Spinner />
+        <Loader />
       ) : (
         <div className={styles.details_container}>
           <EditableField

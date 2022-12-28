@@ -1,0 +1,185 @@
+$cart-start: 15%;
+$cart-end: 30%;
+
+.container {
+  position: relative;
+  width: 160px;
+  margin: 0 auto;
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  top: -10px;
+  transform: translateX(-50%);
+}
+
+.goods {
+  transform: translateX(0%);
+
+  transform-origin: center;
+
+  animation-duration: 1.5s;
+  animation-name: goods-drop;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: linear;
+}
+
+.cart {
+  transform: translateX(0%);
+
+  transform-origin: center;
+
+  animation-duration: 1.5s;
+  animation-name: cart-move;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: linear;
+}
+
+.wind1,
+.wind2,
+.wind3,
+.wind4 {
+  position: relative;
+  z-index: 100;
+  transform: scaleX(0) translateX(50%);
+  transform-origin: center;
+  animation-duration: 3s;
+  animation-name: wind-flow;
+  animation-iteration-count: infinite;
+  animation-delay: 540ms;
+  animation-timing-function: ease-in;
+}
+
+.wind2 {
+  animation-delay: 290ms;
+}
+.wind3 {
+  animation-delay: 500ms;
+}
+
+.wind4 {
+  animation-delay: 390ms;
+}
+
+@keyframes title-fade {
+  from {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes goods-drop {
+  from {
+    transform: translateY(0%) translateX($cart-start);
+    opacity: 0;
+  }
+
+  10% {
+    transform: translateY(-0.5%) translateX(calc($cart-end * (0.5 + 0.1 * 0.5)));
+  }
+  20% {
+    transform: translateY(0%) translateX(calc($cart-end * (0.5 + 0.2 * 0.5)));
+  }
+  45% {
+    transform: translateY(-0.5%)
+      translateX(calc($cart-end * (0.5 + 0.45 * 0.5)));
+    opacity: 1;
+  }
+  55% {
+    transform: translateY(0%) translateX(calc($cart-end * (0.5 + 0.55 * 0.5)));
+  }
+  85% {
+    transform: translateY(0%) translateX(calc($cart-end * (0.5 + 0.85 * 0.5)));
+  }
+  95% {
+    transform: translateY(-0.5%)
+      translateX(calc($cart-end * (0.5 + 0.95 * 0.5)));
+  }
+
+  to {
+    transform: translateY(0%) translateX($cart-end);
+  }
+}
+
+@keyframes cart-move {
+  from {
+    transform: translateY(0%) translateX($cart-start);
+  }
+
+  10% {
+    transform: translateY(-0.5%) translateX(calc($cart-end * (0.5 + 0.1 * 0.5)));
+  }
+  20% {
+    transform: translateY(0%) translateX(calc($cart-end * (0.5 + 0.2 * 0.5)));
+  }
+  45% {
+    transform: translateY(-0.5%)
+      translateX(calc($cart-end * (0.5 + 0.45 * 0.5)));
+  }
+  55% {
+    transform: translateY(0%) translateX(calc($cart-end * (0.5 + 0.55 * 0.5)));
+  }
+  85% {
+    transform: translateY(0%) translateX(calc($cart-end * (0.5 + 0.85 * 0.5)));
+  }
+  95% {
+    transform: translateY(-0.5%)
+      translateX(calc($cart-end * (0.5 + 0.95 * 0.5)));
+  }
+
+  to {
+    transform: translateY(0%) translateX($cart-end);
+  }
+}
+
+@keyframes cart-bump {
+  from {
+  }
+  20% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(5deg);
+  }
+  40% {
+    transform: rotate(0deg);
+  }
+  to {
+  }
+}
+
+@keyframes wind-flow {
+  from {
+    transform: scaleX(0) translateX(80%);
+    opacity: 1;
+  }
+  25% {
+    transform: scaleX(100%) translateX(25%);
+    opacity: 0.7;
+  }
+  45% {
+    transform: scaleX(0) translateX(-25%);
+    opacity: 0;
+  }
+  55% {
+    transform: scaleX(0) translateX(50%);
+    opacity: 0;
+  }
+  75% {
+    transform: scaleX(70%) translateX(25%);
+    opacity: 1;
+  }
+  to {
+    transform: scaleX(0) translateX(-100%);
+    opacity: 0;
+  }
+}

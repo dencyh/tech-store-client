@@ -30,7 +30,7 @@ const StarRating: React.FC<Props> = ({ value, name, onChange }) => {
   }, [rating]);
 
   return (
-    <ul className={styles.stars}>
+    <div className={styles.stars}>
       {startArr.map((value) => (
         <label key={value} className={styles.star__label}>
           <input type="radio" className={styles.star__input} value={value} />
@@ -43,7 +43,7 @@ const StarRating: React.FC<Props> = ({ value, name, onChange }) => {
           />
         </label>
       ))}
-    </ul>
+    </div>
   );
 };
 export default StarRating;

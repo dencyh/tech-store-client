@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Loader from "../components/loader/loader";
 import Logo from "../components/ui/logo/logo";
 import CatalogList from "../features/catalog/catalogList";
 import Categories from "../features/categories";

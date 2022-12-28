@@ -5,7 +5,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const SearchButton = () => {
   return (
-    <button className={styles.button}>
+    <button className={styles.button} aria-label="search">
       <FontAwesomeIcon className={styles.icon} icon={faSearch} />
     </button>
   );

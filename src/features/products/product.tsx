@@ -24,6 +24,7 @@ import { useCart } from "../../hooks/useCart";
 import QuantityButton from "../../components/buttons/quantityButton/quantityButton";
 import { Product as ProductType } from "../../types/products/core.product";
 import { useBookmark } from "../../hooks/useBookmark";
+import Loader from "../../components/loader/loader";
 
 const baseImageUrl = process.env.REACT_APP_API_URL + "/";
 
@@ -74,7 +75,7 @@ const Product = () => {
   if (isLoading) {
     content = content = (
       <div className={styles.loader}>
-        <Spinner text="Loading" />
+        <Loader />
       </div>
     );
   } else if (isSuccess) {

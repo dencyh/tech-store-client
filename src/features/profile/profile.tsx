@@ -10,6 +10,7 @@ import Addresses from "./sections/addresses";
 import Bookmarks from "../bookmarks/bookmarks";
 import UserReviews from "./sections/userReviews";
 import { Spinner } from "../../components/ui/spinner/spinner";
+import Loader from "../../components/loader/loader";
 
 const Profile = () => {
   const currentUser = useAppSelector(selectCurrentUser);
@@ -41,11 +42,11 @@ const Profile = () => {
   return (
     <>
       {!currentUser ? (
-        <Spinner />
+        <Loader />
       ) : (
         <>
           <h2 className={styles.title}>
-            Добрый день, {currentUser?.firstName}!
+            Добрый день, {currentUser.firstName}!
           </h2>
           <div className={styles.container}>
             <Sidebar />

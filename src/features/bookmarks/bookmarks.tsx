@@ -7,6 +7,7 @@ import { selectCurrentUser } from "../user/userSlice";
 import { formatPrice } from "../../utils/formatPrice";
 import plural from "plural-ru";
 import BookmarksItem from "./bookmarksItem";
+import Loader from "../../components/loader/loader";
 
 const Bookmarks = () => {
   const currentUser = useAppSelector(selectCurrentUser);
@@ -25,7 +26,12 @@ const Bookmarks = () => {
     [bookmarks]
   );
 
-  if (isLoading) return <Spinner />;
+  if (isLoading)
+    return (
+      <div className={styles.loader}>
+        <Loader />
+      </div>
+    );
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Избранное</h2>

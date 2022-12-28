@@ -43,7 +43,7 @@ const EditableField: React.FC<Props> = ({
 
   const content = !editing ? (
     <>
-      <h5 className={styles.item_title}>{title}</h5>
+      <h4 className={styles.item_title}>{title}</h4>
       <p>{value}</p>
       <button
         className={`${styles.btn} ${styles.right_middle}`}

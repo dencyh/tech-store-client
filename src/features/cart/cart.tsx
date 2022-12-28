@@ -6,6 +6,7 @@ import { selectLocalCart, getCartSelectors } from "./cartSlice";
 import { Spinner } from "../../components/ui/spinner/spinner";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser } from "../user/userSlice";
+import Loader from "../../components/loader/loader";
 
 const Cart = () => {
   const currentUser = useAppSelector(selectCurrentUser);
@@ -15,7 +16,12 @@ const Cart = () => {
     getCartSelectors(currentUser?._id || "").selectAllCart
   );
 
-  if (!cart) return <Spinner text="Loading cart" />;
+  if (!cart)
+    return (
+      <div className={styles.loader}>
+        <Loader />
+      </div>
+    );
   return (
     <>
       <h1 className={styles.title}>Корзина</h1>
