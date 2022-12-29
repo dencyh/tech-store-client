@@ -13,12 +13,13 @@ import { Product } from "../types/products/core.product";
 export const useCart = (product: Product) => {
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector(selectCurrentUser);
-  const { data: cart } = useGetCartQuery(currentUser?._id || "", {
-    skip: !currentUser
-  });
-  const productInCart = cart?.entities[product._id || ""];
-  const productsInCart = useAppSelector(
-    getCartSelectors(currentUser?._id || "").selectAllCart
+
+  const cart = useAppSelector(getCartSelectors(currentUser?._id).selectCart);
+
+  const cartProduct = cart?.entities[product._id || ""];
+
+  const cartItems = useAppSelector(
+    getCartSelectors(currentUser?._id).selectAllCart
   );
 
   // Update Local Cart
@@ -51,14 +52,14 @@ export const useCart = (product: Product) => {
   const handleQuantityUpdate = (action: "increment" | "decrement") => {
     return function () {
       if (!cart) return;
-      let newCart: CartItem[] = [...productsInCart];
+      let newCart: CartItem[] = [...cartItems];
       const inCart = cart.entities[product._id];
       switch (action) {
         case "increment": {
           if (!inCart) {
             newCart.push({ product: product, quantity: 1 });
           } else {
-            newCart = productsInCart.map((cartItem) =>
+            newCart = cartItems.map((cartItem) =>
               cartItem.product._id === product._id
                 ? { ...cartItem, quantity: cartItem.quantity + 1 }
                 : cartItem
@@ -93,7 +94,8 @@ export const useCart = (product: Product) => {
     : localQuantityUpdate;
 
   return {
-    productInCart,
+    cartItems,
+    cartProduct,
     updateQuantity
   };
 };

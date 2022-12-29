@@ -1,11 +1,11 @@
 import React from "react";
-import Products from "../features/catalog/index";
+import Catalog from "../features/catalog/index";
 import Layout from "./layout";
 
 const CatalogPage = () => {
   return (
     <Layout>
-      <Products />
+      <Catalog />
     </Layout>
   );
 };

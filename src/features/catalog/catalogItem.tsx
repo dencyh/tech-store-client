@@ -18,12 +18,12 @@ interface Props {
 }
 
 const CatalogItem: React.FC<Props> = ({ product }) => {
-  const { updateQuantity, productInCart } = useCart(product);
+  const { updateQuantity, cartProduct } = useCart(product);
   const { handleBookmarks } = useBookmark(product);
 
   const image = product.imagePaths ? product.imagePaths[0] : "";
 
-  const url = image
+  const imageSrc = image
     ? process.env.REACT_APP_API_URL + "/" + image
     : PlaceholderImg;
 
@@ -36,7 +36,7 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
   return (
     <div className={styles.item}>
       <div className={`${styles.img} ${!image ? styles.img_sm : ""}`}>
-        <img src={url} alt={product.name} />
+        <img src={imageSrc} alt={product.name} />
       </div>
       <div className={styles.info}>
         <h3 className={styles.title}>
@@ -67,16 +67,16 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
           </p>
         </div>
 
-        {!productInCart ? (
+        {!cartProduct ? (
           <AddToCartButton
             onAdd={updateQuantity("increment")}
             onRemove={updateQuantity("decrement")}
-            inCart={!!productInCart}
+            inCart={!!cartProduct}
           />
         ) : (
           <div className={styles.btn__container}>
             <QuantityButton
-              quantity={productInCart.quantity}
+              quantity={cartProduct.quantity}
               onIncrement={updateQuantity("increment")}
               onDecrement={updateQuantity("decrement")}
             />

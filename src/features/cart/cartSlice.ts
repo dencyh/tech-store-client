@@ -146,18 +146,18 @@ export const {
   useGetProductsByIdsQuery
 } = cartApiSlice;
 
-export const getCartSelectors = (userId: string) => {
-  const selectCartResult = cartApiSlice.endpoints.getCart.select(userId);
+const currentUser = null;
 
-  const selectCartData = createSelector(
-    selectCartResult,
-    (result) => result.data
-  );
+export const getCartSelectors = (userId?: string) => {
+  const selectCartResult = cartApiSlice.endpoints.getCart.select(userId || "");
+
+  const selectCart = createSelector(selectCartResult, (result) => result.data);
   const { selectAll: selectAllCart } = cartAdapter.getSelectors(
-    (state: RootState) => selectCartData(state) ?? initialState
+    (state: RootState) => selectCart(state) ?? initialState
   );
 
   return {
-    selectAllCart
+    selectAllCart,
+    selectCart
   };
 };

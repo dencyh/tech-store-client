@@ -21,14 +21,14 @@ interface Props {
 
 const CartItem: React.FC<Props> = ({ product, quantity }) => {
   const currentUser = useAppSelector(selectCurrentUser);
-  const [updateCart, { isLoading, isError, isSuccess }] =
-    useUpdateCartMutation();
+  const [updateCart] = useUpdateCartMutation();
 
   const imgUrl = process.env.REACT_APP_API_URL + "/" + product.imagePaths[0];
 
-  const { data: cart } = useGetCartQuery(currentUser?._id || "");
+  const cart = useAppSelector(getCartSelectors(currentUser?._id).selectCart);
+
   const cartItems = useAppSelector(
-    getCartSelectors(currentUser?._id || "").selectAllCart
+    getCartSelectors(currentUser?._id).selectAllCart
   );
 
   const handleQuantityUpdate = (

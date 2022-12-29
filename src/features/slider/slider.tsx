@@ -4,7 +4,7 @@ import styles from "./slider.module.scss";
 
 interface Props {
   children: JSX.Element[];
-  title: string;
+  title?: string;
   subtitle?: string;
 }
 const Slider: React.FC<Props> = ({ title, subtitle, children }) => {

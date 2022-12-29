@@ -17,7 +17,7 @@ const placeholderProducts = Array(5)
   .map((_, index) => index);
 
 const CatalogList = () => {
-  const { type = "" } = useParams();
+  console.log("here");
 
   const currentUser = useAppSelector(selectCurrentUser);
 

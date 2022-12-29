@@ -2,7 +2,6 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Spinner } from "../../components/ui/spinner/spinner";
 import { useAppSelector } from "../../redux/hooks";
 import { getConfigOptions } from "../../utils/findDiff";
 import { formatPrice } from "../../utils/formatPrice";
@@ -34,7 +33,7 @@ const Product = () => {
 
   const { data: product, isLoading, isSuccess } = useGetProductQuery(id);
 
-  const { productInCart, updateQuantity } = useCart(
+  const { cartProduct, updateQuantity } = useCart(
     product || ({} as ProductType)
   );
 
@@ -122,7 +121,7 @@ const Product = () => {
             <p className={styles.price}>{formatPrice(product.price)}</p>
             <Benefits />
             <div className={styles.btn_container}>
-              {!productInCart ? (
+              {!cartProduct ? (
                 <AddToCartButton
                   onAdd={updateQuantity("increment")}
                   inCart={false}
@@ -130,7 +129,7 @@ const Product = () => {
               ) : (
                 <div className={styles.btn__container}>
                   <QuantityButton
-                    quantity={productInCart.quantity}
+                    quantity={cartProduct.quantity}
                     onIncrement={updateQuantity("increment")}
                     onDecrement={updateQuantity("decrement")}
                   />

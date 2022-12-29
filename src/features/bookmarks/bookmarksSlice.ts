@@ -41,19 +41,21 @@ export const { useUpdateBookmarksMutation, useGetBookmarksQuery } =
   bookmarksApiSlice;
 
 // getSelectors wrapper to pass userId
-export const getBookmarksSelectors = (userId: string) => {
-  const selectBookmarksResult =
-    bookmarksApiSlice.endpoints.getBookmarks.select(userId);
+export const getBookmarksSelectors = (userId?: string) => {
+  const selectBookmarksResult = bookmarksApiSlice.endpoints.getBookmarks.select(
+    userId || ""
+  );
 
-  const selectBookmarksData = createSelector(
+  const selectBookmarks = createSelector(
     selectBookmarksResult,
     (bookmarksResult) => bookmarksResult.data
   );
   const { selectAll: selectAllBookmarks } = bookmarksAdapter.getSelectors(
-    (state: RootState) => selectBookmarksData(state) ?? initialState
+    (state: RootState) => selectBookmarks(state) ?? initialState
   );
 
   return {
-    selectAllBookmarks
+    selectAllBookmarks,
+    selectBookmarks
   };
 };

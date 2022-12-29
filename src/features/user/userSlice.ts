@@ -1,13 +1,11 @@
 import { AddressInput } from "./../profile/sections/addresses";
 import { RootState } from "../../redux/store";
 import {
-  createAsyncThunk,
   createSelector,
   createSlice
 } from "@reduxjs/toolkit";
 import { LoginInput } from "../../schemas/user.schema";
 import { apiSlice } from "../api/apiSlice";
-import axios from "axios";
 
 export interface User {
   _id: string;
@@ -84,25 +82,11 @@ const initialState = {
 };
 
 export const API_URL = process.env.REACT_APP_API_URL;
-export const fetchCurrentUser = createAsyncThunk(
-  "user/fetchCurrentUser",
-  async () => {
-    const response = await axios.get(`${API_URL}/api/users/me`, {
-      withCredentials: true
-    });
-    return response.data;
-  }
-);
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
-  extraReducers(builder) {
-    builder.addCase(fetchCurrentUser.fulfilled, (state, action) => {
-      state.currentUser = action.payload;
-    });
-  }
+  reducers: {}
 });
 
 export default userSlice.reducer;

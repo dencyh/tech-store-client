@@ -12,12 +12,12 @@ import Loader from "../../components/loader/loader";
 const Bookmarks = () => {
   const currentUser = useAppSelector(selectCurrentUser);
 
-  const { data, isLoading } = useGetBookmarksQuery(currentUser?._id || "", {
+  const { isLoading } = useGetBookmarksQuery(currentUser?._id || "", {
     skip: !currentUser?._id
   });
 
   const bookmarks = useAppSelector(
-    getBookmarksSelectors(currentUser?._id || "").selectAllBookmarks
+    getBookmarksSelectors(currentUser?._id).selectAllBookmarks
   );
 
   const count = bookmarks.length;

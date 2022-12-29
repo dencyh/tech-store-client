@@ -26,7 +26,7 @@ const BookmarksItem: React.FC<Props> = ({ product }) => {
 
   const { handleBookmarks } = useBookmark(product);
 
-  const { updateQuantity, productInCart } = useCart(product);
+  const { updateQuantity, cartProduct } = useCart(product);
 
   return (
     <li className={styles.item}>
@@ -44,7 +44,7 @@ const BookmarksItem: React.FC<Props> = ({ product }) => {
       <AddToCartButton
         onAdd={updateQuantity("increment")}
         onRemove={updateQuantity("decrement")}
-        inCart={!!productInCart}
+        inCart={!!cartProduct}
       />
       <button
         className={styles.cancel_btn}

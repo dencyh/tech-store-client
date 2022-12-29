@@ -1,9 +1,5 @@
-import React, { useEffect } from "react";
-import Loader from "../components/loader/loader";
-import Logo from "../components/ui/logo/logo";
-import CatalogList from "../features/catalog/catalogList";
+import React from "react";
 import Categories from "../features/categories";
-import Navbar from "../features/navbar";
 import ProductCompact from "../features/products/productMin";
 import {
   getProductsSelectors,
@@ -14,7 +10,7 @@ import { useAppSelector } from "../redux/hooks";
 import Layout from "./layout";
 
 const HomePage = () => {
-  const { data } = useGetCategoryProductsQuery();
+  useGetCategoryProductsQuery();
   const products = useAppSelector(getProductsSelectors().selectAllProducts);
   console.log(products);
 
