@@ -6,9 +6,10 @@ import Marker from "./marker";
 
 interface Props {
   onSubmit: (address: AddressInput) => void;
+  mapCenter?: [number, number];
 }
 
-const Map: React.FC<Props> = ({ onSubmit }) => {
+const Map: React.FC<Props> = ({ onSubmit, mapCenter }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [address, setAddress] = useState<AddressInput>({} as AddressInput);
@@ -58,19 +59,22 @@ const Map: React.FC<Props> = ({ onSubmit }) => {
           });
       }
 
+      const center = mapCenter
+        ? mapCenter
+        : [55.77224833337829, 37.62099757844506];
       ymaps.geolocation.get().then(
         (res: any) => {
           const bounds = res.geoObjects.get(0).properties.get("boundedBy");
           const state = ymaps.util.bounds.getCenterAndZoom(bounds, [450, 450]);
           createMap(state);
           createMap({
-            center: [55.77224833337829, 37.62099757844506],
+            center,
             zoom: 10
           });
         },
         (e: any) => {
           createMap({
-            center: [55.77224833337829, 37.62099757844506],
+            center,
             zoom: 10
           });
         }

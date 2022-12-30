@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export const useForm = <T>(initState: T, onSubmit: (form: T) => void) => {
-  const [form, setForm] = useState(initState);
+  const [form, setForm] = useState<T>(initState);
 
   useEffect(() => {
     setForm(initState);

@@ -19,7 +19,11 @@
 
 .details_item {
   position: relative;
-  padding: 20px 0px;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
   border-bottom: 1px solid $light-gray;
 
   &:last-child {
@@ -34,11 +38,8 @@
   margin-bottom: 5px;
 }
 
-.right_middle {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
+.edit_form {
+  width: 100%;
 }
 
 .form_controls * > {

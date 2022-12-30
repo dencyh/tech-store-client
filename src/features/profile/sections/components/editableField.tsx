@@ -11,16 +11,18 @@ import {
 import styles from "../sections.module.scss";
 
 interface Props {
-  title: string;
+  title?: string;
   value: string;
-  name: string;
+  name?: string;
   buttonText?: string;
+  editButtonFn?: (args: unknown) => unknown;
 }
 const EditableField: React.FC<Props> = ({
   title,
   value,
-  name,
-  buttonText = "Изменить"
+  name = "",
+  buttonText = "Изменить",
+  editButtonFn
 }) => {
   const [editing, setEditing] = useState(false);
 
@@ -43,12 +45,15 @@ const EditableField: React.FC<Props> = ({
 
   const content = !editing ? (
     <>
-      <h4 className={styles.item_title}>{title}</h4>
-      <p>{value}</p>
+      <div>
+        <h4 className={styles.item_title}>{title}</h4>
+        <p>{value}</p>
+      </div>
+
       <button
         className={`${styles.btn} ${styles.right_middle}`}
         aria-label="edit button"
-        onClick={() => setEditing(true)}
+        onClick={editButtonFn ? editButtonFn : () => setEditing(true)}
       >
         {buttonText}
       </button>

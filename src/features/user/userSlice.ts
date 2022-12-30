@@ -1,9 +1,6 @@
 import { AddressInput } from "./../profile/sections/addresses";
 import { RootState } from "../../redux/store";
-import {
-  createSelector,
-  createSlice
-} from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { LoginInput } from "../../schemas/user.schema";
 import { apiSlice } from "../api/apiSlice";
 
@@ -19,7 +16,7 @@ export interface User {
 }
 
 export interface Address extends AddressInput {
-  _id: number;
+  _id: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -57,6 +54,12 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: query,
         credentials: "include"
       })
+    }),
+    getUserAddresses: builder.query<Address[], void>({
+      query: () => ({
+        url: `/address`,
+        credentials: "include"
+      })
     })
   })
 });
@@ -65,7 +68,8 @@ export const {
   useUserLoginMutation,
   useGetCurrentUserQuery,
   useUpdateUserMutation,
-  useCreateAddressMutation
+  useCreateAddressMutation,
+  useGetUserAddressesQuery
 } = userApiSlice;
 
 export const selectUserResult = userApiSlice.endpoints.getCurrentUser.select();

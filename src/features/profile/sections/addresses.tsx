@@ -1,3 +1,4 @@
+import { nanoid } from "@reduxjs/toolkit";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Input from "../../../components/form/input/input";
@@ -7,8 +8,10 @@ import { useForm } from "../../../hooks/useForm";
 import { useAppSelector } from "../../../redux/hooks";
 import {
   selectCurrentUser,
-  useCreateAddressMutation
+  useCreateAddressMutation,
+  useGetUserAddressesQuery
 } from "../../user/userSlice";
+import EditableField from "./components/editableField";
 import styles from "./sections.module.scss";
 
 export interface AddressInput {
@@ -38,7 +41,8 @@ const addressBoilerplate: AddressInput = {
 };
 
 const Addresses = () => {
-  const currentUser = useAppSelector(selectCurrentUser);
+  const { data: userAddresses = [] } = useGetUserAddressesQuery();
+  console.log(userAddresses);
 
   const [createAddress, { isLoading, isSuccess, error }] =
     useCreateAddressMutation();
@@ -54,15 +58,15 @@ const Addresses = () => {
 
   const [showMap, setShowMap] = useState(false);
   const [showForm, setShowForm] = useState(false);
-  const [address, setAddress] = useState(addressBoilerplate);
 
   const onSubmit = (form: AddressInput) => {
-    console.log("submit");
-    console.log(form);
     createAddress(form);
   };
 
-  const { form, handleChange, handleSubmit } = useForm(address, onSubmit);
+  const { form, handleChange, handleSubmit, setForm } = useForm(
+    addressBoilerplate,
+    onSubmit
+  );
 
   const handleAddButton = () => {
     if (showMap) {
@@ -79,7 +83,7 @@ const Addresses = () => {
   const handleCoords = (data: AddressInput) => {
     setShowMap(false);
     setShowForm(true);
-    setAddress(data);
+    setForm((prev) => ({ ...prev, ...data }));
   };
 
   return (
@@ -136,17 +140,13 @@ const Addresses = () => {
         </form>
       )}
       <div className={styles.details_container}>
-        <div className={styles.details_item}>
-          <h5 className={styles.item_title}>
-            {currentUser?.firstName} {currentUser?.lastName}
-          </h5>
-          <p>
-            {currentUser?.firstName} {currentUser?.lastName}
-          </p>
-          <button className={`${styles.btn} ${styles.right_middle}`}>
-            Изменить
-          </button>
-        </div>
+        {userAddresses.map((address) => (
+          <EditableField
+            key={address._id}
+            value={address.text}
+            editButtonFn={() => 1}
+          />
+        ))}
       </div>
     </div>
   );
