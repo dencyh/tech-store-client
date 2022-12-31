@@ -43,6 +43,13 @@
   filter: saturate(0.5);
 }
 
+[class*="controls__control_toolbar"] {
+  z-index: 1010;
+}
+[class*="islets_serp-popup"] {
+  z-index: 1010;
+}
+
 .btn {
   @include btn;
   position: absolute;

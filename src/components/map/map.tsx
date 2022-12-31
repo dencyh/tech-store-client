@@ -1,33 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { AddressInput } from "../../features/profile/sections/addresses";
+import { Address } from "../../features/user/userSlice";
 import { ymapsLoader } from "../../utils/ymapsLoader";
 import styles from "./map.module.scss";
 import Marker from "./marker";
 
 interface Props {
   onSubmit: (address: AddressInput) => void;
-  mapCenter?: [number, number];
+  selectedAddress?: Address;
 }
 
-const Map: React.FC<Props> = ({ onSubmit, mapCenter }) => {
+const Map: React.FC<Props> = ({ onSubmit, selectedAddress }) => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const [address, setAddress] = useState<AddressInput>({} as AddressInput);
+  const [address, setAddress] = useState<AddressInput>(
+    selectedAddress || ({} as AddressInput)
+  );
   const [userActive, setUserActive] = useState(true);
 
   useEffect(() => {
+    const center = selectedAddress
+      ? selectedAddress.coords
+      : [55.77224833337829, 37.62099757844506];
     ymapsLoader.load().then((ymaps: any) => {
       function createMap(state: any) {
         const map = new ymaps.Map(
           "map",
           {
             ...state,
-            controls: ["zoomControl", "searchControl"]
+            controls: ["zoomControl"]
           },
-          {
+          {}
+        );
+        const searchControl = new ymaps.control.SearchControl({
+          options: {
+            noPlacemark: true,
             searchControlProvider: "yandex#search"
           }
-        );
+        });
+        map.controls.add(searchControl);
 
         map.events
           .add("actionbegin", () => {
@@ -48,29 +59,29 @@ const Map: React.FC<Props> = ({ onSubmit, mapCenter }) => {
                   ]
                 );
               const addressObj = Object.fromEntries(addressArr) as AddressInput;
-              setAddress({
+              setAddress((prev) => ({
                 ...addressObj,
-                text: newAddress.get("text"),
+                text: newAddress.get("name"),
                 coords: newCenter,
-                apartment: "",
-                comment: ""
-              });
+                apartment: ""
+              }));
             });
           });
       }
 
-      const center = mapCenter
-        ? mapCenter
-        : [55.77224833337829, 37.62099757844506];
       ymaps.geolocation.get().then(
         (res: any) => {
           const bounds = res.geoObjects.get(0).properties.get("boundedBy");
           const state = ymaps.util.bounds.getCenterAndZoom(bounds, [450, 450]);
-          createMap(state);
-          createMap({
-            center,
-            zoom: 10
-          });
+
+          if (selectedAddress) {
+            createMap({
+              center,
+              zoom: 17
+            });
+          } else {
+            createMap(state);
+          }
         },
         (e: any) => {
           createMap({

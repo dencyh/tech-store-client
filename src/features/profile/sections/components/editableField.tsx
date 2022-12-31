@@ -15,14 +15,16 @@ interface Props {
   value: string;
   name?: string;
   buttonText?: string;
-  editButtonFn?: (args: unknown) => unknown;
+  onEdit?: (args: unknown) => unknown;
+  onRemove?: (args: unknown) => unknown;
 }
 const EditableField: React.FC<Props> = ({
   title,
   value,
   name = "",
   buttonText = "Изменить",
-  editButtonFn
+  onEdit,
+  onRemove
 }) => {
   const [editing, setEditing] = useState(false);
 
@@ -45,18 +47,27 @@ const EditableField: React.FC<Props> = ({
 
   const content = !editing ? (
     <>
-      <div>
+      <div className={styles.item_content}>
         <h4 className={styles.item_title}>{title}</h4>
         <p>{value}</p>
       </div>
 
-      <button
-        className={`${styles.btn} ${styles.right_middle}`}
-        aria-label="edit button"
-        onClick={editButtonFn ? editButtonFn : () => setEditing(true)}
-      >
-        {buttonText}
-      </button>
+      <div className={styles.item_controls}>
+        <button
+          className={styles.btn}
+          aria-label="edit button"
+          onClick={onEdit ? onEdit : () => setEditing(true)}
+        >
+          {buttonText}
+        </button>
+        <button
+          className={styles.btn}
+          aria-label="remove button"
+          onClick={onRemove ? onRemove : undefined}
+        >
+          Удалить
+        </button>
+      </div>
     </>
   ) : (
     <form className={styles.edit_form} onSubmit={handleSubmit}>

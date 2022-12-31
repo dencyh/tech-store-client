@@ -10,14 +10,15 @@
 
 .details_container {
   margin-top: 15px;
-  width: 50%;
-  min-width: fit-content;
+  max-width: 60%;
+  min-width: 450px;
   padding: 10px 15px 10px;
   box-shadow: 0 0 5px $light-gray;
   border-radius: $border-radius-md;
 }
 
 .details_item {
+  min-width: fit-content;
   position: relative;
   display: flex;
   gap: 30px;
@@ -29,6 +30,14 @@
   &:last-child {
     border-bottom: none;
   }
+}
+
+.item_content {
+  flex-basis: 75%;
+}
+
+.item_controls {
+  flex-basis: 10%;
 }
 
 .item_title {
@@ -78,4 +87,10 @@
     color: $link-color;
     filter: brightness(75%);
   }
+}
+
+.top_right {
+  position: absolute;
+  top: 0px;
+  right: 10px;
 }
