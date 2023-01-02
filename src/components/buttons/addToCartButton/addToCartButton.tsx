@@ -11,7 +11,13 @@ interface Props {
   textDelete?: string;
 }
 
-const AddToCartButton: React.FC<Props> = ({ onAdd, onRemove, inCart }) => {
+const AddToCartButton: React.FC<Props> = ({
+  onAdd,
+  onRemove,
+  inCart,
+  textAdd,
+  textDelete
+}) => {
   return (
     <button
       className={`${styles.btn} ${inCart ? styles.btn_active : ""}`}
@@ -20,7 +26,7 @@ const AddToCartButton: React.FC<Props> = ({ onAdd, onRemove, inCart }) => {
       <span className={styles.btn__icon}>
         <FontAwesomeIcon icon={faCartShopping} />
       </span>
-      <span>{inCart ? "В корзине" : "В корзину"}</span>
+      <span>{inCart ? textDelete || "В корзине" : textAdd || "В корзину"}</span>
     </button>
   );
 };

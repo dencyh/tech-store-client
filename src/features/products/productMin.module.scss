@@ -6,20 +6,18 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  width: 200px;
+  width: 150px;
   background-color: $white;
-  padding: 0 10px 10px;
 }
 
 .img {
-  margin: 0 auto;
   width: 150px;
   height: 150px;
 }
 
 .img > img {
-  width: inherit;
-  height: inherit;
+  width: 150px;
+  height: 150px;
 }
 
 .link {
@@ -28,7 +26,6 @@
 }
 
 .name {
-  margin-bottom: 5px;
   font-size: 0.9em;
   font-weight: normal;
 }

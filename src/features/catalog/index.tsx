@@ -6,7 +6,7 @@ import styles from "./catalog.module.scss";
 const Catalog = () => {
   return (
     <div className={styles.container}>
-      {/* <Filters /> */}
+      <Filters />
       <CatalogList />
     </div>
   );

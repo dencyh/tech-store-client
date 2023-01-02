@@ -31,15 +31,11 @@ const ProductMin: React.FC<Props> = ({ product }) => {
           <img src={imgUrl} alt={product.name} />
         </div>
         <h3 className={styles.name}>{product.name}</h3>
+        <div style={{ fontSize: "0.75em" }}>
+          <StarRating value={3} />
+        </div>
         <p className={styles.price}>{formatPrice(product.price)}</p>
-        <StarRating value={3} />
       </Link>
-
-      <AddToCartButton
-        onAdd={updateQuantity("increment")}
-        onRemove={updateQuantity("decrement")}
-        inCart={!!cartProduct}
-      />
     </div>
   );
 };

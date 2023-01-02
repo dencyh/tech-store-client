@@ -17,8 +17,6 @@ const placeholderProducts = Array(5)
   .map((_, index) => index);
 
 const CatalogList = () => {
-  console.log("here");
-
   const currentUser = useAppSelector(selectCurrentUser);
 
   const filters = useAppSelector((state) => state.filters.filters);
@@ -48,7 +46,7 @@ const CatalogList = () => {
     [products, bookmarks, cart]
   );
 
-  if (productsFetching) {
+  if (!products) {
     content = (
       <>
         {placeholderProducts.map((index) => (

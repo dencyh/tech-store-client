@@ -3,7 +3,7 @@ import { createLaptopInput, createLaptopSchema } from "./laptop.shema";
 import { z } from "zod";
 import { createPhoneInput } from "./phone.shema";
 
-export const createProductSchema = {
+export const coreProductSchema = {
   name: z.string({ required_error: "Product name is required" }),
   price: z.number({ required_error: "Price is required" }),
   brand: z.string({ required_error: "Brand name is required" }),
@@ -14,11 +14,6 @@ export const createProductSchema = {
 };
 
 export type CreateProductInput = createPhoneInput | createLaptopInput;
-
-export const productTypeSchemas = {
-  smartphones: createPhoneSchema,
-  laptops: createLaptopSchema
-};
 
 export const addProductImagesSchema = z.object({
   params: z.object({

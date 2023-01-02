@@ -30,7 +30,7 @@ const PriceFilter: React.FC<Props> = ({ title, range, onChange }) => {
     [values]
   );
 
-  const debounced = useDebounce(passValues, 600);
+  const { debounced } = useDebounce(passValues, 600);
 
   useEffect(() => {
     onChange({ name: "price", value: JSON.stringify(debounced) });

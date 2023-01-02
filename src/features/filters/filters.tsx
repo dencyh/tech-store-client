@@ -16,9 +16,12 @@ type FlatSpecs = Omit<SpecsVariants, "specs"> & SpecsVariants["specs"];
 
 const Filters = () => {
   const { type } = useParams();
-  if (!type) return null;
+  const dispatch = useAppDispatch();
 
-  const { data: specsData = {} as SpecsVariants } = useGetSpecsQuery(type);
+  const { data: specsData = {} as SpecsVariants } = useGetSpecsQuery(
+    type || "",
+    { skip: !type }
+  );
 
   const specs = useMemo(() => {
     if (!specsData?._id) return {} as FlatSpecs;
@@ -32,7 +35,6 @@ const Filters = () => {
         } else if (typeof a === "number" && typeof b === "number") {
           return a - b;
         } else {
-          console.log("something else");
           return -1;
         }
       });
@@ -46,10 +48,6 @@ const Filters = () => {
     },
     []
   );
-
-  const filters = useAppSelector((state) => state.filters.filters);
-
-  const dispatch = useAppDispatch();
 
   return (
     <aside className={styles.filters}>

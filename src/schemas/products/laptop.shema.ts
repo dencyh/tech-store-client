@@ -1,9 +1,9 @@
 import { literal, number, object, string, tuple, TypeOf } from "zod";
-import { createProductSchema } from "./core.product.schema";
+import { coreProductSchema } from "./core.product.schema";
 
 export const createLaptopSchema = object({
   body: object({
-    ...createProductSchema,
+    ...coreProductSchema,
     type: literal("laptops", { required_error: "Type is required" }),
     specs: object({
       os: string({ required_error: "OS is required" }),
