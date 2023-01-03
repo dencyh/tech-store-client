@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./itemPlaceholder.module.scss";
 import BookmarkButton from "../../components/buttons/bookmarkButton/bookmarkButton";
 import AddToCartButton from "../../components/buttons/addToCartButton/addToCartButton";
-import PlaceholderImg from "../../assets/img/placeholder-camera-sm.png";
+import PlaceholderImg from "../../assets/img/placeholder-camera-sm.webp";
 
 const ItemPlaceholder = () => {
   return (

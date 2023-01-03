@@ -13,6 +13,19 @@
   filter: drop-shadow(2px 2px 4px $transparent-black);
 }
 
+.carousel_img {
+  width: 100%;
+  // width: 1200px;
+  // height: 300px;
+  // min-width: 500px;
+  // width: 100%;
+  padding: 0 15px;
+  object-fit: cover;
+  aspect-ratio: 21/9;
+  z-index: 1000;
+  position: relative;
+}
+
 .hero_title {
   position: absolute;
   left: 5%;

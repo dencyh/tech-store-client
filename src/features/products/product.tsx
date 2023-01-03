@@ -15,7 +15,7 @@ import {
 import { configKeys } from "../../utils/configKeys";
 import Config from "./config";
 import Benefits from "./benefits";
-import imgPlaceholder from "../../assets/img/placeholder-camera-sm.png";
+import imgPlaceholder from "../../assets/img/placeholder-camera-sm.webp";
 import Specs from "./specs";
 import AddToCartButton from "../../components/buttons/addToCartButton/addToCartButton";
 import BookmarkButton from "../../components/buttons/bookmarkButton/bookmarkButton";
@@ -66,7 +66,7 @@ const Product = () => {
   }, [product]);
 
   const handleImageSelect = (path: string) => {
-    setCurrentImage(path + ".png");
+    setCurrentImage(path + ".webp");
   };
 
   let content;
@@ -78,7 +78,7 @@ const Product = () => {
       </div>
     );
   } else if (isSuccess) {
-    const minRegExp = /.+(?=(.png$))/;
+    const minRegExp = /.+(?=(.webp$))/;
     const minImages = product.imagePaths.map((img) => {
       return baseImageUrl + img.match(minRegExp)?.[0];
     });
@@ -97,7 +97,7 @@ const Product = () => {
                 aria-label="image-select"
                 onClick={() => handleImageSelect(img)}
               >
-                <img src={img + ".min.png"} alt="gallery-image" />
+                <img src={img + ".min.webp"} alt="gallery-image" />
               </div>
             ))}
           </div>

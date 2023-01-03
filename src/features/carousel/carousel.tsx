@@ -10,8 +10,14 @@ interface Props {
   children: JSX.Element[];
   title?: string;
   subtitle?: string;
+  fullWidth?: boolean;
 }
-const carousel: React.FC<Props> = ({ title, subtitle, children }) => {
+const Carousel: React.FC<Props> = ({
+  title,
+  subtitle,
+  children,
+  fullWidth
+}) => {
   const [position, setPosition] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -47,7 +53,11 @@ const carousel: React.FC<Props> = ({ title, subtitle, children }) => {
             style={{ transform: `translateX(${position}px)` }}
           >
             {children.map((child) => (
-              <li className={styles.carousel_item} key={child.key}>
+              <li
+                className={styles.carousel_item}
+                key={child.key}
+                style={{ ...(fullWidth && { minWidth: `${offsetWidth}px` }) }}
+              >
                 {child}
               </li>
             ))}
@@ -64,4 +74,4 @@ const carousel: React.FC<Props> = ({ title, subtitle, children }) => {
     </div>
   );
 };
-export default carousel;
+export default Carousel;

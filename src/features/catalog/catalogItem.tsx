@@ -8,7 +8,7 @@ import QuantityButton from "../../components/buttons/quantityButton/quantityButt
 import KeyFeatures from "./keyFeatures";
 import BookmarkButton from "../../components/buttons/bookmarkButton/bookmarkButton";
 import AddToCartButton from "../../components/buttons/addToCartButton/addToCartButton";
-import PlaceholderImg from "../../assets/img/placeholder-camera-sm.png";
+import PlaceholderImg from "../../assets/img/placeholder-camera-sm.webp";
 import { useCart } from "../../hooks/useCart";
 import { useBookmark } from "../../hooks/useBookmark";
 import styles from "./catalog.module.scss";
