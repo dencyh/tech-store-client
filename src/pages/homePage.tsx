@@ -5,7 +5,7 @@ import {
   getProductsSelectors,
   useGetCategoryProductsQuery
 } from "../features/products/productSlice";
-import Slider from "../features/slider/slider";
+import Slider from "../features/carousel/carousel";
 import { useAppSelector } from "../redux/hooks";
 import Layout from "./layout";
 import HeroImage from "../assets/img/home/cart.webp";

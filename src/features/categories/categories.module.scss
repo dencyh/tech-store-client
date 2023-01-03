@@ -4,33 +4,42 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 420px;
+  width: 100%;
 }
 
 .categories {
+  // width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
 }
 .card {
+  position: relative;
   height: 200px;
   padding: 0.8rem;
+  margin: 5px;
   flex-basis: 19%;
   text-decoration: none;
   border-radius: 25px;
-  background-color: rgb(245, 245, 245);
-  margin: 5px;
+  box-shadow: 0 0 2px $dimmed-white;
+  transition: background 600ms ease;
+  background-color: #f0e9fce0;
+  background: linear-gradient(360deg, rgba(232, 228, 248, 0.88), $dimmed-white);
+  box-shadow: 0 0 2px $light-gray;
+  transition: all 200ms ease;
   &:visited {
     color: inherit;
   }
   &:hover {
-    background-color: rgb(240, 240, 240);
-    box-shadow: 0 0 4px $light-gray;
+    box-shadow: 0 0 4px $secondary-color;
   }
 }
 
 .card__title {
+  color: $primary-color;
   margin-bottom: 5px;
+  font-size: 1.1em;
+  font-weight: 700;
 }
 
 .card__item {
@@ -40,11 +49,30 @@
 }
 
 .card__img {
-  width: 100%;
-  height: 100%;
+  width: 135px;
+  height: 135px;
+  margin: 0 auto;
   & img {
     object-fit: contain;
-    width: 100%;
-    height: 90%;
+    height: 135px;
+    width: 135px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .card {
+    max-width: 160px;
+    height: 160px;
+  }
+
+  .card__img {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    & img {
+      object-fit: contain;
+      height: 100px;
+      width: 100px;
+    }
   }
 }

@@ -1,5 +1,5 @@
 $primary-color: #313235;
-$secondary-color: #7315e5;
+$secondary-color: #8434e6;
 $secondary-desaturated: #e0c7ff;
 $secondary-light: #f0e4ff;
 $light-purple: #c6b7ff;
@@ -36,7 +36,7 @@ $border-radius-xl: 25px;
 @mixin container {
   margin: 0 auto;
   max-width: 1340px;
-  min-width: 990px;
+  // min-width: 990px;
   padding: 0 5px;
 }
 
