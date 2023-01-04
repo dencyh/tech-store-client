@@ -24,6 +24,7 @@ import QuantityButton from "../../components/buttons/quantityButton/quantityButt
 import { Product as ProductType } from "../../types/products/core.product";
 import { useBookmark } from "../../hooks/useBookmark";
 import Loader from "../../components/loader/loader";
+import cn from "classnames";
 
 const baseImageUrl = process.env.REACT_APP_API_URL + "/";
 
@@ -90,9 +91,10 @@ const Product = () => {
           <div className={styles.side_image_container}>
             {minImages.map((img) => (
               <div
-                className={`${styles.side_image} ${
+                className={cn(
+                  styles.side_image,
                   currentImage.includes(img) ? styles.active : ""
-                }`}
+                )}
                 key={img}
                 aria-label="image-select"
                 onClick={() => handleImageSelect(img)}

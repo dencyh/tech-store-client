@@ -12,6 +12,7 @@ import PlaceholderImg from "../../assets/img/placeholder-camera-sm.webp";
 import { useCart } from "../../hooks/useCart";
 import { useBookmark } from "../../hooks/useBookmark";
 import styles from "./catalog.module.scss";
+import cn from "classnames";
 
 interface Props {
   product: Product & { quantity: number; bookmarks: boolean };
@@ -35,7 +36,7 @@ const CatalogItem: React.FC<Props> = ({ product }) => {
 
   return (
     <div className={styles.item}>
-      <div className={`${styles.img} ${!image ? styles.img_sm : ""}`}>
+      <div className={cn(styles.img, !image ? styles.img_sm : "")}>
         <img src={imageSrc} alt={product.name} />
       </div>
       <div className={styles.info}>

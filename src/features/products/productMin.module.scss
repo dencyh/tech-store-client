@@ -5,7 +5,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  // height: 100%;
   width: 170px;
   background-color: $white;
 }
@@ -18,6 +17,19 @@
 .img > img {
   width: 170px;
   height: 170px;
+}
+
+.img_placeholder {
+  width: 170px;
+  height: 170px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.img_placeholder > img {
+  @include placeholder(none);
+  width: 120px;
+  height: 120px;
 }
 
 .link {
@@ -33,11 +45,31 @@
   -webkit-line-clamp: 1;
   overflow: hidden;
 }
+.name_placeholder {
+  @include placeholder;
+  width: 75%;
+  height: 14px;
+  margin-top: 4px;
+  margin-bottom: 1px;
+}
 
 .price {
   color: $dimmed-black;
   font-weight: 700;
   margin-bottom: 5px;
+}
+.price_placeholder {
+  @include placeholder;
+  width: 50%;
+  height: 15px;
+  margin-top: 4px;
+}
+
+.stars {
+  font-size: 0.75em;
+}
+.stars_placeholder {
+  @include placeholder(none);
 }
 
 .btn {

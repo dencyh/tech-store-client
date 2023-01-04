@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import NotFound from "./pages/404";
 import Home from "./pages/homePage";
 import ProductPage from "./pages/productPage";
@@ -28,10 +28,10 @@ function App() {
       </Route>
       <Route path="products/:productName/:id" element={<ProductPage />} />
       <Route path="catalog/:type" element={<CatalogPage />} />
-      <Route path="catalog/:category/new" element={<AddProduct />} />
+      <Route path="catalog/:type/new" element={<AddProduct />} />
       <Route path="cart" element={<CartPage />} />
       <Route path="bookmarks" element={<BookmarksPage />} />
-      <Route path="*" element={<NotFound />} />
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 }

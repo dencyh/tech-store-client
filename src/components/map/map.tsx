@@ -4,6 +4,7 @@ import { Address } from "../../features/user/userSlice";
 import { ymapsLoader } from "../../utils/ymapsLoader";
 import styles from "./map.module.scss";
 import Marker from "./marker";
+import cn from "classnames";
 
 interface Props {
   onSubmit: (address: AddressInput) => void;
@@ -101,7 +102,7 @@ const Map: React.FC<Props> = ({ onSubmit, selectedAddress }) => {
           {address.text || "Выберите ваш адрес"}
         </h3>
         <button
-          className={`${styles.btn} ${address.text ? "" : styles.btn_disabled}`}
+          className={cn(styles.btn, address.text ? "" : styles.btn_disabled)}
           disabled={!!!address.text}
           onClick={() => onSubmit(address)}
         >

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./input.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import cn from "classnames";
 
 interface Props
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
@@ -40,9 +41,11 @@ const Input: React.FC<Props> = ({
         id={name}
         onChange={(e) => onChange({ name, value: e.target.value })}
         value={value}
-        className={`${styles.input} ${
-          error && errorOnBlur ? styles.input_invalid : ""
-        } ${isPassword ? styles.label_password : ""}`}
+        className={cn(
+          styles.input,
+          error && errorOnBlur ? styles.input_invalid : "",
+          isPassword ? styles.label_password : ""
+        )}
         {...rest}
         onBlur={() => setErrorOnBlur(true)}
       />
@@ -50,9 +53,10 @@ const Input: React.FC<Props> = ({
       {label && (
         <label
           htmlFor={name}
-          className={`${styles.label}  ${
+          className={cn(
+            styles.label,
             error && errorOnBlur ? styles.label_invalid : ""
-          } `}
+          )}
         >
           {label}
         </label>

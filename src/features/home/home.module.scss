@@ -2,37 +2,9 @@
 
 .hero_block {
   position: relative;
-  margin: -45px 0 -55px;
-  z-index: 1;
-}
-
-.hero_img {
-  margin: -15px 0 -85px;
-  width: 100%;
-
-  aspect-ratio: 21/9;
-  object-fit: cover;
-  filter: drop-shadow(2px 2px 4px $transparent-black);
-}
-
-.hero_title {
-  position: absolute;
-  left: 5%;
-  top: 60%;
-  transform: translateY(-50%);
-  max-width: 38%;
-  width: fit-content;
-
-  padding: 20px;
-
-  font-family: "Open Sans", sans-serif;
-  font-weight: 700;
-  font-size: clamp(0.8rem, 2.5vw, 2rem);
-  line-height: 1.5;
-  color: #ffffff;
-  background-color: $primary-color;
-  border-radius: $border-radius-md;
-  z-index: 1001;
+  margin: -75px 0 -85px;
+  z-index: 0;
+  background: none;
 }
 
 .title_accent {
@@ -44,14 +16,15 @@
 
 .promo {
   position: relative;
-  width: 100%;
   padding: 0 15px;
+  background: none;
 }
 
 .promo_img {
-  width: 100%;
+  width: 1160px;
+  height: 585px;
+
   object-fit: cover;
-  aspect-ratio: 21/9;
 }
 .promo_title {
   position: absolute;
@@ -70,7 +43,7 @@
   color: #ffffff;
   background-color: $primary-color;
   border-radius: $border-radius-md;
-  z-index: 1001;
+  z-index: 1100;
 }
 
 @media screen {

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import AddToCartButton from "../../components/buttons/addToCartButton/addToCartButton";
 import { Product } from "../../types/products/core.product";
 import { formatPrice } from "../../utils/formatPrice";
 import { useCart } from "../../hooks/useCart";
@@ -31,7 +30,7 @@ const ProductMin: React.FC<Props> = ({ product }) => {
           <img src={imgUrl} alt={product.name} />
         </div>
         <h3 className={styles.name}>{product.name}</h3>
-        <div style={{ fontSize: "0.75em" }}>
+        <div className={styles.stars}>
           <StarRating value={3} />
         </div>
         <p className={styles.price}>{formatPrice(product.price)}</p>

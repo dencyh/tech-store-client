@@ -14,6 +14,7 @@ import {
 } from "../../user/userSlice";
 import EditableField from "./components/editableField";
 import styles from "./sections.module.scss";
+import cn from "classnames";
 
 export interface AddressInput {
   area: string;
@@ -149,7 +150,7 @@ const Addresses = () => {
     <div className={styles.container}>
       <h3 className={styles.title}>Ваши адреса</h3>
       <button
-        className={`${styles.btn} ${styles.btn_primary}`}
+        className={cn(styles.btn, styles.btn_primary)}
         onClick={handleAddButton}
       >
         {showMap ? "Отмена" : showForm ? "Назад к карте" : "Добавить адрес"}

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import useDebounce from "../../hooks/useDebounce";
 import styles from "./marker.module.scss";
+import cn from "classnames";
 
 interface Props {
   userActive: boolean;
@@ -25,7 +26,7 @@ const Marker: React.FC<Props> = ({
         <g id="marker">
           <g
             id="pin"
-            className={`${styles.pin} ${userActive ? styles.pin_to : ""}`}
+            className={cn(styles.pin, userActive ? styles.pin_to : "")}
           >
             <path
               id="Vector"
@@ -39,7 +40,7 @@ const Marker: React.FC<Props> = ({
             />
           </g>
           <ellipse
-            className={`${styles.shadow} ${userActive ? styles.shadow_to : ""}`}
+            className={cn(styles.shadow, userActive ? styles.shadow_to : "")}
             id="shadow"
             cx="60"
             cy="76.5"

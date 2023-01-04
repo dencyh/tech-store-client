@@ -2,6 +2,7 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styles from "./addToCartButton.module.scss";
+import cn from "classnames";
 
 interface Props {
   onAdd: () => void;
@@ -20,7 +21,7 @@ const AddToCartButton: React.FC<Props> = ({
 }) => {
   return (
     <button
-      className={`${styles.btn} ${inCart ? styles.btn_active : ""}`}
+      className={cn(styles.btn, inCart ? styles.btn_active : "")}
       onClick={inCart ? onRemove : onAdd}
     >
       <span className={styles.btn__icon}>

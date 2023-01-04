@@ -11,16 +11,18 @@
 }
 
 .container {
+  position: relative;
   display: flex;
   padding: 0 10px;
   gap: 15px;
 }
 
 .carousel_container {
-  position: relative;
   border-radius: $border-radius-lg;
   overflow-x: hidden;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .handle {
@@ -33,7 +35,6 @@
   z-index: 1000;
   font-size: 1.1em;
   transition: transform 200ms ease;
-  // position: static;
   &:hover {
     transform: scale(1.05);
   }
@@ -60,5 +61,4 @@
 
 .carousel_item {
   border-radius: $border-radius-lg;
-  background-color: $white;
 }

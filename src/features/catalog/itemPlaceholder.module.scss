@@ -38,12 +38,10 @@
 }
 
 .title {
+  @include placeholder;
   margin-bottom: 5px;
   font-size: 24px;
   height: 32px;
-  background-color: $lighter-gray;
-  border-radius: $border-radius-sm;
-  animation: 2.5s infinite placeholder-glow;
 }
 
 .reviews {
@@ -55,16 +53,12 @@
 }
 .reviews__rating {
   width: 50px;
-  background: $lighter-gray;
-  border-radius: $border-radius-sm;
-  animation: 2.5s infinite placeholder-glow;
+  @include placeholder;
 }
 
 .reviews__count {
   width: 80px;
-  background: $lighter-gray;
-  border-radius: $border-radius-sm;
-  animation: 2.5s infinite placeholder-glow;
+  @include placeholder;
 }
 
 .benefits {
@@ -76,8 +70,7 @@
 
 .badge {
   @include badge($accent-color);
-  color: $accent-color;
-  animation: 2.5s infinite placeholder-glow;
+  @include placeholder;
 }
 
 .features {
@@ -100,11 +93,8 @@
   gap: 6px;
 }
 .feature > span {
-  background-color: $lighter-gray;
-  border-radius: $border-radius-sm;
-  color: $lighter-gray;
+  @include placeholder;
   height: 16px;
-  animation: 2.5s infinite placeholder-glow;
 }
 
 .pricebox {
@@ -122,10 +112,8 @@
 }
 
 .price > p {
-  border-radius: $border-radius-sm;
-  background-color: $lighter-gray;
-  color: $lighter-gray;
-  animation: 2.5s infinite placeholder-glow;
+  color: $gray-200;
+  @include placeholder;
 }
 
 .btn {
@@ -167,10 +155,8 @@
 }
 
 .additional_info > p {
-  background-color: $lighter-gray;
+  @include placeholder;
   color: $lighter-gray;
   width: fit-content;
   font-size: 0.9em;
-  border-radius: $border-radius-sm;
-  animation: 2.5s infinite placeholder-glow;
 }

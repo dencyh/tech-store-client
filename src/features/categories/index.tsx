@@ -6,6 +6,9 @@ import styles from "./categories.module.scss";
 import { Category, useGetCategoriesQuery } from "../api/apiSlice";
 import { Spinner } from "../../components/ui/spinner/spinner";
 import Loader from "../../components/loader/loader";
+import PlaceholderCard from "./placeholderCard";
+
+const dummyCategories = Array(10).fill(0);
 
 export const Categories = () => {
   const {
@@ -19,7 +22,13 @@ export const Categories = () => {
   let content;
 
   if (isLoading) {
-    content = <Loader />;
+    content = (
+      <div className={styles.categories}>
+        {dummyCategories.map((_, index) => (
+          <PlaceholderCard key={index} />
+        ))}
+      </div>
+    );
   } else if (isSuccess) {
     content = (
       <div className={styles.categories}>

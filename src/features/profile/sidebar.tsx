@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useParams } from "react-router-dom";
 import { objectKeys } from "../../utils/objectIterator";
 import styles from "./sidebar.module.scss";
+import cn from "classnames";
 
 const MenuItems = {
   "История заказов": [
@@ -54,9 +55,10 @@ const Sidebar = () => {
                 {section.map((sectionItem) => (
                   <li
                     key={sectionItem.text}
-                    className={`${styles.sidebar_item} ${
+                    className={cn(
+                      styles.sidebar_item,
                       activePath === sectionItem.link ? styles.active_item : ""
-                    }`}
+                    )}
                   >
                     <Link to={sectionItem.link}>
                       <span className={styles.sidebar_icon}>
@@ -73,9 +75,10 @@ const Sidebar = () => {
           return (
             <li key={sectionTitle} className={styles.sidebar_section}>
               <div
-                className={`${styles.sidebar_item} ${
+                className={cn(
+                  styles.sidebar_item,
                   activePath === section[0].link ? styles.active_item : ""
-                }`}
+                )}
               >
                 <Link to={section[0].link}>
                   <span className={styles.sidebar_icon}>

@@ -11,6 +11,7 @@ import {
   useGetCategoryProductsQuery
 } from "../products/productSlice";
 import ItemPlaceholder from "./itemPlaceholder";
+import cn from "classnames";
 
 const placeholderProducts = Array(5)
   .fill(0)
@@ -68,7 +69,7 @@ const CatalogList = () => {
     <div className={styles.list}>
       {/* <Link
         to={`/catalog/${type}/new`}
-        className={`${styles.btn} ${styles.new__link}`}
+        className={cn(styles.btn, styles.new__link)}
       >
         Добавить продукт
       </Link> */}

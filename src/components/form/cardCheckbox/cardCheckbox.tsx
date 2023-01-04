@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./cardCheckbox.module.scss";
+import cn from "classnames";
 
 interface Props
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
@@ -20,9 +21,7 @@ const CardCheckbox: React.FC<Props> = ({
 }) => {
   return (
     <label
-      className={`${styles.checkbox__label} ${
-        unavailable ? styles.disabled : ""
-      }`}
+      className={cn(styles.checkbox__label, unavailable ? styles.disabled : "")}
     >
       <input
         type="radio"

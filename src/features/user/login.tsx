@@ -7,6 +7,7 @@ import { translate } from "../../utils/translate";
 import { FormType } from "./auth";
 import styles from "./auth.module.scss";
 import { useUserLoginMutation } from "./userSlice";
+import cn from "classnames";
 
 const initialState = {
   email: "",
@@ -56,9 +57,7 @@ const Login: React.FC<Props> = ({ onFormType }) => {
             />
           </div>
         ))}
-        <button className={`${styles.btn} ${styles.btn_disabled}`}>
-          Войти
-        </button>
+        <button className={cn(styles.btn, styles.btn_disabled)}>Войти</button>
       </form>
     </>
   );
