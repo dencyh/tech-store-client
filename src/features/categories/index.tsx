@@ -19,17 +19,15 @@ export const Categories = () => {
     error
   } = useGetCategoriesQuery(undefined);
 
-  let content;
+  let content = (
+    <div className={styles.categories}>
+      {dummyCategories.map((_, index) => (
+        <PlaceholderCard key={index} />
+      ))}
+    </div>
+  );
 
-  if (isLoading) {
-    content = (
-      <div className={styles.categories}>
-        {dummyCategories.map((_, index) => (
-          <PlaceholderCard key={index} />
-        ))}
-      </div>
-    );
-  } else if (isSuccess) {
+  if (isSuccess) {
     content = (
       <div className={styles.categories}>
         {categories!.map((category: Category) => (
@@ -37,8 +35,6 @@ export const Categories = () => {
         ))}
       </div>
     );
-  } else if (isError) {
-    content = <div>{JSON.stringify(error)}</div>;
   }
 
   return <div className={styles.wrapper}>{content}</div>;

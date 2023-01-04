@@ -30,17 +30,18 @@
   min-width: 45px;
   min-height: 45px;
   border-radius: 50%;
-  background: $transparent-black;
-  color: $dimmed-white;
+  color: $secondary-color;
   z-index: 1000;
-  font-size: 1.1em;
-  transition: transform 200ms ease;
-  &:hover {
-    transform: scale(1.05);
-  }
+  font-size: 1.6em;
+  transition: all 200ms ease;
 }
 .handle:focus {
   outline: 2px solid $light-blue;
+}
+
+.disabled {
+  color: $light-gray;
+  cursor: not-allowed;
 }
 
 .carousel {

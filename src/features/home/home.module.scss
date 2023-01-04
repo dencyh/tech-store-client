@@ -2,7 +2,7 @@
 
 .hero_block {
   position: relative;
-  margin: -75px 0 -85px;
+  margin: -125px 0 -100px;
   z-index: 0;
   background: none;
 }
@@ -23,8 +23,13 @@
 .promo_img {
   width: 1160px;
   height: 585px;
-
   object-fit: cover;
+  user-select: none;
+  pointer-events: none;
+}
+.promo_img > img {
+  // user-select: none;
+  // pointer-events: none;
 }
 .promo_title {
   position: absolute;

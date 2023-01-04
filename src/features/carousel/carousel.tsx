@@ -25,10 +25,12 @@ const Carousel: React.FC<Props> = ({
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [offsetWidth, setOffsetWidth] = useState(0);
-  const [scrollWidth, setScrollWidth] = useState(0);
+  const [rightLimit, setRightLimit] = useState(0);
   useEffect(() => {
-    setOffsetWidth(containerRef.current?.offsetWidth || 0);
-    setScrollWidth(containerRef.current?.scrollWidth || 0);
+    const width = containerRef.current?.offsetWidth || 0;
+    const scroll = containerRef.current?.scrollWidth || 0;
+    setOffsetWidth(width);
+    setRightLimit(width - scroll);
   }, [containerRef.current?.offsetWidth]);
 
   useEffect(() => {
@@ -79,14 +81,13 @@ const Carousel: React.FC<Props> = ({
 
   const handleRight = () => {
     const newPosition = position - offsetWidth;
-    const mostRight = offsetWidth - scrollWidth;
     // If too far right
-    if (newPosition < mostRight) {
+    if (newPosition < rightLimit) {
       // Bounce only if in the end
-      if (mostRight === position) {
-        bounce(mostRight - offsetWidth / 10, mostRight);
+      if (rightLimit === position) {
+        bounce(rightLimit - offsetWidth / 10, rightLimit);
       } else {
-        setPosition(mostRight);
+        setPosition(rightLimit);
       }
     } else {
       setPosition(newPosition);
@@ -99,7 +100,11 @@ const Carousel: React.FC<Props> = ({
       <h3 className={styles.subtitle}>{subtitle}</h3>
       <div className={styles.container}>
         <button
-          className={cn(styles.handle, styles.handle_left)}
+          className={cn(
+            styles.handle,
+            styles.handle_left,
+            position >= 0 && styles.disabled
+          )}
           aria-label="left-handle"
           onClick={handleLeft}
         >
@@ -122,7 +127,11 @@ const Carousel: React.FC<Props> = ({
           </ul>
         </div>
         <button
-          className={cn(styles.handle, styles.handle_right)}
+          className={cn(
+            styles.handle,
+            styles.handle_right,
+            position <= rightLimit && styles.disabled && styles.disabled
+          )}
           aria-label="right-handle"
           onClick={handleRight}
         >

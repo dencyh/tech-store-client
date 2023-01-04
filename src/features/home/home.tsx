@@ -46,10 +46,10 @@ const Home = () => {
 
   return (
     <>
-      <Categories />
       <div className={styles.hero_block}>
         <Carousel fullWidth>{carouselImages}</Carousel>
       </div>
+      <Categories />
       <Carousel title="Новинки">{carouselItems}</Carousel>
       <Carousel title="Рекомендации">{carouselItems}</Carousel>
       <Carousel title="Скидки">{carouselItems}</Carousel>
