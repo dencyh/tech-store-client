@@ -1,0 +1,46 @@
+@import "../../assets/styles/variables.scss";
+
+.accordion {
+  border-radius: $border-radius-md;
+  padding: 8px 0;
+}
+
+.item {
+  position: relative;
+  padding: 4px 14px 4px;
+}
+
+.item_title {
+  border-top: 1px solid $gray-200;
+  &:last-child {
+    border: none;
+  }
+}
+
+.item_btn {
+  margin-top: 8px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  font-size: 0.9em;
+  border-radius: $border-radius-md;
+
+  &:hover {
+    background-color: $dimmed-white;
+  }
+}
+
+.content {
+  padding: 0 12px;
+  max-height: 0;
+  overflow-y: hidden;
+  transition: max-height, visibility 500ms cubic-bezier(0.65, 0.05, 0.36, 1);
+  visibility: hidden;
+}
+
+.active {
+  max-height: 9000px;
+  visibility: visible;
+}

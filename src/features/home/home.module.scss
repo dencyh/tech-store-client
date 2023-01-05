@@ -2,7 +2,7 @@
 
 .hero_block {
   position: relative;
-  margin: -125px 0 -100px;
+  margin: -140px 0 -100px;
   z-index: 0;
   background: none;
 }
@@ -27,10 +27,7 @@
   user-select: none;
   pointer-events: none;
 }
-.promo_img > img {
-  // user-select: none;
-  // pointer-events: none;
-}
+
 .promo_title {
   position: absolute;
   left: 5%;

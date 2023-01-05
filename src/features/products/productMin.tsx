@@ -6,6 +6,9 @@ import { useCart } from "../../hooks/useCart";
 import { useBookmark } from "../../hooks/useBookmark";
 import styles from "./productMin.module.scss";
 import StarRating from "../reviews/starRating";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import AddToCartButton from "../../components/buttons/addToCartButton/addToCartButton";
 
 interface Props {
   product: Product;
@@ -33,8 +36,13 @@ const ProductMin: React.FC<Props> = ({ product }) => {
         <div className={styles.stars}>
           <StarRating value={3} />
         </div>
-        <p className={styles.price}>{formatPrice(product.price)}</p>
       </Link>
+      <div className={styles.pricebox}>
+        <p className={styles.price}>{formatPrice(product.price)}</p>
+        <button className={styles.btn} aria-label="buy button">
+          <FontAwesomeIcon icon={faShoppingCart} />
+        </button>
+      </div>
     </div>
   );
 };

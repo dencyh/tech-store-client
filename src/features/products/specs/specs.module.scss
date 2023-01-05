@@ -2,7 +2,7 @@
 
 .feature {
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
 .table {
@@ -11,15 +11,15 @@
   width: 100%;
   // max-width: 650px;
   border-collapse: collapse;
-  font-size: 1.1em;
+  font-size: 0.9em;
 }
 .th {
   font-weight: 700;
 }
 .table_zebra > *:nth-child(even) {
-  background-color: $light-slate;
+  background-color: $gray-100;
 }
 
 .tr > * {
-  padding: 16px 4px;
+  padding: 12px 8px;
 }

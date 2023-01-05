@@ -25,6 +25,8 @@ import { Product as ProductType } from "../../types/products/core.product";
 import { useBookmark } from "../../hooks/useBookmark";
 import Loader from "../../components/loader/loader";
 import cn from "classnames";
+import Accordion from "../../components/accordion/accordion";
+import AccordionItem from "../../components/accordion/accordionItem";
 
 const baseImageUrl = process.env.REACT_APP_API_URL + "/";
 
@@ -152,9 +154,27 @@ const Product = () => {
             </div>
           </div>
         </div>
+
         <div className={styles.specs}>
-          <h3 className={styles.specs_title}>Характеристики</h3>
-          <Specs product={product} />
+          <Accordion
+            items={[
+              ...(product.description
+                ? [
+                    {
+                      title: "Описание",
+                      children: product.description
+                    }
+                  ]
+                : []),
+              {
+                title: "Характеристики",
+                children: <Specs product={product} />
+              }
+            ]}
+            allowMultiple
+          />
+          {/* <h3 className={styles.specs_title}>Характеристики</h3>
+          <Specs product={product} /> */}
         </div>
         <Reviews />
       </>

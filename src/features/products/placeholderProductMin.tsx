@@ -3,6 +3,8 @@ import styles from "./productMin.module.scss";
 import PlaceholderPhoto from "../../assets/img/placeholder-camera-sm.webp";
 import StarRating from "../reviews/starRating";
 import cn from "classnames";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 const PlaceholderProductMin = () => {
   return (
@@ -15,7 +17,12 @@ const PlaceholderProductMin = () => {
         <div className={cn(styles.stars, styles.stars_placeholder)}>
           <StarRating value={0} />
         </div>
+      </div>
+      <div className={styles.pricebox}>
         <p className={styles.price_placeholder}></p>
+        <button className={styles.btn} aria-label="buy button">
+          <FontAwesomeIcon icon={faShoppingCart} />
+        </button>
       </div>
     </div>
   );

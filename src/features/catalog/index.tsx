@@ -10,7 +10,7 @@ const Catalog = () => {
 
   return (
     <>
-      <h1>{translate("type", type)}</h1>
+      <h1>{translate("type", type) || "Каталог"}</h1>
       <div className={styles.container}>
         <Filters />
         <CatalogList />

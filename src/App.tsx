@@ -1,6 +1,5 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import NotFound from "./pages/404";
 import Home from "./pages/homePage";
 import ProductPage from "./pages/productPage";
 import CatalogPage from "./pages/catalogPage";
@@ -27,7 +26,10 @@ function App() {
         <Route path=":path" element={<ProfilePage />} />
       </Route>
       <Route path="products/:productName/:id" element={<ProductPage />} />
-      <Route path="catalog/:type" element={<CatalogPage />} />
+      <Route path="catalog" element={<CatalogPage />}>
+        <Route index element={<CatalogPage />} />
+        <Route path=":type" element={<CatalogPage />} />
+      </Route>
       <Route path="catalog/:type/new" element={<AddProduct />} />
       <Route path="cart" element={<CartPage />} />
       <Route path="bookmarks" element={<BookmarksPage />} />

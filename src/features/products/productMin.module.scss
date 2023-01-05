@@ -73,6 +73,18 @@
 }
 
 .btn {
-  margin-top: 20px;
   @include btn;
+
+  background-color: $dark-purple-desaturated;
+  padding: 8px 15px;
+  margin-top: -10px;
+  font-size: 0.9em;
+  width: fit-content;
+  height: fit-content;
+}
+
+.pricebox {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 25px;
 }
