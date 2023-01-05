@@ -11,9 +11,25 @@
   @include container;
   position: relative;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  gap: 80px;
   min-height: 500;
   margin-top: 20px;
+}
+
+.left_section {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 90%;
+}
+
+.right_section {
+}
+
+.gallery_container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
 .main_image {
@@ -99,15 +115,6 @@
   gap: 15px;
   width: 350px;
   margin-bottom: 15px;
-
-  &::after {
-    position: absolute;
-    content: "";
-    height: 1px;
-    bottom: -40px;
-    background: $gray;
-    width: 100%;
-  }
 }
 
 .btn {
@@ -161,18 +168,20 @@
 }
 
 .configuration {
-  position: absolute;
-  top: 60%;
   padding-top: 20px;
+  color: $primary-color;
 }
 
-.configuration__item {
-  margin-bottom: 20px;
+.configuration__section_title {
+  font-weight: 600;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid $light-gray;
 }
 
 .configuration__title {
-  font-weight: 700;
-  margin-bottom: 10px;
+  font-weight: 500;
+  margin-bottom: 4px;
 }
 
 .configuration__options {
@@ -198,14 +207,4 @@
   display: flex;
   gap: 10px;
   align-items: center;
-}
-
-.specs_title {
-  margin-bottom: 10px;
-}
-
-.specs {
-  margin-left: 40px;
-  width: 60%;
-  margin-bottom: 30px;
 }

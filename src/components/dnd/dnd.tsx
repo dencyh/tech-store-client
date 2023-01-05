@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useUploadImagesMutation } from "../../../features/products/productSlice";
-import Loader from "../../loader/loader";
-import { Spinner } from "../spinner/spinner";
+import { useUploadImagesMutation } from "../../features/products/productSlice";
+import Loader from "../loader/loader";
+import { Spinner } from "../ui/spinner/spinner";
 import styles from "./dnd.module.scss";
 
 const DND = () => {

@@ -19,7 +19,7 @@ const Summary: React.FC<Props> = ({ summary }) => {
   };
 
   return (
-    <div className={styles.inner_container}>
+    <div className={styles.summary_container}>
       <div>
         <h3>Оценки пользователей</h3>
         <div className={styles.rating_container}>

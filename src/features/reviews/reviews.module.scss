@@ -2,15 +2,16 @@
 
 .container {
   display: flex;
-  gap: 80px;
+  justify-content: space-between;
+  gap: 60px;
   color: $dimmed-black;
 }
 
-.inner_container {
-  max-width: 350px;
-  border-left: 1px solid $light-gray;
+.summary_container {
+  // max-width: 350px;
   margin-top: 20px;
   padding: 20px;
+  flex-basis: 32%;
 }
 
 .review_item {
@@ -109,7 +110,7 @@
 
 .reviews_list {
   margin-top: 50px;
-  width: 60%;
+  flex-basis: 70%;
 }
 
 .review_date {

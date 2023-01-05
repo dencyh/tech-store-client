@@ -41,7 +41,7 @@ const Reviews = () => {
     <div className={styles.container}>
       <div className={styles.reviews_list}>
         {reviews.length > 0 ? (
-          <h2 className={styles.section_title}></h2>
+          <h2 className={styles.section_title}>Отзывы</h2>
         ) : (
           <>
             <h2 className={styles.section_title}>Отзывов нет</h2>

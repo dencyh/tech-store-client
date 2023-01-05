@@ -1,4 +1,4 @@
-@import "../../../assets/styles/variables.scss";
+@import "../../assets/styles/variables.scss";
 
 @mixin option-dash($width, $before: false) {
   content: "";
@@ -24,7 +24,7 @@
   justify-content: center;
   align-items: center;
   border-radius: 25px;
-  border: 2px dashed $slate;
+  border: 2px dashed $slate-500;
 }
 
 .container {
@@ -46,7 +46,7 @@
 
 .mouse_over {
   @include inner-container;
-  background-color: $light-slate;
+  background-color: $slate-100;
 }
 
 .mouse_out {

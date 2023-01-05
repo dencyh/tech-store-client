@@ -33,7 +33,7 @@ const CardCheckbox: React.FC<Props> = ({
       />
       <span className={styles.checkbox__tile}>
         <i className="bx bxl-twitter"></i>
-        <span>{label}</span>
+        <span className={styles.inner_text}>{label}</span>
       </span>
     </label>
   );

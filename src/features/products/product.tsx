@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from "react";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
 import { getConfigOptions } from "../../utils/findDiff";
@@ -26,7 +26,6 @@ import { useBookmark } from "../../hooks/useBookmark";
 import Loader from "../../components/loader/loader";
 import cn from "classnames";
 import Accordion from "../../components/accordion/accordion";
-import AccordionItem from "../../components/accordion/accordionItem";
 
 const baseImageUrl = process.env.REACT_APP_API_URL + "/";
 
@@ -90,27 +89,50 @@ const Product = () => {
       <>
         {/* <div>Ноутбуки &gt; Apple</div> */}
         <div className={styles.inner_wrapper}>
-          <div className={styles.side_image_container}>
-            {minImages.map((img) => (
-              <div
-                className={cn(
-                  styles.side_image,
-                  currentImage.includes(img) ? styles.active : ""
-                )}
-                key={img}
-                aria-label="image-select"
-                onClick={() => handleImageSelect(img)}
-              >
-                <img src={img + ".min.webp"} alt="gallery-image" />
+          <div className={styles.left_section}>
+            <div className={styles.gallery_container}>
+              <div className={styles.side_image_container}>
+                {minImages.map((img) => (
+                  <div
+                    className={cn(
+                      styles.side_image,
+                      currentImage.includes(img) ? styles.active : ""
+                    )}
+                    key={img}
+                    aria-label="image-select"
+                    onClick={() => handleImageSelect(img)}
+                  >
+                    <img src={img + ".min.webp"} alt="gallery-image" />
+                  </div>
+                ))}
               </div>
-            ))}
+
+              <div className={styles.main_image}>
+                <img src={currentImage} alt={product.name} />
+              </div>
+            </div>
+            <div className={styles.specs}>
+              <Accordion
+                items={[
+                  ...(product.description
+                    ? [
+                        {
+                          title: "Описание",
+                          children: product.description
+                        }
+                      ]
+                    : []),
+                  {
+                    title: "Характеристики",
+                    children: <Specs product={product} />
+                  }
+                ]}
+                allowMultiple
+              />
+            </div>
           </div>
 
-          <div className={styles.main_image}>
-            <img src={currentImage} alt={product.name} />
-          </div>
-
-          <div className={styles.details}>
+          <div className={styles.right_section}>
             <h1 className={styles.title}>{product.name}</h1>
             <p className={styles.reviews}>
               <span>
@@ -149,33 +171,14 @@ const Product = () => {
 
             {/* <p>Доставка 5-7 дней</p> */}
             <div className={styles.configuration}>
-              <h3 className={styles.configuration__title}>Конфигурация:</h3>
+              <h3 className={styles.configuration__section_title}>
+                Конфигурация:
+              </h3>
               <Config config={config} />
             </div>
           </div>
         </div>
 
-        <div className={styles.specs}>
-          <Accordion
-            items={[
-              ...(product.description
-                ? [
-                    {
-                      title: "Описание",
-                      children: product.description
-                    }
-                  ]
-                : []),
-              {
-                title: "Характеристики",
-                children: <Specs product={product} />
-              }
-            ]}
-            allowMultiple
-          />
-          {/* <h3 className={styles.specs_title}>Характеристики</h3>
-          <Specs product={product} /> */}
-        </div>
         <Reviews />
       </>
     );

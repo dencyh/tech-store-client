@@ -49,29 +49,33 @@
 }
 
 .checkbox__input:checked + .checkbox__tile {
-  border-color: $secondary-color;
-  background-color: $secondary-light;
+  border-color: $slate-500;
+  background-color: $slate-100;
 }
 
 .checkbox__input:focus + .checkbox__tile {
-  outline: 3px solid $secondary-desaturated;
+  outline: 3px solid $light-blue;
 }
 .checkbox__input:focus:checked + .checkbox__tile {
-  outline: 3px solid $secondary-desaturated;
-  background-color: $secondary-light;
+  outline: 3px solid $light-blue;
+  background-color: $gray-100;
 }
 
+// Icon
 .checkbox__input:checked + .checkbox__tile::before {
   transform: scale(1);
-  opacity: 1;
-  background-color: $secondary-color;
+  // opacity: 1;
+  background-color: $primary-color;
 }
 
 .checkbox__tile:hover {
-  border-color: $secondary-color;
+  border-color: $gray;
 }
 
 .disabled > .checkbox__tile {
-  // cursor: not-allowed;
   color: $gray;
+}
+
+.inner_text {
+  padding: 0 10px;
 }
