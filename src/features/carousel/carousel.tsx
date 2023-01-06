@@ -29,8 +29,9 @@ const Carousel: React.FC<Props> = ({
   useEffect(() => {
     const width = containerRef.current?.offsetWidth || 0;
     const scroll = containerRef.current?.scrollWidth || 0;
+
     setOffsetWidth(width);
-    setRightLimit(width - scroll);
+    setRightLimit(fullWidth ? -width : width - scroll);
   }, [containerRef.current?.offsetWidth]);
 
   useEffect(() => {
@@ -119,7 +120,7 @@ const Carousel: React.FC<Props> = ({
               <li
                 className={styles.carousel_item}
                 key={child.key}
-                style={{ ...(fullWidth && { minWidth: `${offsetWidth}px` }) }}
+                style={{ ...(fullWidth && { minWidth: `${100}%` }) }}
               >
                 {child}
               </li>

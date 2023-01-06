@@ -24,6 +24,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+}
+.carousel {
+  width: 100%;
 }
 
 .handle {
@@ -42,7 +46,6 @@
 
 .disabled {
   color: $light-gray;
-  cursor: not-allowed;
 }
 
 .carousel {
