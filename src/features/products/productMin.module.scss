@@ -76,11 +76,29 @@
   @include btn;
 
   background-color: $dark-purple-desaturated;
-  padding: 8px 15px;
+
+  padding: 2px 16px;
+  width: fit-content;
+  max-height: 35px;
+
   margin-top: -10px;
   font-size: 0.9em;
-  width: fit-content;
-  height: fit-content;
+
+  &:hover {
+    filter: brightness(110%);
+  }
+}
+
+.in_cart {
+  background-color: $white;
+  color: $green-600;
+  border: 2px solid $green-600;
+  transition: all 150ms ease;
+
+  &:hover {
+    color: $red-700;
+    border: 2px solid $red-700;
+  }
 }
 
 .pricebox {
