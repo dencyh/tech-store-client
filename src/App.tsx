@@ -10,6 +10,7 @@ import ProfilePage from "./pages/profilePage";
 import { selectCurrentUser } from "./features/user/userSlice";
 import { useAppSelector } from "./redux/hooks";
 import { selectLocalCart, useGetCartQuery } from "./features/cart/cartSlice";
+import ProtectedRoute from "./components/protectedRoute";
 
 function App() {
   const currentUser = useAppSelector(selectCurrentUser);
@@ -21,7 +22,14 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="profile">
+      <Route
+        path="profile"
+        element={
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        }
+      >
         <Route index element={<ProfilePage />} />
         <Route path=":path" element={<ProfilePage />} />
       </Route>
@@ -30,9 +38,25 @@ function App() {
         <Route index element={<CatalogPage />} />
         <Route path=":type" element={<CatalogPage />} />
       </Route>
-      <Route path="catalog/:type/new" element={<AddProduct />} />
+
+      <Route
+        path="catalog/:type/new"
+        element={
+          <ProtectedRoute requireAdmin>
+            <AddProduct />
+          </ProtectedRoute>
+        }
+      />
+
       <Route path="cart" element={<CartPage />} />
-      <Route path="bookmarks" element={<BookmarksPage />} />
+      <Route
+        path="bookmarks"
+        element={
+          <ProtectedRoute>
+            <BookmarksPage />
+          </ProtectedRoute>
+        }
+      />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
